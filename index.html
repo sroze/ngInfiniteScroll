@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if IE 8]> <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8" />
+
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Always force latest IE rendering engine or request Chrome Frame -->
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+  <title>ngInfiniteScroll - Infinite Scrolling for AngularJS</title>
+
+  <link href="stylesheets/application.css?1355082479" media="screen" rel="stylesheet" type="text/css" />
+  <script src="javascripts/application.js?1355082473" type="text/javascript"></script>
+</head>
+<body>
+
+  <div class='contain-to-grid'>
+    <nav class='top-bar'>
+      <ul>
+        <li class='name'><h1><a href='#'><img src="images/tiny-inverted.png?1355082470" /> ngInfiniteScroll</a></h1></li>
+        <li class='toggle-topbar'><a href='#'></a></li>
+      </ul>
+      <section>
+        <ul class='left'>
+          <li><a href='#'>Demos</a></li>
+          <li><a href='#'>Documentation</a></li>
+          <li><a href='#'>FAQ</a></li>
+          <li><a href='#'>About</a></li>
+        </ul>
+        <ul class='right'>
+          <li><a href='#'>View on GitHub</a></li>
+        </ul>
+      </section>
+    </nav>
+  </div>
+
+  <div class='row'>
+  <div class='eight columns' style='text-align: center; vertical-align: middle;'>
+    <img src="images/logo-resized.png?1355082470" />
+  </div>
+
+  <div class='four columns'>
+    <p style='margin-top: 40px;' class='no-marg-bottom'>
+      <button data-reveal-id='download-modal' class='button radius download-button' style='height: 100px; width: 100%;'>Download Now</button>
+    </p>
+    <p style='text-align: right;'>
+      or <a href='#'>clone or fork on GitHub</a>
+    </p>
+  </div>
+</div>
+
+<div id='download-modal' class='reveal-modal'>
+  <a class="close-reveal-modal">&#215;</a>
+  <h1>Download <small>version 1.0.0</small></h1>
+  <div class='row'>
+
+    <div class='six columns'>
+      <h3 class='subheader'>Production</h3>
+      <p class='subtext'>Includes unminified and minified JavaScript</p>
+      <a href='#' class='button radius'>.tar.gz</a>
+      <a href='#' class='button radius secondary'>.zip</a>
+    </div>
+
+    <div class='six columns'>
+      <h3 class='subheader'>Development</h3>
+      <p class='subtext'>Includes full source tree</p>
+      <a href='#' class='button radius'>.tar.gz</a>
+      <a href='#' class='button radius secondary'>.zip</a>
+      <p class='github'>or <a href='#'>clone or fork on GitHub</a></p>
+    </div>
+
+  </div>
+
+  <div class='row'>
+    <div class='twelve columns'><a href='#'>Old versions are available as development downloads on GitHub</a></div>
+  </div>
+</div>
+
+<div class='row'>
+  <div class='eight columns'>
+    <h3>What is Infinite Scrolling?</h3>
+    <p>
+      Infinite scrolling, also known as "endless scrolling," "unpagination," and others,
+      is a technique where additional content for a web page is appended dynamically to
+      the bottom of the page as the user approaches the end of the content. You may have
+      seen this technique on the <a href='https://facebook.com/'>Facebook</a>
+      timeline or on <a href='http://pinterest.com/'>Pinterest's</a> homepage.
+    </p>
+  </div>
+  <div class='four columns'>
+    <img src="images/diagram.png?1355082470" />
+  </div>
+</div>
+
+<div class='row'>
+  <div class='eight columns push-four'>
+    <h3>What is ngInfiniteScroll?</h3>
+    <p>
+      ngInfiniteScroll is a directive that you can use to implement infinite scrolling
+      in your <a href='http://angularjs.org'>AngularJS</a> applications.
+      Simply declare which function to call when the user
+      gets close to the bottom of the content with the directive and the module will
+      take care of the rest. Of course, you can specify several options to ensure
+      that the behavior is just what you're looking for.
+    </p>
+  </div>
+  <div class='four columns pull-eight'>
+    <img src="images/textmate.png?1355082470" />
+  </div>
+</div>
+
+<div class='row'>
+  <div class='twelve columns'>
+    <h3>How do I use ngInfiniteScroll?</h3>
+    <p>Using ngInfiniteScroll is easy&mdash;just follow these simple steps:</p>
+    <ol>
+      <li>
+        <p class='no-marg-bottom'>
+          Include the <a href='#'>ngInfiniteScroll JavaScript source</a>
+          on your page.
+        </p>
+        <p><code>&lt;script type='text/javascript' src='path/to/ng-infinite-scroll.min.js'&gt;&lt;/script&gt;</code></p>
+      </li>
+
+      <li>
+        <p>
+          Ensure that your application modle (or whatever module is going to use ngInfiniteScroll)
+          specifies <code>infiniteScroll</code> as a dependency.
+        </p>
+        <p><code>angular.module('myApplication', ['infiniteScroll']);</code></p>
+        <p>
+          Note that the module name does not include <code>ng</code>, as that namespace is used
+          by the official Angular module.
+        </p>
+      </li>
+
+      <li>
+        <p>
+          Use the directive by specifying an <code>infinite-scroll</code> attribute on an element.
+        </p>
+        <p><code>&lt;div infinite-scroll="myPagingFunction()" infinite-scroll-distance="3"&gt;&lt;/div&gt;</code></p>
+        <p>
+          Note that the attribute does not include <code>ng</code>, as that namespace is used
+          by the official Angular module.
+        </p>
+        <p>
+          See the <a href='#'>API documentation</a> for more information about what attributes are available for use.
+        </p>
+      </li>
+  </div>
+</div>
+
+
+  <div class='row'>
+    <div class='twelve columns'>
+      <hr>
+    </div>
+  </div>
+
+  <div class='row'>
+    <div class='four columns footer'>
+      <p>
+        Copyright &copy; 2012 Brandon Tilley
+      </p>
+    </div>
+    <div class='eight columns footer'>
+      <ul class='inline-list footer-links'>
+        <li><a href='#'>Home</a></li>
+        <li><a href='#'>Demos</a></li>
+        <li><a href='#'>Documentation</a></li>
+        <li><a href='#'>FAQ</a></li>
+        <li><a href='#'>About</a></li>
+        <li><a href='#'>View on GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+</html>

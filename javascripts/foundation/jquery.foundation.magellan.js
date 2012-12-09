@@ -1,0 +1,9 @@
+/*
+ * jQuery Foundation Magellan 0.0.1
+ * http://foundation.zurb.com
+ * Copyright 2012, ZURB
+ * Free to use under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+*/
+/*jslint unparam: true, browser: true, indent: 2 */
+(function(e,t,n){"use strict";e.fn.foundationMagellan=function(n){var r=e("[data-magellan-expedition=fixed]"),i={threshold:r.length?r.outerHeight(!0):25,activeClass:"active"},n=e.extend({},i,n);e(document).on("magellan.arrival","[data-magellan-arrival]",function(t){var r=e(this).closest("[data-magellan-expedition]"),i=r.attr("data-magellan-active-class")||n.activeClass;e(this).closest("[data-magellan-expedition]").find("[data-magellan-arrival]").not(this).removeClass(i),e(this).addClass(i)});var s=e("[data-magellan-expedition]");s.find("[data-magellan-arrival]:first").addClass(s.attr("data-magellan-active-class")||n.activeClass),r.on("magellan.update-position",function(){var t=e(this);t.data("magellan-fixed-position",""),t.data("magellan-top-offset","")}),r.trigger("magellan.update-position"),e(t).on("resize.magellan",function(){r.trigger("magellan.update-position")}),e(t).on("scroll.magellan",function(){var i=e(t).scrollTop();r.each(function(){var t=e(this);t.data("magellan-top-offset")===""&&t.data("magellan-top-offset",t.offset().top);var r=i+n.threshold>t.data("magellan-top-offset");t.data("magellan-fixed-position")!=r&&(t.data("magellan-fixed-position",r),r?t.css({position:"fixed",top:0}):t.css({position:"",top:""}))})}),e(t).on("scroll.magellan",function(r){var i=e(t).scrollTop();e("[data-magellan-destination]").each(function(){var t=e(this),r=t.attr("data-magellan-destination"),s=t.offset().top-i;s<=n.threshold&&e("[data-magellan-arrival="+r+"]").trigger("magellan.arrival")})})}})(jQuery,this);
