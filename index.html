@@ -14,10 +14,10 @@
 
   <title>ngInfiniteScroll - Infinite Scrolling for AngularJS</title>
 
-  <link href="stylesheets/application.css?1355082479" media="screen" rel="stylesheet" type="text/css" />
-  <script src="javascripts/application.js?1355083219" type="text/javascript"></script>
+  <link href="stylesheets/application.css?1355101756" media="screen" rel="stylesheet" type="text/css" />
+  <script src="javascripts/application.js?1355101749" type="text/javascript"></script>
 </head>
-<body>
+<body ng-app='infiniteScrollSite'>
 
   <div class='contain-to-grid'>
     <nav class='top-bar'>
@@ -54,31 +54,45 @@
   </div>
 </div>
 
-<div id='download-modal' class='reveal-modal'>
+<div id='download-modal' class='reveal-modal medium' ng-controller='DownloadsController'>
   <a class="close-reveal-modal">&#215;</a>
-  <h1>Download <small>version 1.0.0</small></h1>
+  <h1>Download <small> {{selectedVersion}}</small></h1>
   <div class='row'>
 
     <div class='six columns'>
       <h3 class='subheader'>Production</h3>
-      <p class='subtext'>Includes unminified and minified JavaScript</p>
-      <a href='#' class='button radius'>.tar.gz</a>
-      <a href='#' class='button radius secondary'>.zip</a>
+      <div ng-hide='selectedVersion == "master"'>
+        <p class='subtext'>Download the finished JavaScript, minified or unminified</p>
+        <a ng-href='/downloads/{{selectedVersion}}.min.js' ng-show='versionIsStable(selectedVersion)' class='button radius'>minified</a>
+        <a ng-show='versionIsUnstable(selectedVersion)' disabled='disabled' class='button radius has-tip tip-bottom'
+           title='Minified sources are not available for unstable releases'>minified</a>
+        <a ng-href='/downloads/{{selectedVersion}}.js' class='button radius secondary'>unminified</a>
+      </div>
+      <div ng-show='selectedVersion == "master"'>
+        <p class='subtext'>Production assets are not available for download for the development head</p>
+      </div>
     </div>
 
     <div class='six columns'>
       <h3 class='subheader'>Development</h3>
-      <p class='subtext'>Includes full source tree</p>
-      <a href='#' class='button radius'>.tar.gz</a>
-      <a href='#' class='button radius secondary'>.zip</a>
-      <p class='github'>or <a href='https://github.com/BinaryMuse/ngInfiniteScroll'>clone or fork on GitHub</a></p>
+      <p class='subtext'>Download the entire development source for {{selectedVersion}}</p>
+      <a ng-href='https://github.com/BinaryMuse/ngInfiniteScroll/archive/{{selectedVersion}}.tar.gz' class='button radius'>.tar.gz</a>
+      <a ng-href='https://github.com/BinaryMuse/ngInfiniteScroll/archive/{{selectedVersion}}.zip' class='button radius secondary'>.zip</a>
+      <p class='github'>or <a ng-href='https://github.com/BinaryMuse/ngInfiniteScroll/tree/{{selectedVersion}}'>view {{selectedVersion}} at GitHub</a></p>
     </div>
 
   </div>
 
   <div class='row'>
-    <div class='twelve columns'><a href='https://github.com/BinaryMuse/ngInfiniteScroll/downloads'>Old versions are available as development downloads on GitHub</a></div>
+    <div class='twelve columns'>
+      <p>
+        Select a different version:
+        <select class='version-select' ng-model='selectedVersion'
+                ng-options='versionLabel(version) for version in versions'></select>
+      </p>
+    </div>
   </div>
+
 </div>
 
 <div class='row'>
