@@ -19,7 +19,6 @@
     "testacular": "~0.4.0",
     "chai": "~1.4.0",
     "coffee-script": "~1.4.0",
-    "phantomjs": "~0.2.3",
     "grunt-testacular": "~0.2.2"
   }
 }
