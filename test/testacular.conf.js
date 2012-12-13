@@ -10,11 +10,15 @@ files = [
   MOCHA,
   MOCHA_ADAPTER,
   'node_modules/chai/chai.js',
+  'test/lib/jquery.js',
+  'test/lib/angular.js',
+  'test/lib/angular-mocks.js',
+  'src/**/*.coffee',
   'test/**/test_*.coffee'
 ];
 
 // list of files to exclude
-exclude = [];
+exclude = ['*.swp', '*~'];
 
 // test results reporter to use
 // possible values: 'dots', 'progress', 'junit'
