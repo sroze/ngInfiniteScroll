@@ -14,11 +14,14 @@
   "readmeFilename": "README.md",
   "private": true,
   "devDependencies": {
-    "grunt-coffee": "0.0.6",
-    "grunt-coffeelint": "0.0.3",
-    "testacular": "~0.4.0",
     "chai": "~1.4.0",
-    "coffee-script": "~1.4.0",
-    "grunt-testacular": "~0.2.2"
+    "grunt-testacular": "~0.3.0",
+    "grunt-coffeelint": "0.0.5",
+    "grunt-coffee": "0.0.6",
+    "testacular": "~0.4.0",
+    "grunt-contrib-coffee": "~0.4.0",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-concat": "~0.1.2",
+    "grunt-contrib-uglify": "~0.1.1"
   }
 }
