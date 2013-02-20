@@ -1,7 +1,6 @@
 module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-coffeelint'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
-  grunt.loadNpmTasks 'grunt-contrib-jshint'
   grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
   grunt.loadNpmTasks 'grunt-testacular'
@@ -37,9 +36,6 @@ module.exports = (grunt) ->
       dist:
         src: 'compile/**/*.js'
         dest: 'build/lib.js'
-    jshint:
-      beforeconcat: ['compile/**/*.js']
-      afterconcat: 'build/lib.js'
     uglify:
       options:
         banner: '<%= meta.banner %>'
@@ -56,5 +52,5 @@ module.exports = (grunt) ->
         options:
           keepalive: true
 
-  grunt.registerTask 'default', ['coffeelint', 'coffee', 'jshint:beforeconcat', 'concat', 'jshint:afterconcat', 'uglify']
+  grunt.registerTask 'default', ['coffeelint', 'coffee', 'concat', 'uglify']
   grunt.registerTask 'test', ['testacularServer']
