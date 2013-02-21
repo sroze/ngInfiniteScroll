@@ -1,11 +1,8 @@
 mod = angular.module('infinite-scroll', [])
-mod.factory 'docWindow', ['$window', ($window) ->
-  angular.element($window)
-]
 
-mod.directive 'infiniteScroll', ['$rootScope', 'docWindow', '$document', ($rootScope, docWindow, $document) ->
+mod.directive 'infiniteScroll', ['$rootScope', '$window', '$document', ($rootScope, $window, $document) ->
   link: (scope, elem, attrs) ->
-    $window = docWindow
+    $window = angular.element($window)
 
     # infinite-scroll-distance specifies how close to the bottom of the page
     # the window is allowed to be before we trigger a new scroll. The value
