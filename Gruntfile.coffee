@@ -35,13 +35,13 @@ module.exports = (grunt) ->
         banner: '<%= meta.banner %>'
       dist:
         src: 'compile/**/*.js'
-        dest: 'build/lib.js'
+        dest: 'build/infinite-scroll.js'
     uglify:
       options:
         banner: '<%= meta.banner %>'
       dist:
-        src: ['build/lib.js']
-        dest: 'build/lib.min.js'
+        src: ['build/infinite-scroll.js']
+        dest: 'build/infinite-scroll.min.js'
     testacular:
       unit:
         options:
