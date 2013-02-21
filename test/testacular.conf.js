@@ -10,6 +10,8 @@ files = [
   MOCHA,
   MOCHA_ADAPTER,
   'node_modules/chai/chai.js',
+  'test/lib/sinon-chai.js',
+  'test/lib/sinon.js',
   'test/lib/jquery.js',
   'test/lib/angular.js',
   'test/lib/angular-mocks.js',

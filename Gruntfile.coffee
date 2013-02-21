@@ -42,15 +42,15 @@ module.exports = (grunt) ->
       dist:
         src: ['build/lib.js']
         dest: 'build/lib.min.js'
-    testacularServer:
-      local:
-        configFile: 'test/testacular.conf.js'
-        autoWatch: true
-        browsers: ['Chrome', 'PhantomJS']
-        reporters: ['dots']
-        runnerPort: 9101
+    testacular:
+      unit:
         options:
+          configFile: 'test/testacular.conf.js'
+          autoWatch: true
+          browsers: ['Chrome', 'PhantomJS']
+          reporters: ['dots']
+          runnerPort: 9101
           keepalive: true
 
   grunt.registerTask 'default', ['coffeelint', 'coffee', 'concat', 'uglify']
-  grunt.registerTask 'test', ['testacularServer']
+  grunt.registerTask 'test', ['testacular']
