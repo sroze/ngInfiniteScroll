@@ -2,7 +2,8 @@ mod = angular.module('infinite-scroll', [])
 mod.factory 'docWindow', ['$window', ($window) ->
   angular.element($window)
 ]
-dir = mod.directive 'infiniteScroll', ($rootScope, docWindow, $document) ->
+
+mod.directive 'infiniteScroll', ['$rootScope', 'docWindow', '$document', ($rootScope, docWindow, $document) ->
   link: (scope, elem, attrs) ->
     $window = docWindow
 
@@ -56,4 +57,4 @@ dir = mod.directive 'infiniteScroll', ($rootScope, docWindow, $document) ->
 
     if scope.$eval(attrs.infiniteScrollImmediateCheck)
       handler()
-dir.$inject = ['$rootScope', 'docWindow', '$document']
+]

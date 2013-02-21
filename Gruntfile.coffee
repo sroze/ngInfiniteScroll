@@ -12,6 +12,8 @@ module.exports = (grunt) ->
     coffeelint:
       src: 'src/**/*.coffee'
       options:
+        max_line_length:
+          level: 'ignore'
         line_endings:
           value: 'unix'
           level: 'error'
