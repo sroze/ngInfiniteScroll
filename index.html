@@ -15,7 +15,7 @@
   <title>ngInfiniteScroll - Infinite Scrolling for AngularJS</title>
 
   <link href="stylesheets/application.css?1361426313" media="screen" rel="stylesheet" type="text/css" />
-  <script src="javascripts/application.js?1361435316" type="text/javascript"></script>
+  <script src="javascripts/application.js?1361435627" type="text/javascript"></script>
 </head>
 <body ng-app='infiniteScrollSite'>
 
@@ -189,8 +189,8 @@
             <h3 class='subheader'>Production</h3>
             <div ng-hide='selectedVersion == "master"'>
               <p class='subtext'>Download the finished JavaScript, minified or unminified</p>
-              <a ng-href='downloads/{{selectedVersion}}/ng-infinite-scroll.min.js' class='button radius'>minified</a>
-              <a ng-href='downloads/{{selectedVersion}}/ng-infinite-scroll.js' class='button radius secondary'>unminified</a>
+              <a ng-href='https://raw.github.com/BinaryMuse/ngInfiniteScroll/{{selectedVersion}}/build/ng-infinite-scroll.min.js' class='button radius'>minified</a>
+              <a ng-href='https://raw.github.com/BinaryMuse/ngInfiniteScroll/{{selectedVersion}}/build/ng-infinite-scroll.js' class='button radius secondary'>unminified</a>
             </div>
             <div ng-show='selectedVersion == "master"'>
               <p class='subtext'>Production assets are not available for download for the development head</p>
