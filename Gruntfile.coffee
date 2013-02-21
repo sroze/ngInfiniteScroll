@@ -1,5 +1,6 @@
 module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-coffeelint'
+  grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
@@ -19,6 +20,10 @@ module.exports = (grunt) ->
           level: 'error'
         no_stand_alone_at:
           level: 'error'
+    clean:
+      options:
+        force: true
+      build: ["compile/**", "build/**"]
     coffee:
       compile:
         files: [
@@ -37,13 +42,13 @@ module.exports = (grunt) ->
         banner: '<%= meta.banner %>'
       dist:
         src: 'compile/**/*.js'
-        dest: 'build/infinite-scroll.js'
+        dest: 'build/ng-infinite-scroll.js'
     uglify:
       options:
         banner: '<%= meta.banner %>'
       dist:
-        src: ['build/infinite-scroll.js']
-        dest: 'build/infinite-scroll.min.js'
+        src: ['build/ng-infinite-scroll.js']
+        dest: 'build/ng-infinite-scroll.min.js'
     testacular:
       unit:
         options:
@@ -54,5 +59,5 @@ module.exports = (grunt) ->
           runnerPort: 9101
           keepalive: true
 
-  grunt.registerTask 'default', ['coffeelint', 'coffee', 'concat', 'uglify']
+  grunt.registerTask 'default', ['coffeelint', 'clean', 'coffee', 'concat', 'uglify']
   grunt.registerTask 'test', ['testacular']
