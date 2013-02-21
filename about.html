@@ -15,7 +15,7 @@
   <title>ngInfiniteScroll - About - Infinite Scrolling for AngularJS</title>
 
   <link href="stylesheets/application.css?1361426313" media="screen" rel="stylesheet" type="text/css" />
-  <script src="javascripts/application.js?1361433063" type="text/javascript"></script>
+  <script src="javascripts/application.js?1361434822" type="text/javascript"></script>
 </head>
 <body ng-app='infiniteScrollSite'>
 
@@ -37,12 +37,6 @@
         </ul>
       </section>
     </nav>
-  </div>
-
-  <div class='row'>
-    <div class='twelve columns'>
-      <div class='alert-box' style='margin-top: 10px;'><strong>Notice:</strong> This site is for a project that is still under development, and is incomplete.</div>
-    </div>
   </div>
 
   <div class='row'>
@@ -111,17 +105,15 @@
       </li>
 
       <li class='active' id='downloadTab'>
-        <h1>Download <small> {{selectedVersion}}</small></h1>
+        <h1>Download <small> {{selectedVersion}}</small> <small ng-show='versionIsUnstable(selectedVersion)'>(unstable)</small></h1>
 
         <div class='row'>
           <div class='six columns'>
             <h3 class='subheader'>Production</h3>
             <div ng-hide='selectedVersion == "master"'>
               <p class='subtext'>Download the finished JavaScript, minified or unminified</p>
-              <a ng-href='/downloads/{{selectedVersion}}.min.js' ng-show='versionIsStable(selectedVersion)' class='button radius'>minified</a>
-              <a ng-show='versionIsUnstable(selectedVersion)' disabled='disabled' class='button radius has-tip tip-bottom'
-                title='Minified sources are not available for unstable releases'>minified</a>
-              <a ng-href='/downloads/{{selectedVersion}}.js' class='button radius secondary'>unminified</a>
+              <a ng-href='/downloads/{{selectedVersion}}/ng-infinite-scroll.min.js' class='button radius'>minified</a>
+              <a ng-href='/downloads/{{selectedVersion}}/ng-infinite-scroll.js' class='button radius secondary'>unminified</a>
             </div>
             <div ng-show='selectedVersion == "master"'>
               <p class='subtext'>Production assets are not available for download for the development head</p>
