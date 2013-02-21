@@ -1,7 +1,10 @@
-angular.module('infinite-scroll', []).directive 'infiniteScroll', [->
+mod = angular.module('infinite-scroll', [])
+mod.factory 'docWindow', ['$window', ($window) ->
+  angular.element($window)
+]
+dir = mod.directive 'infiniteScroll', ($rootScope, docWindow, $document) ->
   link: (scope, elem, attrs) ->
-    $window   = angular.element(window)
-    $document = angular.element(document)
+    $window = docWindow
 
     # infinite-scroll-distance specifies how close to the bottom of the page
     # the window is allowed to be before we trigger a new scroll. The value
@@ -37,13 +40,20 @@ angular.module('infinite-scroll', []).directive 'infiniteScroll', [->
       windowBottom = $window.height() + $window.scrollTop()
       documentBottom = $document.height()
       remaining = documentBottom - windowBottom
-      shouldScroll = remaining < $(window).height() * scrollDistance
+      shouldScroll = remaining <= $window.height() * scrollDistance
 
       if shouldScroll && scrollEnabled
-        scope.$eval attrs.infiniteScroll
+        if $rootScope.$$phase
+          scope.$eval attrs.infiniteScroll
+        else
+          scope.$apply attrs.infiniteScroll
       else if shouldScroll
         checkWhenEnabled = true
 
-    $window.bind 'scroll', handler
-    handler()
-]
+    $window.on 'scroll', handler
+    scope.$on '$destroy', ->
+      $window.off 'scroll', handler
+
+    if scope.$eval(attrs.infiniteScrollImmediateCheck)
+      handler()
+dir.$inject = ['$rootScope', 'docWindow', '$document']

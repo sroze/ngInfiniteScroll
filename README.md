@@ -9,4 +9,7 @@ ngInfiniteScroll is still under development. Watch this space!
 Testing
 -------
 
-ngInfiniteScroll uses Testacular for its unit tests, and will attach to an instance of Chrome and PhantomJS. You can use Grunt to run the tests continually with `grunt test`; alternatively, you can run the tests one-off with `npm test`. Note that you will need [PhantomJS](http://phantomjs.org/) on your path.
+ngInfiniteScroll uses Testacular for its unit tests. Note that you will need [PhantomJS](http://phantomjs.org/) on your path, and the `grunt-cli` npm package installed globally if you wish to use grunt.
+
+ * `grunt test` - continually watch for changes and run tests in PhantomJS and Chrome
+ * `npm test` - run tests once in PhantomJS only
