@@ -12,7 +12,6 @@
   "author": "Brandon Tilley <brandon@brandontilley.com>",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "private": true,
   "devDependencies": {
     "chai": "~1.4.0",
     "grunt-testacular": "~0.3.0",
