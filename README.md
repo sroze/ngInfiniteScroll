@@ -9,6 +9,17 @@ Demo
 
 Check out a running demo [at the ngInfiniteScroll web site](http://binarymuse.github.com/ngInfiniteScroll/demo.html).
 
+Version Numbers
+---------------
+
+ngInfinite Scroll follows [semantic versioning](http://semver.org/) and uses the following versioning scheme:
+
+ * Versions starting with 0 (e.g. 0.1.0, 0.2.0, etc.) are pre-release builds
+ * Versions with an even minor version (1.0.0, 1.4.0, 2.2.0, etc.) are stable releases
+ * Versions with an odd minor version (1.1.0, 1.3.0, 2.1.0, etc.) are development releases
+
+The [download page](http://binarymuse.github.com/ngInfiniteScroll/#download) allows you to pick among various versions and specify which releases are stable (not including pre-release builds).
+
 Getting Started
 ---------------
 
