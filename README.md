@@ -2,9 +2,35 @@
 
 [![Build Status](https://travis-ci.org/BinaryMuse/ngInfiniteScroll.png?branch=master)](https://travis-ci.org/BinaryMuse/ngInfiniteScroll)
 
-ngInfiniteScroll is still under development. Watch this space!
+ngInfiniteScroll is a directive for [AngularJS](http://angularjs.org/) to evaluate an expression when the bottom of the directive's element approaches the bottom of the browser window, which can be used to implement infinite scrolling.
 
----
+Demo
+----
+
+Check out a running demo [at the ngInfiniteScroll web site](http://binarymuse.github.com/ngInfiniteScroll/demo.html).
+
+Getting Started
+---------------
+
+ * Download ngInfiniteScroll from [the download page on the ngInfiniteScroll web site](http://binarymuse.github.com/ngInfiniteScroll/#download)
+ * Include the script tag on your page
+
+        <script type='text/javascript' src='path/to/ng-infinite-scroll.min.js'></script>
+
+ * Ensure that your application module specifies `infinite-scroll` as a dependency:
+
+        angular.module('myApplication', ['infinite-scroll']);
+
+ * Use the directive by specifying an `infinite-scroll` attribute on an element.
+
+        <div infinite-scroll="myPagingFunction()" infinite-scroll-distance="3"></div>
+
+Note that neither the module nor the directive uses the `ng` prefix, as that prefix is reserved for the core Angular module.
+
+Detailed Documentation
+----------------------
+
+ngInfiniteScroll accepts several attributes to customize the behavior of the directive; detailed instructions can be found [on the ngInfiniteScroll web site](http://binarymuse.github.com/ngInfiniteScroll/documentation.html).
 
 Testing
 -------
