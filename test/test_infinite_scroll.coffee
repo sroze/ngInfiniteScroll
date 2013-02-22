@@ -1,17 +1,18 @@
 should = chai.should()
 
 describe 'Infinite Scroll', ->
-  [$rootScope, $compile, docWindow, $document, fakeWindow, origJq] = [undefined]
+  [$rootScope, $compile, docWindow, $document, $timeout, fakeWindow, origJq] = [undefined]
 
   beforeEach ->
     module('infinite-scroll')
 
   beforeEach ->
-    inject (_$rootScope_, _$compile_, _$window_, _$document_) ->
+    inject (_$rootScope_, _$compile_, _$window_, _$document_, _$timeout_) ->
       $rootScope = _$rootScope_
       $compile = _$compile_
       $window = _$window_
       $document = _$document_
+      $timeout = _$timeout_
       fakeWindow = angular.element($window)
 
       origJq = angular.element
@@ -26,6 +27,25 @@ describe 'Infinite Scroll', ->
 
   it 'triggers on scrolling', ->
     scroller = """
+    <div infinite-scroll='scroll()' style='height: 1000px'
+      infinite-scroll-immediate-check='false'></div>
+    """
+    el = angular.element(scroller)
+    $document.append(el)
+
+    sinon.stub(fakeWindow, 'height').returns(1000)
+    scope = $rootScope.$new(true)
+    scope.scroll = sinon.spy()
+    $compile(el)(scope)
+    $timeout.flush() # 'immediate' call is with $timeout ..., 0
+    fakeWindow.scroll()
+    scope.scroll.should.have.been.calledOnce
+
+    el.remove()
+    scope.$destroy()
+
+  it 'triggers immediately by default', ->
+    scroller = """
     <div infinite-scroll='scroll()' style='height: 1000px'></div>
     """
     el = angular.element(scroller)
@@ -35,16 +55,16 @@ describe 'Infinite Scroll', ->
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
     $compile(el)(scope)
-    fakeWindow.scroll()
-    scope.scroll.should.have.been.called
+    $timeout.flush() # 'immediate' call is with $timeout ..., 0
+    scope.scroll.should.have.been.calledOnce
 
     el.remove()
     scope.$destroy()
 
-  it 'triggers right away when infinite-scroll-immediate-check is on', ->
+  it 'does not trigger immediately when infinite-scroll-immediate-check is false', ->
     scroller = """
     <div infinite-scroll='scroll()' infinite-scroll-distance='1'
-      infinite-scroll-immediate-check='true' style='height: 500px;'></div>
+      infinite-scroll-immediate-check='false' style='height: 500px;'></div>
     """
     el = angular.element(scroller)
     $document.append(el)
@@ -53,7 +73,10 @@ describe 'Infinite Scroll', ->
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
     $compile(el)(scope)
-    scope.scroll.should.have.been.called
+    $timeout.flush() # 'immediate' call is with $timeout ..., 0
+    scope.scroll.should.not.have.been.called
+    fakeWindow.scroll()
+    scope.scroll.should.have.been.calledOnce
 
     el.remove()
     scope.$destroy()
@@ -99,14 +122,15 @@ describe 'Infinite Scroll', ->
 
     scope.busy = false
     scope.$digest()
-    scope.scroll.should.have.been.called
+    scope.scroll.should.have.been.calledOnce
 
     el.remove()
     scope.$destroy()
 
   it 'only triggers when the page has been sufficiently scrolled down', ->
     scroller = """
-    <div infinite-scroll='scroll()' infinite-scroll-distance='1' style='height: 10000px'></div>
+    <div infinite-scroll='scroll()'
+      infinite-scroll-distance='1' style='height: 10000px'></div>
     """
     el = angular.element(scroller)
     $document.append(el)
@@ -123,7 +147,7 @@ describe 'Infinite Scroll', ->
 
     fakeWindow.scrollTop.returns(8000)
     fakeWindow.scroll()
-    scope.scroll.should.have.been.called
+    scope.scroll.should.have.been.calledOnce
 
     el.remove()
     scope.$destroy()
@@ -147,7 +171,7 @@ describe 'Infinite Scroll', ->
 
     fakeWindow.scrollTop.returns(4000)
     fakeWindow.scroll()
-    scope.scroll.should.have.been.called
+    scope.scroll.should.have.been.calledOnce
 
     el.remove()
     scope.$destroy()

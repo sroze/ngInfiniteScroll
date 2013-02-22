@@ -1,6 +1,6 @@
 mod = angular.module('infinite-scroll', [])
 
-mod.directive 'infiniteScroll', ['$rootScope', '$window', ($rootScope, $window) ->
+mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', ($rootScope, $window, $timeout) ->
   link: (scope, elem, attrs) ->
     $window = angular.element($window)
 
@@ -52,6 +52,11 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', ($rootScope, $window) 
     scope.$on '$destroy', ->
       $window.off 'scroll', handler
 
-    if scope.$eval(attrs.infiniteScrollImmediateCheck)
-      handler()
+    $timeout (->
+      if attrs.infiniteScrollImmediateCheck
+        if scope.$eval(attrs.infiniteScrollImmediateCheck)
+          handler()
+      else
+        handler()
+    ), 0
 ]
