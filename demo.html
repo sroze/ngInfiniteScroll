@@ -14,15 +14,15 @@
 
   <title>ngInfiniteScroll - Demo - Infinite Scrolling for AngularJS</title>
 
-  <link href="stylesheets/application.css?1361426313" media="screen" rel="stylesheet" type="text/css" />
-  <script src="javascripts/application.js?1361485466" type="text/javascript"></script>
+  <link href="stylesheets/application.css?1361516856" media="screen" rel="stylesheet" type="text/css" />
+  <script src="javascripts/application.js?1361516846" type="text/javascript"></script>
 </head>
 <body ng-app='infiniteScrollSite'>
 
   <div class='contain-to-grid'>
     <nav class='top-bar'>
       <ul>
-        <li class='name'><h1><a href='index.html'><img src="images/tiny-inverted.png?1355082470" /> ngInfiniteScroll</a></h1></li>
+        <li class='name'><h1><a href='index.html'><img src="images/tiny-inverted.png?1361513595" /> ngInfiniteScroll</a></h1></li>
         <li class='toggle-topbar'><a href='#'></a></li>
       </ul>
       <section>
@@ -47,23 +47,23 @@
     </p>
 
     <pre ng-non-bindable class='panel demo radius'>
-  &lt;div ng-controller='DemoController'>
-    &lt;div infinite-scroll='loadMore()' infinite-scroll-disabled='!enabled' infinite-scroll-distance='2'>
-      &lt;img ng-repeat='image in images' ng-src='http://placehold.it/225x250&text={{image}}'>
-    &lt;/div>
-  &lt;/div></pre>
+&lt;div ng-controller='DemoController'>
+  &lt;div infinite-scroll='loadMore()' infinite-scroll-disabled='!enabled' infinite-scroll-distance='2'>
+    &lt;img ng-repeat='image in images' ng-src='http://placehold.it/225x250&text={{image}}'>
+  &lt;/div>
+&lt;/div></pre>
 
     <pre ng-non-bindable class='panel demo radius'>
-  app.controller('DemoController', function($scope) {
-    $scope.images = [1, 2, 3, 4, 5, 6, 7, 8];
+app.controller('DemoController', function($scope) {
+  $scope.images = [1, 2, 3, 4, 5, 6, 7, 8];
 
-    $scope.loadMore = function() {
-      var last = $scope.images[$scope.images.length - 1];
-      for(var i = 1; i <= 8; i++) {
-        $scope.images.push(last + i);
-      }
-    };
-  });</pre>
+  $scope.loadMore = function() {
+    var last = $scope.images[$scope.images.length - 1];
+    for(var i = 1; i <= 8; i++) {
+      $scope.images.push(last + i);
+    }
+  };
+});</pre>
 
     <p>
       For more details and instructions, please see <a href='documentation.html'>the documentation</a>.
@@ -82,7 +82,7 @@
     <span ng-show='enabled'>Enabled</span>
     <span ng-hide='enabled'>Disabled</span>
 
-    <ul infinite-scroll='loadMore()' infinite-scroll-disabled='!enabled' infinite-scroll-distance='2' class='demo-container block-grid four-up'>
+    <ul infinite-scroll='loadMore()' infinite-scroll-disabled='!enabled' infinite-scroll-distance='1' class='demo-container block-grid four-up'>
       <li ng-repeat='item in items' class='demo-block'>
         <div>{{item}}</div>
       </li>
