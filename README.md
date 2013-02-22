@@ -25,7 +25,7 @@ Getting Started
 
         <div infinite-scroll="myPagingFunction()" infinite-scroll-distance="3"></div>
 
-Note that neither the module nor the directive uses the `ng` prefix, as that prefix is reserved for the core Angular module.
+Note that neither the module nor the directive use the `ng` prefix, as that prefix is reserved for the core Angular module.
 
 Detailed Documentation
 ----------------------
