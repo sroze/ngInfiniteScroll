@@ -1,20 +1,14 @@
-/* ngInfiniteScroll - v0.1.0 - 2013-02-21 */
+/* ng-infinite-scroll - v0.1.0 - 2013-02-21 */
 var mod;
 
 mod = angular.module('infinite-scroll', []);
 
-mod.factory('docWindow', [
-  '$window', function($window) {
-    return angular.element($window);
-  }
-]);
-
 mod.directive('infiniteScroll', [
-  '$rootScope', 'docWindow', '$document', function($rootScope, docWindow, $document) {
+  '$rootScope', '$window', function($rootScope, $window) {
     return {
       link: function(scope, elem, attrs) {
-        var $window, checkWhenEnabled, handler, scrollDistance, scrollEnabled;
-        $window = docWindow;
+        var checkWhenEnabled, handler, scrollDistance, scrollEnabled;
+        $window = angular.element($window);
         scrollDistance = 0;
         if (attrs.infiniteScrollDistance != null) {
           scope.$watch(attrs.infiniteScrollDistance, function(value) {
@@ -33,10 +27,10 @@ mod.directive('infiniteScroll', [
           });
         }
         handler = function() {
-          var documentBottom, remaining, shouldScroll, windowBottom;
+          var elementBottom, remaining, shouldScroll, windowBottom;
           windowBottom = $window.height() + $window.scrollTop();
-          documentBottom = $document.height();
-          remaining = documentBottom - windowBottom;
+          elementBottom = elem.offset().top + elem.height();
+          remaining = elementBottom - windowBottom;
           shouldScroll = remaining <= $window.height() * scrollDistance;
           if (shouldScroll && scrollEnabled) {
             if ($rootScope.$$phase) {

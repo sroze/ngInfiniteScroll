@@ -26,13 +26,12 @@ describe 'Infinite Scroll', ->
 
   it 'triggers on scrolling', ->
     scroller = """
-    <div infinite-scroll='scroll()'></div>
+    <div infinite-scroll='scroll()' style='height: 1000px'></div>
     """
     el = angular.element(scroller)
     $document.append(el)
 
     sinon.stub(fakeWindow, 'height').returns(1000)
-    sinon.stub($document, 'height').returns(1000)
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
     $compile(el)(scope)
@@ -45,13 +44,12 @@ describe 'Infinite Scroll', ->
   it 'triggers right away when infinite-scroll-immediate-check is on', ->
     scroller = """
     <div infinite-scroll='scroll()' infinite-scroll-distance='1'
-      infinite-scroll-immediate-check='true'></div>
+      infinite-scroll-immediate-check='true' style='height: 500px;'></div>
     """
     el = angular.element(scroller)
     $document.append(el)
 
     sinon.stub(fakeWindow, 'height').returns(1000)
-    sinon.stub($document, 'height').returns(500)
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
     $compile(el)(scope)
@@ -63,13 +61,12 @@ describe 'Infinite Scroll', ->
   it 'does not trigger when disabled', ->
     scroller = """
     <div infinite-scroll='scroll()' infinite-scroll-distance='1'
-      infinite-scroll-disabled='busy'></div>
+      infinite-scroll-disabled='busy' style='height: 500px;'></div>
     """
     el = angular.element(scroller)
     $document.append(el)
 
     sinon.stub(fakeWindow, 'height').returns(1000)
-    sinon.stub($document, 'height').returns(500)
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
     scope.busy = true
@@ -85,13 +82,12 @@ describe 'Infinite Scroll', ->
   it 're-triggers after being re-enabled', ->
     scroller = """
     <div infinite-scroll='scroll()' infinite-scroll-distance='1'
-      infinite-scroll-disabled='busy'></div>
+      infinite-scroll-disabled='busy' style='height: 500px;'></div>
     """
     el = angular.element(scroller)
     $document.append(el)
 
     sinon.stub(fakeWindow, 'height').returns(1000)
-    sinon.stub($document, 'height').returns(500)
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
     scope.busy = true
@@ -110,13 +106,12 @@ describe 'Infinite Scroll', ->
 
   it 'only triggers when the page has been sufficiently scrolled down', ->
     scroller = """
-    <div infinite-scroll='scroll()' infinite-scroll-distance='1'></div>
+    <div infinite-scroll='scroll()' infinite-scroll-distance='1' style='height: 10000px'></div>
     """
     el = angular.element(scroller)
     $document.append(el)
 
     sinon.stub(fakeWindow, 'height').returns(1000)
-    sinon.stub($document, 'height').returns(10000)
     sinon.stub(fakeWindow, 'scrollTop').returns(7999)
 
     scope = $rootScope.$new(true)
@@ -135,13 +130,12 @@ describe 'Infinite Scroll', ->
 
   it 'respects the infinite-scroll-distance attribute', ->
     scroller = """
-    <div infinite-scroll='scroll()' infinite-scroll-distance='5'></div>
+    <div infinite-scroll='scroll()' infinite-scroll-distance='5' style='height: 10000px;'></div>
     """
     el = angular.element(scroller)
     $document.append(el)
 
     sinon.stub(fakeWindow, 'height').returns(1000)
-    sinon.stub($document, 'height').returns(10000)
     sinon.stub(fakeWindow, 'scrollTop').returns(3999)
 
     scope = $rootScope.$new(true)

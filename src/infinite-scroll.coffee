@@ -1,6 +1,6 @@
 mod = angular.module('infinite-scroll', [])
 
-mod.directive 'infiniteScroll', ['$rootScope', '$window', '$document', ($rootScope, $window, $document) ->
+mod.directive 'infiniteScroll', ['$rootScope', '$window', ($rootScope, $window) ->
   link: (scope, elem, attrs) ->
     $window = angular.element($window)
 
@@ -36,8 +36,8 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$document', ($rootSco
     # called in order to throttle the function call.
     handler = ->
       windowBottom = $window.height() + $window.scrollTop()
-      documentBottom = $document.height()
-      remaining = documentBottom - windowBottom
+      elementBottom = elem.offset().top + elem.height()
+      remaining = elementBottom - windowBottom
       shouldScroll = remaining <= $window.height() * scrollDistance
 
       if shouldScroll && scrollEnabled
