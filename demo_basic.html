@@ -14,8 +14,8 @@
 
   <title>ngInfiniteScroll - Demo - Basic - Infinite Scrolling for AngularJS</title>
 
-  <link href="stylesheets/application.css?1361649017" media="screen" rel="stylesheet" type="text/css" />
-  <script src="javascripts/application.js?1361649017" type="text/javascript"></script>
+  <link href="stylesheets/application.css?1361654657" media="screen" rel="stylesheet" type="text/css" />
+  <script src="javascripts/application.js?1361654656" type="text/javascript"></script>
 </head>
 <body ng-app='infiniteScrollSite'>
 
@@ -47,25 +47,27 @@
       This basic demo implements an infinite scroller that simply appends elements to an array. The elements are rendered to the page with <code>ngRepeat</code>.
     </p>
 
-    <pre ng-non-bindable class='panel demo radius'>
-&lt;div ng-app='myApp' ng-controller='DemoController'>
-  &lt;div infinite-scroll='loadMore()' infinite-scroll-distance='2'>
-    &lt;img ng-repeat='image in images' ng-src='http://placehold.it/225x250&text={{image}}'>
-  &lt;/div>
-&lt;/div></pre>
+<div ng-non-bindable>
+<div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">ng-app=</span><span class="s">&#39;myApp&#39;</span> <span class="na">ng-controller=</span><span class="s">&#39;DemoController&#39;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">infinite-scroll=</span><span class="s">&#39;loadMore()&#39;</span> <span class="na">infinite-scroll-distance=</span><span class="s">&#39;2&#39;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;img</span> <span class="na">ng-repeat=</span><span class="s">&#39;image in images&#39;</span> <span class="na">ng-src=</span><span class="s">&#39;http://placehold.it/225x250&amp;text={{image}}&#39;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div></div>
 
-    <pre ng-non-bindable class='panel demo radius'>
-var myApp = angular.module('myApp', ['infinite-scroll']);
-myApp.controller('DemoController', function($scope) {
-  $scope.images = [1, 2, 3, 4, 5, 6, 7, 8];
+<div ng-non-bindable>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">myApp</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;infinite-scroll&#39;</span><span class="p">]);</span>
+<span class="nx">myApp</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">images</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">];</span>
 
-  $scope.loadMore = function() {
-    var last = $scope.images[$scope.images.length - 1];
-    for(var i = 1; i <= 8; i++) {
-      $scope.images.push(last + i);
-    }
-  };
-});</pre>
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">loadMore</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">last</span> <span class="o">=</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">images</span><span class="p">[</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">images</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">8</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">$scope</span><span class="p">.</span><span class="nx">images</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">last</span> <span class="o">+</span> <span class="nx">i</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+<span class="p">});</span>
+</pre></div></div>
 
     <p>
       For more details and instructions, please see <a href='documentation.html'>the documentation</a>.

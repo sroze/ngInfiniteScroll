@@ -14,8 +14,8 @@
 
   <title>ngInfiniteScroll - About - Infinite Scrolling for AngularJS</title>
 
-  <link href="stylesheets/application.css?1361649017" media="screen" rel="stylesheet" type="text/css" />
-  <script src="javascripts/application.js?1361649017" type="text/javascript"></script>
+  <link href="stylesheets/application.css?1361654657" media="screen" rel="stylesheet" type="text/css" />
+  <script src="javascripts/application.js?1361654656" type="text/javascript"></script>
 </head>
 <body ng-app='infiniteScrollSite'>
 
@@ -59,14 +59,22 @@
     <p>There are a couple of things to check if you're getting poor performance when using the infiniteScroll directive.</p>
     <p><strong>Ensure that you're not calling your infinite scroll expression too often.</strong> Depending on logic you're performing inside the expression or function that ngInfiniteScroll executes for you, you may need to temporarily disable scroll events from triggering the expression. You can do this using the <code>infinite-scroll-disabled</code> attribute. See the <a href='documentation.html'>documentation</a> for more information, and see the <a href='demo_async.html'>remote data demo</a> to see this technique in action.</p>
     <p><strong>Ensure you're not repeating the infinite scroll directive.</strong> Most often, you will use the <code>ngRepeat</code> directive inside the infinite scroll directive to achieve the correct results:</p>
-    <pre class='demo panel rounded' ng-non-bindable>&lt;div infinite-scroll='pagerFunction()'>
-  &lt;div ng-repeat='item in items'>{{item}}&lt;/div>
-&lt;/div></pre>
+
+<div ng-non-bindable>
+<div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">infinite-scroll=</span><span class="s">&#39;pagerFunction()&#39;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">ng-repeat=</span><span class="s">&#39;item in items&#39;</span><span class="nt">&gt;</span>{{item}}<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div></div>
+
     <p>A common mistake is to put the ng-repeat on the infinite scroll element itself:</p>
-    <pre ng-non-bindable class='demo panel rounded'>&lt;!-- this is wrong! -->
-&lt;div infinite-scroll='pagerFunction()' ng-repeat='item in items'>
+
+<div ng-non-bindable>
+<div class="highlight"><pre><span class="c">&lt;!-- this is wrong! --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">infinite-scroll=</span><span class="s">&#39;pagerFunction()&#39;</span> <span class="na">ng-repeat=</span><span class="s">&#39;item in items&#39;</span><span class="nt">&gt;</span>
   {{item}}
-&lt;/div></pre>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div></div>
+
     <p>This is incorrect and will generally result in your browser being very unhappy.</p>
   </div>
 </div>

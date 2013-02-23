@@ -14,8 +14,8 @@
 
   <title>ngInfiniteScroll - Demo - Loading Remote Data - Infinite Scrolling for AngularJS</title>
 
-  <link href="stylesheets/application.css?1361649017" media="screen" rel="stylesheet" type="text/css" />
-  <script src="javascripts/application.js?1361649017" type="text/javascript"></script>
+  <link href="stylesheets/application.css?1361654657" media="screen" rel="stylesheet" type="text/css" />
+  <script src="javascripts/application.js?1361654656" type="text/javascript"></script>
 </head>
 <body ng-app='infiniteScrollSite'>
 
@@ -50,45 +50,47 @@
       <strong>Important Note:</strong> This demo hits the Reddit API, and if you're familiar with Reddit, you know that I cannot guarantee that all the items and outbound links are safe for work. <strong>You have been warned!</strong>
     </p>
 
-    <pre ng-non-bindable class='panel demo radius'>
-&lt;div ng-app='myApp' ng-controller='DemoController'>
-  &lt;div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
-    &lt;div ng-repeat='item in items'>
-      &lt;span class='score'>{{item.score}}&lt;/span>
-      &lt;span class='title'>
-        &lt;a ng-href='{{item.url}}' target='_blank'>{{item.title}}&lt;/a>
-      &lt;/span>
-      &lt;small>by {{item.author}} -
-        &lt;a ng-href='http://reddit.com{{item.permalink}}' target='_blank'>{{item.num_comments}} comments&lt;/a>
-      &lt;/small>
-      &lt;div style='clear: both;'>&lt;/div>
-    &lt;/div>
-    &lt;div ng-show='busy'>Loading data...&lt;/div>
-  &lt;/div>
-&lt;/div></pre>
+<div ng-non-bindable>
+<div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">ng-app=</span><span class="s">&#39;myApp&#39;</span> <span class="na">ng-controller=</span><span class="s">&#39;DemoController&#39;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">infinite-scroll=</span><span class="s">&#39;nextPage()&#39;</span> <span class="na">infinite-scroll-disabled=</span><span class="s">&#39;busy&#39;</span> <span class="na">infinite-scroll-distance=</span><span class="s">&#39;1&#39;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">ng-repeat=</span><span class="s">&#39;item in items&#39;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&#39;score&#39;</span><span class="nt">&gt;</span>{{item.score}}<span class="nt">&lt;/span&gt;</span>
+      <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&#39;title&#39;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">ng-href=</span><span class="s">&#39;{{item.url}}&#39;</span> <span class="na">target=</span><span class="s">&#39;_blank&#39;</span><span class="nt">&gt;</span>{{item.title}}<span class="nt">&lt;/a&gt;</span>
+      <span class="nt">&lt;/span&gt;</span>
+      <span class="nt">&lt;small&gt;</span>by {{item.author}} -
+        <span class="nt">&lt;a</span> <span class="na">ng-href=</span><span class="s">&#39;http://reddit.com{{item.permalink}}&#39;</span> <span class="na">target=</span><span class="s">&#39;_blank&#39;</span><span class="nt">&gt;</span>{{item.num_comments}} comments<span class="nt">&lt;/a&gt;</span>
+      <span class="nt">&lt;/small&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">&#39;clear: both;&#39;</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">ng-show=</span><span class="s">&#39;busy&#39;</span><span class="nt">&gt;</span>Loading data...<span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div></div>
 
-    <pre ng-non-bindable class='panel demo radius'>
-var myApp = angular.module('myApp', ['infinite-scroll']);
-myApp.controller('DemoController', function($scope, $http) {
-  $scope.items = [];
-  $scope.busy = false;
-  $scope.after = '';
+<div ng-non-bindable>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">myApp</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;infinite-scroll&#39;</span><span class="p">]);</span>
+<span class="nx">myApp</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$http</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">items</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">busy</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
 
-  $scope.nextPage = function() {
-    if ($scope.busy) return;
-    $scope.busy = true;
+  <span class="nx">$scope</span><span class="p">.</span><span class="nx">nextPage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">busy</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">busy</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 
-    var url = "http://api.reddit.com/hot?after=" + $scope.after + "&jsonp=JSON_CALLBACK";
-    $http.jsonp(url).success(function(data) {
-      var items = data.data.children;
-      for (var i = 0; i < items.length; i++) {
-        $scope.items.push(items[i].data);
-      }
-      $scope.after = "t3_" + $scope.items[$scope.items.length - 1].id;
-      $scope.busy = false;
-    });
-  };
-});</pre>
+    <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;http://api.reddit.com/hot?after=&quot;</span> <span class="o">+</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">after</span> <span class="o">+</span> <span class="s2">&quot;&amp;jsonp=JSON_CALLBACK&quot;</span><span class="p">;</span>
+    <span class="nx">$http</span><span class="p">.</span><span class="nx">jsonp</span><span class="p">(</span><span class="nx">url</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">items</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">children</span><span class="p">;</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">items</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">items</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">data</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="nx">$scope</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">&quot;t3_&quot;</span> <span class="o">+</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">items</span><span class="p">[</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">].</span><span class="nx">id</span><span class="p">;</span>
+      <span class="nx">$scope</span><span class="p">.</span><span class="nx">busy</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">});</span>
+  <span class="p">};</span>
+<span class="p">});</span>
+</pre></div></div>
 
     <p>
       For more details and instructions, please see <a href='documentation.html'>the documentation</a>.
