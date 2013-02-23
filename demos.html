@@ -12,7 +12,7 @@
   <!-- Always force latest IE rendering engine or request Chrome Frame -->
   <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 
-  <title>ngInfiniteScroll - Documentation - Infinite Scrolling for AngularJS</title>
+  <title>ngInfiniteScroll - Demos - Infinite Scrolling for AngularJS</title>
 
   <link rel="stylesheet" type="text/css" href="stylesheets/application.css?1361606523" media="screen" />
   <script type="text/javascript" src="javascripts/application.js?1361606513"></script>
@@ -41,26 +41,11 @@
 
   <div class='row'>
   <div class='twelve columns'>
-    <h3>Documentation</h3>
-    <h4><code>infiniteScroll</code> (directive in module <code>infinite-scroll</code>)</h4>
+    <h3>Demos</h3>
 
-    <h5>Description</h5>
-    <p>infiniteScroll allows you to specify behavior when the bottom of an element nears the bottom of the browser window.</p>
-
-    <h5>Usage</h5>
-    <pre class='panel demo radius'>
-&lt;ANY infinite-scroll='{expression}'
-     [infinite-scroll-distance='{number}']
-     [infinite-scroll-disabled='{boolean}']
-     [infinite-scroll-immediate-check='{boolean}']>
-&lt;/ANY></pre>
-
-    <h5>Parameters</h5>
-    <ul class='parameters'>
-      <li><code>infinite-scroll - {expression}</code> - Expression to evaluate (usually a function call) when the bottom of the element approaches the bottom of the browser window.</li>
-      <li><code>infinite-scroll-distance <em>(optional)</em> - {number}</code> - A number representing how close the bottom of the element must be to the bottom of the browser window before the expression specified by <code>infinite-scroll</code> is triggered. Measured in multiples of the window height; for example, if the browser window is 1000 pixels tall and <code>infinite-scroll-distance</code> is set to <code>2</code>, the infinite scroll expression will be evaluated when the bottom of the element is within 2000 pixels of the bottom of the browser window. Defaults to <code>0</code> (e.g. the expression will be evaluated when the bottom of the element crosses the bottom of the browser window).</li>
-      <li><code>infinite-scroll-disabled <em>(optional)</em> - {boolean}</code> - A boolean expression that, when <code>true</code>, indicates that the infininite scroll expression should not be evaluated even if all other conditions are met. This is usually used to throttle or pause the infinite scroll, for example when data is loading via Ajax. If a scroll event triggers the directive but this attribute prevents the expression evaluation, the event will be handled instead immediately after this attribute again evaluates to <code>false</code>.</li>
-      <li><code>infinite-scroll-immediate-check <em>(optional)</em> - {boolean}</code> - A boolean expression that indicates that the directive should check immediately to see if a scroll event <em>would</em> trigger an evaluation of the infinite scroll expression even if a scroll event does not occur. Useful if it's possible that the content inside the directive's element is not tall enough to fill up the entire browser window's height. Defaults to <code>true</code>.</li>
+    <ul>
+      <li><a href='demo_basic.html'>Basic</a> - This demo implements an infinite scroller that simply appends elements to an array when the page is scrolled.</li>
+      <li><a href='demo_async.html'>Loading remote data</a> - This demo uses the <code>$http</code> service to connect to the Reddit API and display items as the page scrolls.</li>
     </ul>
   </div>
 </div>
