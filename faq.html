@@ -12,7 +12,7 @@
   <!-- Always force latest IE rendering engine or request Chrome Frame -->
   <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 
-  <title>ngInfiniteScroll - Documentation - Infinite Scrolling for AngularJS</title>
+  <title>ngInfiniteScroll - About - Infinite Scrolling for AngularJS</title>
 
   <link rel="stylesheet" type="text/css" href="stylesheets/application.css?1361606523" media="screen" />
   <script type="text/javascript" src="javascripts/application.js?1361606513"></script>
@@ -41,27 +41,29 @@
 
   <div class='row'>
   <div class='twelve columns'>
-    <h3>Documentation</h3>
-    <h4><code>infiniteScroll</code> (directive in module <code>infinite-scroll</code>)</h4>
+    <h3>FAQ</h3>
 
-    <h5>Description</h5>
-    <p>infiniteScroll allows you to specify behavior when the bottom of an element nears the bottom of the browser window.</p>
+    <h4>Who made ngInfiniteScroll</h4>
+    <p>ngInfiniteScroll was developed internally by <a href='https://github.com/BinaryMuse'>Brandon Tilley</a> for use at <a href='http://learni.st/'>Learnist</a> It currently drives functionality on several pages, including the home page.</p>
 
-    <h5>Usage</h5>
-    <pre class='panel demo radius'>
-&lt;ANY infinite-scroll='{expression}'
-     [infinite-scroll-distance='{number}']
-     [infinite-scroll-disabled='{boolean}']
-     [infinite-scroll-immediate-check='{boolean}']>
-&lt;/ANY></pre>
+    <h4>How do I get help?</h4>
+    <p>If you'd like to report an issue, please do so at the <a href='https://github.com/BinaryMuse/ngInfiniteScroll/issues'>GitHub issue tracker</a>.</p>
 
-    <h5>Parameters</h5>
-    <ul class='parameters'>
-      <li><code>infinite-scroll - {expression}</code> - Expression to evaluate (usually a function call) when the bottom of the element approaches the bottom of the browser window.</li>
-      <li><code>infinite-scroll-distance <em>(optional)</em> - {number}</code> - A number representing how close the bottom of the element must be to the bottom of the browser window before the expression specified by <code>infinite-scroll</code> is triggered. Measured in multiples of the window height; for example, if the browser window is 1000 pixels tall and <code>infinite-scroll-distance</code> is set to <code>2</code>, the infinite scroll expression will be evaluated when the bottom of the element is within 2000 pixels of the bottom of the browser window. Defaults to <code>0</code> (e.g. the expression will be evaluated when the bottom of the element crosses the bottom of the browser window).</li>
-      <li><code>infinite-scroll-disabled <em>(optional)</em> - {boolean}</code> - A boolean expression that, when <code>true</code>, indicates that the infininite scroll expression should not be evaluated even if all other conditions are met. This is usually used to throttle or pause the infinite scroll, for example when data is loading via Ajax. If a scroll event triggers the directive but this attribute prevents the expression evaluation, the event will be handled instead immediately after this attribute again evaluates to <code>false</code>.</li>
-      <li><code>infinite-scroll-immediate-check <em>(optional)</em> - {boolean}</code> - A boolean expression that indicates that the directive should check immediately to see if a scroll event <em>would</em> trigger an evaluation of the infinite scroll expression even if a scroll event does not occur. Useful if it's possible that the content inside the directive's element is not tall enough to fill up the entire browser window's height. Defaults to <code>true</code>.</li>
-    </ul>
+    <h4>Why is ngInfiniteScroll triggering my expression on every single scroll event?</h4>
+    <p>The infiniteScroll directive uses the height of the element that it's attached to in order to determine how close to the bottom of the window it is. In some cases, the browser can report a height of <code>0</code>, which causes this behavior. Usually, this is due to a container element that only contains floated children. The simplest way to fix this problem is to add a "spacer" element to the bottom of the container (something like <code>&lt;div style='clear: both;'>&lt;/div></code>); see <a href='http://stackoverflow.com/questions/218760/how-do-you-keep-parents-of-floated-elements-from-collapsing'>this StackOverflow question and its associated answers</a> for more details.</p>
+
+    <h4>Why is my performance so poor when using ngInfiniteScroll?</h4>
+    <p>There are a couple of things to check if you're getting poor performance when using the infiniteScroll directive.</p>
+    <p><strong>Ensure that you're not calling your infinite scroll expression too often.</strong> Depending on logic you're performing inside the expression or function that ngInfiniteScroll executes for you, you may need to temporarily disable scroll events from triggering the expression. You can do this using the <code>infinite-scroll-disabled</code> attribute. See the <a href='documentation.html'>documentation</a> for more information, and see the <a href='demo_async.html'>remote data demo</a> to see this technique in action.</p>
+    <p><strong>Ensure you're not repeating the infinite scroll directive.</strong> Most often, you will use the <code>ngRepeat</code> directive inside the infinite scroll directive to achieve the correct results:</p>
+    <pre class='demo panel rounded' ng-non-bindable>&lt;div infinite-scroll='pagerFunction()'>
+  &lt;div ng-repeat='item in items'>{{item}}&lt;/div>
+&lt;/div></pre>
+    <p>A common mistake is to put the ng-repeat on the infinite scroll element itself:</p>
+    <pre ng-non-bindable class='demo panel rounded'>&lt;div infinite-scroll='pagerFunction()' ng-repeat='item in items'>
+  {{item}}
+&lt;/div></pre>
+    <p>This is incorrect and will generally result in your browser being very unhappy.</p>
   </div>
 </div>
 
