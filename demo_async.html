@@ -15,7 +15,7 @@
   <title>ngInfiniteScroll - Demo - Loading Remote Data - Infinite Scrolling for AngularJS</title>
 
   <link href="stylesheets/application.css?1361611233" media="screen" rel="stylesheet" type="text/css" />
-  <script src="javascripts/application.js?1361611233" type="text/javascript"></script>
+  <script src="javascripts/application.js?1361616066" type="text/javascript"></script>
 </head>
 <body ng-app='infiniteScrollSite'>
 
@@ -51,24 +51,25 @@
     </p>
 
     <pre ng-non-bindable class='panel demo radius'>
-&lt;div ng-controller='DemoController'>
+&lt;div ng-app='myApp' ng-controller='DemoController'>
   &lt;div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
     &lt;div ng-repeat='item in items'>
-      &lt;span class='score'>{{item.score}}&lt;span>
+      &lt;span class='score'>{{item.score}}&lt;/span>
       &lt;span class='title'>
-        &lt;a ng-href='{{item.url}}' target='_blank'>{{item.title}}&lt;a>
-      &lt;span>
+        &lt;a ng-href='{{item.url}}' target='_blank'>{{item.title}}&lt;/a>
+      &lt;/span>
       &lt;small>by {{item.author}} -
-        &lt;a ng-href='http://reddit.com{{item.permalink}}' target='_blank'>{{item.num_comments}} comments&lt;a>
-      &lt;small>
-      &lt;div style='clear: both;'>&lt;div>
-    &lt;div>
-    &lt;div ng-show='busy'>Loading data...&lt;div>
+        &lt;a ng-href='http://reddit.com{{item.permalink}}' target='_blank'>{{item.num_comments}} comments&lt;/a>
+      &lt;/small>
+      &lt;div style='clear: both;'>&lt;/div>
+    &lt;/div>
+    &lt;div ng-show='busy'>Loading data...&lt;/div>
   &lt;/div>
 &lt;/div></pre>
 
     <pre ng-non-bindable class='panel demo radius'>
-app.controller('DemoController', function($scope, $http) {
+var myApp = angular.module('myApp', ['infinite-scroll']);
+myApp.controller('DemoController', function($scope, $http) {
   $scope.items = [];
   $scope.busy = false;
   $scope.after = '';

@@ -15,7 +15,7 @@
   <title>ngInfiniteScroll - About - Infinite Scrolling for AngularJS</title>
 
   <link href="stylesheets/application.css?1361611233" media="screen" rel="stylesheet" type="text/css" />
-  <script src="javascripts/application.js?1361611233" type="text/javascript"></script>
+  <script src="javascripts/application.js?1361616066" type="text/javascript"></script>
 </head>
 <body ng-app='infiniteScrollSite'>
 
@@ -49,6 +49,9 @@
     <h4>How do I get help?</h4>
     <p>If you'd like to report an issue, please do so at the <a href='https://github.com/BinaryMuse/ngInfiniteScroll/issues'>GitHub issue tracker</a>. <a href='http://stackoverflow.com/'>StackOverflow</a> is an excellent place to ask for help if you get stuck; creating a working example of your problem using <a href='http://jsfiddle.net/'>JsFiddle</a> or <a href='http://plnkr.co/'>Plunker</a> is encouraged.</p>
 
+    <h4>Why do I receive the error message "Object [object Object] has no method 'on'"?</h4>
+    <p>Although AngularJS ships with a stripped-down version of jQuery (called jqLite), it does not contain the necessary functionality for ngInfiniteScroll to work. For this reason, you must include jQuery to use ngInfiniteScroll. Remember to put the script tag for jQuery <em>before</em> the script tag for AngularJS.</p>
+
     <h4>Why is ngInfiniteScroll triggering my expression on every single scroll event?</h4>
     <p>The infiniteScroll directive uses the height of the element that it's attached to in order to determine how close to the bottom of the window it is. In some cases, the browser can report a height of <code>0</code>, which causes this behavior. Usually, this is due to a container element that only contains floated children. The simplest way to fix this problem is to add a "spacer" element to the bottom of the container (something like <code>&lt;div style='clear: both;'>&lt;/div></code>); see <a href='http://stackoverflow.com/questions/218760/how-do-you-keep-parents-of-floated-elements-from-collapsing'>this StackOverflow question and its associated answers</a> for more details.</p>
 
@@ -60,7 +63,8 @@
   &lt;div ng-repeat='item in items'>{{item}}&lt;/div>
 &lt;/div></pre>
     <p>A common mistake is to put the ng-repeat on the infinite scroll element itself:</p>
-    <pre ng-non-bindable class='demo panel rounded'>&lt;div infinite-scroll='pagerFunction()' ng-repeat='item in items'>
+    <pre ng-non-bindable class='demo panel rounded'>&lt;!-- this is wrong! -->
+&lt;div infinite-scroll='pagerFunction()' ng-repeat='item in items'>
   {{item}}
 &lt;/div></pre>
     <p>This is incorrect and will generally result in your browser being very unhappy.</p>
