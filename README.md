@@ -4,10 +4,10 @@
 
 ngInfiniteScroll is a directive for [AngularJS](http://angularjs.org/) to evaluate an expression when the bottom of the directive's element approaches the bottom of the browser window, which can be used to implement infinite scrolling.
 
-Demo
-----
+Demos
+-----
 
-Check out a running demo [at the ngInfiniteScroll web site](http://binarymuse.github.com/ngInfiniteScroll/demo.html).
+Check out the running demos [at the ngInfiniteScroll web site](http://binarymuse.github.com/ngInfiniteScroll/demos.html).
 
 Version Numbers
 ---------------
