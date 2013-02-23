@@ -24,8 +24,10 @@ Getting Started
 ---------------
 
  * Download ngInfiniteScroll from [the download page on the ngInfiniteScroll web site](http://binarymuse.github.com/ngInfiniteScroll/#download)
- * Include the script tag on your page
+ * Include the script tag on your page after the AngularJS and jQuery script tags (ngInfiniteScroll requires jQuery to run)
 
+        <script type='text/javascript' src='path/to/jquery.min.js'></script>
+        <script type='text/javascript' src='path/to/angular.min.js'></script>
         <script type='text/javascript' src='path/to/ng-infinite-scroll.min.js'></script>
 
  * Ensure that your application module specifies `infinite-scroll` as a dependency:
