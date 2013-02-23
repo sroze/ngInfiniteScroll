@@ -14,8 +14,8 @@
 
   <title>ngInfiniteScroll - About - Infinite Scrolling for AngularJS</title>
 
-  <link rel="stylesheet" type="text/css" href="stylesheets/application.css?1361606523" media="screen" />
-  <script type="text/javascript" src="javascripts/application.js?1361606513"></script>
+  <link href="stylesheets/application.css?1361611233" media="screen" rel="stylesheet" type="text/css" />
+  <script src="javascripts/application.js?1361611233" type="text/javascript"></script>
 </head>
 <body ng-app='infiniteScrollSite'>
 
@@ -44,10 +44,10 @@
     <h3>FAQ</h3>
 
     <h4>Who made ngInfiniteScroll</h4>
-    <p>ngInfiniteScroll was developed internally by <a href='https://github.com/BinaryMuse'>Brandon Tilley</a> for use at <a href='http://learni.st/'>Learnist</a> It currently drives functionality on several pages, including the home page.</p>
+    <p>ngInfiniteScroll was developed internally by <a href='https://github.com/BinaryMuse'>Brandon Tilley</a> for use at <a href='http://learni.st/'>Learnist</a>. It currently drives functionality on several pages, including the home page.</p>
 
     <h4>How do I get help?</h4>
-    <p>If you'd like to report an issue, please do so at the <a href='https://github.com/BinaryMuse/ngInfiniteScroll/issues'>GitHub issue tracker</a>.</p>
+    <p>If you'd like to report an issue, please do so at the <a href='https://github.com/BinaryMuse/ngInfiniteScroll/issues'>GitHub issue tracker</a>. <a href='http://stackoverflow.com/'>StackOverflow</a> is an excellent place to ask for help if you get stuck; creating a working example of your problem using <a href='http://jsfiddle.net/'>JsFiddle</a> or <a href='http://plnkr.co/'>Plunker</a> is encouraged.</p>
 
     <h4>Why is ngInfiniteScroll triggering my expression on every single scroll event?</h4>
     <p>The infiniteScroll directive uses the height of the element that it's attached to in order to determine how close to the bottom of the window it is. In some cases, the browser can report a height of <code>0</code>, which causes this behavior. Usually, this is due to a container element that only contains floated children. The simplest way to fix this problem is to add a "spacer" element to the bottom of the container (something like <code>&lt;div style='clear: both;'>&lt;/div></code>); see <a href='http://stackoverflow.com/questions/218760/how-do-you-keep-parents-of-floated-elements-from-collapsing'>this StackOverflow question and its associated answers</a> for more details.</p>

@@ -14,8 +14,8 @@
 
   <title>ngInfiniteScroll - Demo - Loading Remote Data - Infinite Scrolling for AngularJS</title>
 
-  <link rel="stylesheet" type="text/css" href="stylesheets/application.css?1361606523" media="screen" />
-  <script type="text/javascript" src="javascripts/application.js?1361606513"></script>
+  <link href="stylesheets/application.css?1361611233" media="screen" rel="stylesheet" type="text/css" />
+  <script src="javascripts/application.js?1361611233" type="text/javascript"></script>
 </head>
 <body ng-app='infiniteScrollSite'>
 
@@ -46,8 +46,8 @@
     <p>
       This demo uses the <code>$http</code> service to load data from the Reddit API as the page scrolls. While an Ajax request is pending, the directive is disabled so it doesn't trigger multiple simultaneous calls to the API.
     </p>
-    <p>
-      <strong>Important Note:</strong> Since this demo hits the Reddit API, I cannot guarantee that all the outbound links are safe for work. <strong>You have been warned!</strong>
+    <p class='panel radius callout'>
+      <strong>Important Note:</strong> This demo hits the Reddit API, and if you're familiar with Reddit, you know that I cannot guarantee that all the items and outbound links are safe for work. <strong>You have been warned!</strong>
     </p>
 
     <pre ng-non-bindable class='panel demo radius'>
