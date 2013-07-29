@@ -1,13 +1,1 @@
-// jQuery.event.swipe
-// 0.5
-// Stephen Band
-// Dependencies
-// jQuery.event.move 1.2
-// One of swipeleft, swiperight, swipeup or swipedown is triggered on
-// moveend, when the move has covered a threshold ratio of the dimension
-// of the target node, or has gone really fast. Threshold and velocity
-// sensitivity changed with:
-//
-// jQuery.event.special.swipe.settings.threshold
-// jQuery.event.special.swipe.settings.sensitivity
-(function(e){typeof define=="function"&&define.amd?define(["jquery"],e):e(jQuery)})(function(e,t){function o(e){var t,n,r;t=e.target.offsetWidth,n=e.target.offsetHeight,r={distX:e.distX,distY:e.distY,velocityX:e.velocityX,velocityY:e.velocityY,finger:e.finger};if(e.distX>e.distY){if(e.distX>-e.distY){if(e.distX/t>s.threshold||e.velocityX*e.distX/t*s.sensitivity>1)r.type="swiperight",i(e.currentTarget,r)}else if(-e.distY/n>s.threshold||e.velocityY*e.distY/t*s.sensitivity>1)r.type="swipeup",i(e.currentTarget,r)}else if(e.distX>-e.distY){if(e.distY/n>s.threshold||e.velocityY*e.distY/t*s.sensitivity>1)r.type="swipedown",i(e.currentTarget,r)}else if(-e.distX/t>s.threshold||e.velocityX*e.distX/t*s.sensitivity>1)r.type="swipeleft",i(e.currentTarget,r)}function u(t){var n=e.data(t,"event_swipe");return n||(n={count:0},e.data(t,"event_swipe",n)),n}var n=e.event.add,r=e.event.remove,i=function(t,n,r){e.event.trigger(n,r,t)},s={threshold:.4,sensitivity:6};e.event.special.swipe=e.event.special.swipeleft=e.event.special.swiperight=e.event.special.swipeup=e.event.special.swipedown={setup:function(e,t,r){var e=u(this);if(e.count++>0)return;return n(this,"moveend",o),!0},teardown:function(){var e=u(this);if(--e.count>0)return;return r(this,"moveend",o),!0},settings:s}});
+!function(t){"function"==typeof define&&define.amd?define(["jquery"],t):t(jQuery)}(function(t){function e(t){var e,i,s;e=t.target.offsetWidth,i=t.target.offsetHeight,s={distX:t.distX,distY:t.distY,velocityX:t.velocityX,velocityY:t.velocityY,finger:t.finger},t.distX>t.distY?t.distX>-t.distY?(t.distX/e>d.threshold||t.velocityX*t.distX/e*d.sensitivity>1)&&(s.type="swiperight",r(t.currentTarget,s)):(-t.distY/i>d.threshold||t.velocityY*t.distY/e*d.sensitivity>1)&&(s.type="swipeup",r(t.currentTarget,s)):t.distX>-t.distY?(t.distY/i>d.threshold||t.velocityY*t.distY/e*d.sensitivity>1)&&(s.type="swipedown",r(t.currentTarget,s)):(-t.distX/e>d.threshold||t.velocityX*t.distX/e*d.sensitivity>1)&&(s.type="swipeleft",r(t.currentTarget,s))}function i(e){var i=t.data(e,"event_swipe");return i||(i={count:0},t.data(e,"event_swipe",i)),i}var s=t.event.add,n=t.event.remove,r=function(e,i,s){t.event.trigger(i,s,e)},d={threshold:.4,sensitivity:6};t.event.special.swipe=t.event.special.swipeleft=t.event.special.swiperight=t.event.special.swipeup=t.event.special.swipedown={setup:function(t){var t=i(this);if(!(t.count++>0))return s(this,"moveend",e),!0},teardown:function(){var t=i(this);if(!(--t.count>0))return n(this,"moveend",e),!0},settings:d}});
