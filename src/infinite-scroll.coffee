@@ -38,7 +38,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', ($rootScop
       windowBottom = $window.height() + $window.scrollTop()
       elementBottom = elem.offset().top + elem.height()
       remaining = elementBottom - windowBottom
-      shouldScroll = remaining <= $window.height() * scrollDistance
+      shouldScroll = remaining <= $window.height() * scrollDistance + 1
 
       if shouldScroll && scrollEnabled
         if $rootScope.$$phase

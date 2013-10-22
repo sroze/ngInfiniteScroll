@@ -136,7 +136,7 @@ describe 'Infinite Scroll', ->
     $document.append(el)
 
     sinon.stub(fakeWindow, 'height').returns(1000)
-    sinon.stub(fakeWindow, 'scrollTop').returns(7999)
+    sinon.stub(fakeWindow, 'scrollTop').returns(7998)
 
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
@@ -160,7 +160,7 @@ describe 'Infinite Scroll', ->
     $document.append(el)
 
     sinon.stub(fakeWindow, 'height').returns(1000)
-    sinon.stub(fakeWindow, 'scrollTop').returns(3999)
+    sinon.stub(fakeWindow, 'scrollTop').returns(3998)
 
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
