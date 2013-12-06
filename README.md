@@ -45,6 +45,11 @@ Detailed Documentation
 
 ngInfiniteScroll accepts several attributes to customize the behavior of the directive; detailed instructions can be found [on the ngInfiniteScroll web site](http://binarymuse.github.com/ngInfiniteScroll/documentation.html).
 
+Ports
+-----
+
+If you use [AngularDart](https://github.com/angular/angular.dart), Juha Komulainen has [a port of the project](http://pub.dartlang.org/packages/ng_infinite_scroll) you can use.
+
 License
 -------
 
