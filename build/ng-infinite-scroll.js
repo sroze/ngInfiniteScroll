@@ -1,13 +1,15 @@
-/* ng-infinite-scroll - v1.0.0 - 2013-02-23 */
+/* ng-infinite-scroll - v1.0.0 - 2014-01-23 */
 var mod;
 
 mod = angular.module('infinite-scroll', []);
 
+mod.value('THROTTLE_MILLISECONDS', null);
+
 mod.directive('infiniteScroll', [
-  '$rootScope', '$window', '$timeout', function($rootScope, $window, $timeout) {
+  '$rootScope', '$window', '$timeout', 'THROTTLE_MILLISECONDS', function($rootScope, $window, $timeout, THROTTLE_MILLISECONDS) {
     return {
       link: function(scope, elem, attrs) {
-        var checkWhenEnabled, handler, scrollDistance, scrollEnabled;
+        var checkWhenEnabled, handler, scrollDistance, scrollEnabled, throttle;
         $window = angular.element($window);
         scrollDistance = 0;
         if (attrs.infiniteScrollDistance != null) {
@@ -42,6 +44,38 @@ mod.directive('infiniteScroll', [
             return checkWhenEnabled = true;
           }
         };
+        throttle = function(func, wait) {
+          var later, previous, timeout;
+          timeout = null;
+          previous = 0;
+          later = function() {
+            var context;
+            previous = new Date().getTime();
+            $timeout.cancel(timeout);
+            timeout = null;
+            func.call();
+            return context = null;
+          };
+          return function() {
+            var now, remaining;
+            now = new Date().getTime();
+            remaining = wait - (now - previous);
+            if (remaining <= 0) {
+              clearTimeout(timeout);
+              $timeout.cancel(timeout);
+              timeout = null;
+              previous = now;
+              return func.call();
+            } else {
+              if (!timeout) {
+                return timeout = $timeout(later, remaining);
+              }
+            }
+          };
+        };
+        if (THROTTLE_MILLISECONDS != null) {
+          handler = throttle(handler, THROTTLE_MILLISECONDS);
+        }
         $window.on('scroll', handler);
         scope.$on('$destroy', function() {
           return $window.off('scroll', handler);
