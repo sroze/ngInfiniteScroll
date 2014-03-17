@@ -1,4 +1,4 @@
-![logo](http://binarymuse.github.com/ngInfiniteScroll/images/logo-resized.png)
+![logo](http://sroze.github.com/ngInfiniteScroll/images/logo-resized.png)
 
 [![Build Status](https://travis-ci.org/BinaryMuse/ngInfiniteScroll.png?branch=master)](https://travis-ci.org/BinaryMuse/ngInfiniteScroll)
 
@@ -18,12 +18,12 @@ ngInfinite Scroll follows [semantic versioning](http://semver.org/) and uses the
  * Versions with an even minor version (1.0.0, 1.4.0, 2.2.0, etc.) are stable releases
  * Versions with an odd minor version (1.1.0, 1.3.0, 2.1.0, etc.) are development releases
 
-The [download page](http://binarymuse.github.com/ngInfiniteScroll/#download) allows you to pick among various versions and specify which releases are stable (not including pre-release builds).
+The [download page](http://sroze.github.com/ngInfiniteScroll/#download) allows you to pick among various versions and specify which releases are stable (not including pre-release builds).
 
 Getting Started
 ---------------
 
- * Download ngInfiniteScroll from [the download page on the ngInfiniteScroll web site](http://binarymuse.github.com/ngInfiniteScroll/#download) or install it with [Bower](http://bower.io/) via `bower install ngInfiniteScroll`
+ * Download ngInfiniteScroll from [the download page on the ngInfiniteScroll web site](http://sroze.github.com/ngInfiniteScroll/#download) or install it with [Bower](http://bower.io/) via `bower install ngInfiniteScroll`
  * Include the script tag on your page after the AngularJS and jQuery script tags (ngInfiniteScroll requires jQuery to run)
 
         <script type='text/javascript' src='path/to/jquery.min.js'></script>
@@ -43,7 +43,7 @@ Note that neither the module nor the directive use the `ng` prefix, as that pref
 Detailed Documentation
 ----------------------
 
-ngInfiniteScroll accepts several attributes to customize the behavior of the directive; detailed instructions can be found [on the ngInfiniteScroll web site](http://binarymuse.github.com/ngInfiniteScroll/documentation.html).
+ngInfiniteScroll accepts several attributes to customize the behavior of the directive; detailed instructions can be found [on the ngInfiniteScroll web site](http://sroze.github.com/ngInfiniteScroll/documentation.html).
 
 Ports
 -----
