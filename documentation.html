@@ -69,6 +69,14 @@
     <pre class='panel demo radius'>
 var myApp = angular.module('myApp', ['infinite-scroll']);</pre>
 
+    <h4>Throttling scroll events</h4>
+    <p>Scroll events can be triggered very frequently, which can hurt performance and make scrolling appear jerky. To mitigate this, <code>infiniteScroll</code> can be configured to process scroll events a maximum of once every <code>x</code> milliseconds:</p>
+
+    <pre class='panel demo radius'>
+// you might call this after your module initalization
+angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 250)
+    </pre>
+
     <h4>Typical Usage</h4>
     <p>Typically, you will use the <code>infiniteScroll</code> directive on an element that contains another element that uses <code>ngRepeat</code> to show a series of elements based on an array (or object); the expression you pass in to the <code>infinite-scroll</code> attribute will generally add additional elements to the array, expanding the <code>ngRepeat</code>.</p>
 
