@@ -1,13 +1,13 @@
 ![logo](http://sroze.github.com/ngInfiniteScroll/images/logo-resized.png)
 
-[![Build Status](https://travis-ci.org/BinaryMuse/ngInfiniteScroll.png?branch=master)](https://travis-ci.org/BinaryMuse/ngInfiniteScroll)
+[![Build Status](https://travis-ci.org/sroze/ngInfiniteScroll.png?branch=master)](https://travis-ci.org/sroze/ngInfiniteScroll)
 
 ngInfiniteScroll is a directive for [AngularJS](http://angularjs.org/) to evaluate an expression when the bottom of the directive's element approaches the bottom of the browser window, which can be used to implement infinite scrolling.
 
 Demos
 -----
 
-Check out the running demos [at the ngInfiniteScroll web site](http://binarymuse.github.com/ngInfiniteScroll/demos.html).
+Check out the running demos [at the ngInfiniteScroll web site](http://sroze.github.com/ngInfiniteScroll/demos.html).
 
 Version Numbers
 ---------------
