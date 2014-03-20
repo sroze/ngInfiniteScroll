@@ -1,0 +1,8 @@
+{
+  "name": "ngInfiniteScroll",
+  "version": "1.0.0",
+  "main": "build/ng-infinite-scroll.js",
+  "dependencies": {
+    "angular": ">=1.0.7"
+  }
+}
