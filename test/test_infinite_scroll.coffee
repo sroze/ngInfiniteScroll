@@ -161,7 +161,7 @@ describe 'Infinite Scroll', ->
         container.offset = -> {top: 7999, left: 0}
       else
         sinon.stub(fakeWindow, 'height').returns(1000)
-        sinon.stub(fakeWindow, 'scrollTop').returns(7999)
+        sinon.stub(fakeWindow, 'scrollTop').returns(7998)
         container = fakeWindow
        
       scope = $rootScope.$new(true)
@@ -195,7 +195,7 @@ describe 'Infinite Scroll', ->
         container.scrollTop = 3999
       else
         sinon.stub(fakeWindow, 'height').returns(1000)
-        sinon.stub(fakeWindow, 'scrollTop').returns(3999)
+        sinon.stub(fakeWindow, 'scrollTop').returns(3998)
         container = fakeWindow
 
       scope = $rootScope.$new(true)
@@ -291,8 +291,4 @@ describe 'Infinite Scroll', ->
         
         tests[test](cont, cont, {})
     ) scroller, test
-
-
-
-
 
