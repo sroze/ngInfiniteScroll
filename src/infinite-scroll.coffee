@@ -3,51 +3,40 @@ mod = angular.module('infinite-scroll', [])
 mod.value('THROTTLE_MILLISECONDS', null)
 
 mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_MILLISECONDS', \
-                                    ($rootScope, $window, $timeout, THROTTLE_MILLISECONDS) ->
+                                  ($rootScope, $window, $timeout, THROTTLE_MILLISECONDS) ->
+  scope:
+    infiniteScroll: '&'
+    infiniteScrollContainer: '='
+    infiniteScrollDistance: '='
+    infiniteScrollDisabled: '='
+
   link: (scope, elem, attrs) ->
     $window = angular.element($window)
 
-    # infinite-scroll-distance specifies how close to the bottom of the page
-    # the window is allowed to be before we trigger a new scroll. The value
-    # provided is multiplied by the window height; for example, to load
-    # more when the bottom of the page is less than 3 window heights away,
-    # specify a value of 3. Defaults to 0.
-    scrollDistance = 0
-    if attrs.infiniteScrollDistance?
-      scope.$watch attrs.infiniteScrollDistance, (value) ->
-        scrollDistance = parseInt(value, 10)
+    scrollDistance = null
+    scrollEnabled = null
+    checkWhenEnabled = null
+    container = null
+    immediateCheck = true
 
-    # infinite-scroll-disabled specifies a boolean that will keep the
-    # infnite scroll function from being called; this is useful for
-    # debouncing or throttling the function call. If an infinite
-    # scroll is triggered but this value evaluates to true, then
-    # once it switches back to false the infinite scroll function
-    # will be triggered again.
-    scrollEnabled = true
-    checkWhenEnabled = false
-    if attrs.infiniteScrollDisabled?
-      scope.$watch attrs.infiniteScrollDisabled, (value) ->
-        scrollEnabled = !value
-        if scrollEnabled && checkWhenEnabled
-          checkWhenEnabled = false
-          handler()
-
-    # infinite-scroll specifies a function to call when the window
+    # infinite-scroll specifies a function to call when the window,
+    # or some other container specified by infinite-scroll-container,
     # is scrolled within a certain range from the bottom of the
     # document. It is recommended to use infinite-scroll-disabled
     # with a boolean that is set to true when the function is
     # called in order to throttle the function call.
     handler = ->
-      windowBottom = $window.height() + $window.scrollTop()
-      elementBottom = elem.offset().top + elem.height()
-      remaining = elementBottom - windowBottom
-      shouldScroll = remaining <= $window.height() * scrollDistance
+      if container == $window
+        containerBottom = container.height() + container.scrollTop()
+        elementBottom = elem.offset().top + elem.height()
+      else
+        containerBottom = container.height()
+        elementBottom = elem.offset().top - container.offset().top + elem.height()
+      remaining = elementBottom - containerBottom
+      shouldScroll = remaining <= container.height() * scrollDistance
 
       if shouldScroll && scrollEnabled
-        if $rootScope.$$phase
-          scope.$eval attrs.infiniteScroll
-        else
-          scope.$apply attrs.infiniteScroll
+        scope.infiniteScroll()
       else if shouldScroll
         checkWhenEnabled = true
 
@@ -81,15 +70,80 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
     if THROTTLE_MILLISECONDS?
       handler = throttle(handler, THROTTLE_MILLISECONDS)
 
-    $window.on 'scroll', handler
     scope.$on '$destroy', ->
-      $window.off 'scroll', handler
+      container.off 'scroll', handler
+
+    # infinite-scroll-distance specifies how close to the bottom of the page
+    # the window is allowed to be before we trigger a new scroll. The value
+    # provided is multiplied by the container height; for example, to load
+    # more when the bottom of the page is less than 3 container heights away,
+    # specify a value of 3. Defaults to 0.
+    handleInfiniteScrollDistance = (v) ->
+      scrollDistance = parseInt(v, 10) or 0
+
+    scope.$watch 'infiniteScrollDistance', handleInfiniteScrollDistance
+    # If I don't explicitly call the handler here, tests fail. Don't know why yet.
+    handleInfiniteScrollDistance scope.infiniteScrollDistance
+
+    # infinite-scroll-disabled specifies a boolean that will keep the
+    # infnite scroll function from being called; this is useful for
+    # debouncing or throttling the function call. If an infinite
+    # scroll is triggered but this value evaluates to true, then
+    # once it switches back to false the infinite scroll function
+    # will be triggered again.
+    handleInfiniteScrollDisabled = (v) ->
+      scrollEnabled = !v
+      if scrollEnabled && checkWhenEnabled
+        checkWhenEnabled = false
+        handler()
+
+    scope.$watch 'infiniteScrollDisabled', handleInfiniteScrollDisabled
+    # If I don't explicitly call the handler here, tests fail. Don't know why yet.
+    handleInfiniteScrollDisabled scope.infiniteScrollDisabled
+
+    # infinite-scroll-container sets the container which we want to be
+    # infinte scrolled, instead of the whole window. Must be an
+    # Angular or jQuery element, or, if jQuery is loaded,
+    # a jQuery selector as a string.
+    changeContainer = (newContainer) ->
+      if container?
+        container.off 'scroll', handler
+      container = newContainer
+      if newContainer?
+        container.on 'scroll', handler
+
+    changeContainer $window
+
+    handleInfiniteScrollContainer = (newContainer) ->
+      # TODO: For some reason newContainer is sometimes null instead
+      # of the empty array, which Angular is supposed to pass when the
+      # element is not defined
+      # (https://github.com/sroze/ngInfiniteScroll/pull/7#commitcomment-5748431).
+      # So I leave both checks.
+      if (not newContainer?) or newContainer.length == 0
+        return
+      newContainer = angular.element newContainer
+      if newContainer?
+        changeContainer newContainer
+      else
+        throw new Exception("invalid infinite-scroll-container attribute.")
+
+    scope.$watch 'infiniteScrollContainer', handleInfiniteScrollContainer
+    handleInfiniteScrollContainer(scope.infiniteScrollContainer or [])
+
+    # infinite-scroll-parent establishes this element's parent as the
+    # container infinitely scrolled instead of the whole window.
+    if attrs.infiniteScrollParent?
+      changeContainer angular.element elem.parent()
+
+    # infinte-scoll-immediate-check sets whether or not run the
+    # expression passed on infinite-scroll for the first time when the
+    # directive first loads, before any actual scroll.
+    if attrs.infiniteScrollImmediateCheck?
+      immediateCheck = scope.$eval(attrs.infiniteScrollImmediateCheck)
 
     $timeout (->
-      if attrs.infiniteScrollImmediateCheck
-        if scope.$eval(attrs.infiniteScrollImmediateCheck)
-          handler()
-      else
+      if immediateCheck
         handler()
     ), 0
 ]
