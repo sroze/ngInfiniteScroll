@@ -24,6 +24,8 @@ describe 'Infinite Scroll Throttled to 200ms', ->
       $document = _$document_
       $timeout = _$timeout_
       fakeWindow = angular.element($window)
+      sinon.stub(fakeWindow, 'last').returns(fakeWindow)
+
       THROTTLE_MILLISECONDS = _THROTTLE_MILLISECONDS_
 
       origJq = angular.element

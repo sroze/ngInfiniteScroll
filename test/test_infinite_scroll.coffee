@@ -14,6 +14,8 @@ describe 'Infinite Scroll', ->
       $document = _$document_
       $timeout = _$timeout_
       fakeWindow = angular.element($window)
+      sinon.stub(fakeWindow, 'last').returns(fakeWindow)
+
       origJq = angular.element
       angular.element = (first, args...) ->
         if first == $window
