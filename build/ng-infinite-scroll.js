@@ -1,4 +1,4 @@
-/* ng-infinite-scroll - v1.1.0 - 2014-04-03 */
+/* ng-infinite-scroll - v1.1.1 - 2014-05-14 */
 var mod;
 
 mod = angular.module('infinite-scroll', []);
@@ -23,20 +23,31 @@ mod.directive('infiniteScroll', [
         container = null;
         immediateCheck = true;
         handler = function() {
-          var containerBottom, elementBottom, remaining, shouldScroll;
+          var containerBottom, containerTopOffset, elementBottom, remaining, shouldScroll;
           if (container === $window) {
             containerBottom = container.height() + container.scrollTop();
             elementBottom = elem.offset().top + elem.height();
           } else {
             containerBottom = container.height();
-            elementBottom = elem.offset().top - container.offset().top + elem.height();
+            containerTopOffset = 0;
+            if (container.offset() !== void 0) {
+              containerTopOffset = container.offset().top;
+            }
+            elementBottom = elem.offset().top - containerTopOffset + elem.height();
           }
           remaining = elementBottom - containerBottom;
           shouldScroll = remaining <= container.height() * scrollDistance + 1;
-          if (shouldScroll && scrollEnabled) {
-            return scope.infiniteScroll();
-          } else if (shouldScroll) {
-            return checkWhenEnabled = true;
+          if (shouldScroll) {
+            checkWhenEnabled = true;
+            if (scrollEnabled) {
+              if (scope.$$phase || $rootScope.$$phase) {
+                return scope.infiniteScroll();
+              } else {
+                return scope.$apply(scope.infiniteScroll);
+              }
+            }
+          } else {
+            return checkWhenEnabled = false;
           }
         };
         throttle = function(func, wait) {
@@ -92,7 +103,7 @@ mod.directive('infiniteScroll', [
           if (container != null) {
             container.off('scroll', handler);
           }
-          container = newContainer;
+          container = typeof newContainer.last === 'function' ? newContainer.last() : newContainer;
           if (newContainer != null) {
             return container.on('scroll', handler);
           }
