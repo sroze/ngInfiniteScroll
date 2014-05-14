@@ -76,7 +76,7 @@ describe 'Infinite Scroll Throttled to 200ms', ->
 
     $timeout.flush()
 
-    scope.scroll.should.have.been.calledOnce
+    scope.scroll.should.have.been.called.twice
 
     el.remove()
     scope.$destroy()

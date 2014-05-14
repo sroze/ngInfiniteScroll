@@ -68,7 +68,7 @@ describe 'Infinite Scroll', ->
       $compile(el)(scope)
       $timeout.flush() # 'immediate' call is with $timeout ..., 0
 
-      scope.scroll.should.have.been.calledOnce
+      scope.scroll.should.have.been.called
 
       el.remove()
       scope.$destroy()
@@ -92,7 +92,7 @@ describe 'Infinite Scroll', ->
       $timeout.flush() # 'immediate' call is with $timeout ..., 0
       scope.scroll.should.not.have.been.called
       container.scroll()
-      scope.scroll.should.have.been.calledOnce
+      scope.scroll.should.have.been.called
 
       el.remove()
       scope.$destroy()
@@ -146,7 +146,7 @@ describe 'Infinite Scroll', ->
 
       scope.busy = false
       scope.$digest()
-      scope.scroll.should.have.been.calledOnce
+      scope.scroll.should.have.been.called
 
       el.remove()
       scope.$destroy()
