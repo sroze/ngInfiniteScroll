@@ -38,13 +38,16 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
       remaining = elementBottom - containerBottom
       shouldScroll = remaining <= container.height() * scrollDistance + 1
 
-      if shouldScroll && scrollEnabled
-        if scope.$$phase || $rootScope.$$phase
-          scope.infiniteScroll()
-        else
-          scope.$apply(scope.infiniteScroll)
-      else if shouldScroll
+      if shouldScroll
         checkWhenEnabled = true
+
+        if scrollEnabled
+          if scope.$$phase || $rootScope.$$phase
+            scope.infiniteScroll()
+          else
+            scope.$apply(scope.infiniteScroll)
+      else
+        checkWhenEnabled = false
 
     # The optional THROTTLE_MILLISECONDS configuration value specifies
     # a minimum time that should elapse between each call to the
