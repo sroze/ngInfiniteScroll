@@ -118,7 +118,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
       if container?
         container.off 'scroll', handler
 
-      container = if typeof newContainer.last is 'function' then newContainer.last() else newContainer
+      container = if typeof newContainer.last is 'function' && newContainer != $window then newContainer.last() else newContainer
       if newContainer?
         container.on 'scroll', handler
 
