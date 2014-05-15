@@ -1,4 +1,4 @@
-/* ng-infinite-scroll - v1.1.1 - 2014-05-14 */
+/* ng-infinite-scroll - v1.1.1 - 2014-05-15 */
 var mod;
 
 mod = angular.module('infinite-scroll', []);
@@ -12,16 +12,18 @@ mod.directive('infiniteScroll', [
         infiniteScroll: '&',
         infiniteScrollContainer: '=',
         infiniteScrollDistance: '=',
-        infiniteScrollDisabled: '='
+        infiniteScrollDisabled: '=',
+        infiniteScrollUseDocumentBottom: '='
       },
       link: function(scope, elem, attrs) {
-        var changeContainer, checkWhenEnabled, container, handleInfiniteScrollContainer, handleInfiniteScrollDisabled, handleInfiniteScrollDistance, handler, immediateCheck, scrollDistance, scrollEnabled, throttle;
+        var changeContainer, checkWhenEnabled, container, handleInfiniteScrollContainer, handleInfiniteScrollDisabled, handleInfiniteScrollDistance, handleInfiniteScrollUseDocumentBottom, handler, immediateCheck, scrollDistance, scrollEnabled, throttle, useDocumentBottom;
         $window = angular.element($window);
         scrollDistance = null;
         scrollEnabled = null;
         checkWhenEnabled = null;
         container = null;
         immediateCheck = true;
+        useDocumentBottom = false;
         handler = function() {
           var containerBottom, containerTopOffset, elementBottom, remaining, shouldScroll;
           if (container === $window) {
@@ -34,6 +36,9 @@ mod.directive('infiniteScroll', [
               containerTopOffset = container.offset().top;
             }
             elementBottom = elem.offset().top - containerTopOffset + elem.height();
+          }
+          if (useDocumentBottom) {
+            elementBottom = $(document).height();
           }
           remaining = elementBottom - containerBottom;
           shouldScroll = remaining <= container.height() * scrollDistance + 1;
@@ -99,11 +104,16 @@ mod.directive('infiniteScroll', [
         };
         scope.$watch('infiniteScrollDisabled', handleInfiniteScrollDisabled);
         handleInfiniteScrollDisabled(scope.infiniteScrollDisabled);
+        handleInfiniteScrollUseDocumentBottom = function(v) {
+          return useDocumentBottom = v;
+        };
+        scope.$watch('infiniteScrollUseDocumentBottom', handleInfiniteScrollUseDocumentBottom);
+        handleInfiniteScrollUseDocumentBottom(scope.infiniteScrollUseDocumentBottom);
         changeContainer = function(newContainer) {
           if (container != null) {
             container.off('scroll', handler);
           }
-          container = typeof newContainer.last === 'function' ? newContainer.last() : newContainer;
+          container = typeof newContainer.last === 'function' && newContainer !== $window ? newContainer.last() : newContainer;
           if (newContainer != null) {
             return container.on('scroll', handler);
           }
