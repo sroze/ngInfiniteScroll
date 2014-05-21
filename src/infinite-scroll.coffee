@@ -9,6 +9,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
     infiniteScrollContainer: '='
     infiniteScrollDistance: '='
     infiniteScrollDisabled: '='
+    infiniteScrollUseDocumentBottom: '='
 
   link: (scope, elem, attrs) ->
     $window = angular.element($window)
@@ -18,6 +19,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
     checkWhenEnabled = null
     container = null
     immediateCheck = true
+    useDocumentBottom = false
 
     # infinite-scroll specifies a function to call when the window,
     # or some other container specified by infinite-scroll-container,
@@ -35,6 +37,10 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
         if container.offset() != undefined
           containerTopOffset = container.offset().top
         elementBottom = elem.offset().top - containerTopOffset + elem.height()
+
+      if(useDocumentBottom)
+        elementBottom = $(document).height()
+
       remaining = elementBottom - containerBottom
       shouldScroll = remaining <= container.height() * scrollDistance + 1
 
@@ -110,6 +116,15 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
     # If I don't explicitly call the handler here, tests fail. Don't know why yet.
     handleInfiniteScrollDisabled scope.infiniteScrollDisabled
 
+    # use the bottom of the document instead of the element's bottom.
+    # This useful when the element does not have a height due to its
+    # children being absolute positioned.
+    handleInfiniteScrollUseDocumentBottom = (v) ->
+      useDocumentBottom = v
+
+    scope.$watch 'infiniteScrollUseDocumentBottom', handleInfiniteScrollUseDocumentBottom
+    handleInfiniteScrollUseDocumentBottom scope.infiniteScrollUseDocumentBottom
+
     # infinite-scroll-container sets the container which we want to be
     # infinte scrolled, instead of the whole window. Must be an
     # Angular or jQuery element, or, if jQuery is loaded,
@@ -118,7 +133,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
       if container?
         container.off 'scroll', handler
 
-      container = if typeof newContainer.last is 'function' then newContainer.last() else newContainer
+      container = if typeof newContainer.last is 'function' && newContainer != $window then newContainer.last() else newContainer
       if newContainer?
         container.on 'scroll', handler
 
