@@ -12,7 +12,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
     infiniteScrollUseDocumentBottom: '='
 
   link: (scope, elem, attrs) ->
-    $window = angular.element($window)
+    windowElement = angular.element($window)
 
     scrollDistance = null
     scrollEnabled = null
@@ -28,7 +28,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
     # with a boolean that is set to true when the function is
     # called in order to throttle the function call.
     handler = ->
-      if container == $window
+      if container == windowElement
         containerBottom = container.height() + container.scrollTop()
         elementBottom = elem.offset().top + elem.height()
       else
@@ -133,11 +133,11 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
       if container?
         container.off 'scroll', handler
 
-      container = if typeof newContainer.last is 'function' && newContainer != $window then newContainer.last() else newContainer
+      container = if typeof newContainer.last is 'function' && newContainer != windowElement then newContainer.last() else newContainer
       if newContainer?
         container.on 'scroll', handler
 
-    changeContainer $window
+    changeContainer windowElement
 
     handleInfiniteScrollContainer = (newContainer) ->
       # TODO: For some reason newContainer is sometimes null instead
