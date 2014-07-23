@@ -29,8 +29,8 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
     # called in order to throttle the function call.
     handler = ->
       if container == $window
-        containerBottom = container.height() + container.scrollTop()
-        elementBottom = elem.offset().top + elem.height()
+        containerBottom = $(container).height() + $(container).scrollTop()
+        elementBottom = $(elem).offset().top + $(elem).height()
       else
         containerBottom = container.height()
         containerTopOffset = 0
@@ -42,7 +42,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
         elementBottom = $(document).height()
 
       remaining = elementBottom - containerBottom
-      shouldScroll = remaining <= container.height() * scrollDistance + 1
+      shouldScroll = remaining <= $(container).height() * scrollDistance + 1
 
       if shouldScroll
         checkWhenEnabled = true
