@@ -30,7 +30,7 @@ mod.directive('infiniteScroll', [
             containerBottom = $(container).height() + $(container).scrollTop();
             elementBottom = $(elem).offset().top + $(elem).height();
           } else {
-            containerBottom = container.height();
+            containerBottom = container.outerHeight();
             containerTopOffset = 0;
             if (container.offset() !== void 0) {
               containerTopOffset = container.offset().top;
