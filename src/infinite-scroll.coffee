@@ -21,6 +21,22 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
     immediateCheck = true
     useDocumentBottom = false
 
+    height = (elem) ->
+      elem = elem[0] or elem
+
+      if isNaN(elem.offsetHeight) then height(elem.document.documentElement) else elem.offsetHeight
+
+    offsetTop = (elem) ->
+      if not elem[0].getBoundingClientRect or elem.css('none')
+        return
+
+      elem[0].getBoundingClientRect().top + pageYOffset(elem)
+
+    pageYOffset = (elem) ->
+      elem = elem[0] or elem
+
+      if isNaN(window.pageYOffset) then elem.document.documentElement.scrollTop else elem.ownerDocument.defaultView.pageYOffset
+
     # infinite-scroll specifies a function to call when the window,
     # or some other container specified by infinite-scroll-container,
     # is scrolled within a certain range from the bottom of the
@@ -29,20 +45,20 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
     # called in order to throttle the function call.
     handler = ->
       if container == $window
-        containerBottom = $(container).height() + $(container).scrollTop()
-        elementBottom = $(elem).offset().top + $(elem).height()
+        containerBottom = height(container) + pageYOffset(container[0].document.documentElement)
+        elementBottom = offsetTop(elem) + height(elem)
       else
-        containerBottom = container.height()
+        containerBottom = height(container)
         containerTopOffset = 0
-        if container.offset() != undefined
-          containerTopOffset = container.offset().top
-        elementBottom = elem.offset().top - containerTopOffset + elem.height()
+        if offsetTop(container) != undefined
+          containerTopOffset = offsetTop(container)
+        elementBottom = offsetTop(elem) - containerTopOffset + height(elem)
 
       if(useDocumentBottom)
-        elementBottom = $(document).height()
+        elementBottom = height((elem[0].ownerDocument || elem[0].document).documentElement)
 
       remaining = elementBottom - containerBottom
-      shouldScroll = remaining <= $(container).height() * scrollDistance + 1
+      shouldScroll = remaining <= height(container) * scrollDistance + 1
 
       if shouldScroll
         checkWhenEnabled = true
@@ -147,7 +163,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
       # So I leave both checks.
       if (not newContainer?) or newContainer.length == 0
         return
-      newContainer = angular.element newContainer
+      newContainer = angular.element document.querySelector newContainer
       if newContainer?
         changeContainer newContainer
       else
