@@ -110,7 +110,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
     # more when the bottom of the page is less than 3 container heights away,
     # specify a value of 3. Defaults to 0.
     handleInfiniteScrollDistance = (v) ->
-      scrollDistance = parseInt(v, 10) or 0
+      scrollDistance = parseFloat(v) or 0
 
     scope.$watch 'infiniteScrollDistance', handleInfiniteScrollDistance
     # If I don't explicitly call the handler here, tests fail. Don't know why yet.
