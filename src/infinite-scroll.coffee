@@ -24,7 +24,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
     height = (elem) ->
       elem = elem[0] or elem
 
-      if isNaN(elem.offsetHeight) then height(elem.document.documentElement) else elem.offsetHeight
+      if isNaN(elem.offsetHeight) then elem.document.documentElement.clientHeight else elem.offsetHeight
 
     offsetTop = (elem) ->
       if not elem[0].getBoundingClientRect or elem.css('none')
