@@ -1,7 +1,7 @@
 should = chai.should()
 
 describe 'Infinite Scroll', ->
-  [$rootScope, $compile, docWindow, $document, $timeout, fakeWindow, origJq] = [undefined]
+  [$rootScope, $compile, $document, $timeout, fakeWindow] = [undefined]
 
   beforeEach ->
     module('infinite-scroll')
@@ -14,30 +14,26 @@ describe 'Infinite Scroll', ->
       $document = _$document_
       $timeout = _$timeout_
       fakeWindow = angular.element($window)
-      sinon.stub(fakeWindow, 'last').returns(fakeWindow)
+      # sinon.stub(fakeWindow, 'last').returns(fakeWindow)
 
-      origJq = angular.element
-      angular.element = (first, args...) ->
-        if first == $window
-          fakeWindow
-        else
-          origJq(first, args...)
+  scroll = (container) ->
+    event = $document[0].createEvent 'UIEvent'
+    event.initUIEvent 'scroll', true, true, fakeWindow[0], 1
 
-  afterEach ->
-    angular.element = origJq   
+    container[0].dispatchEvent(event)
 
-  tests = 
+  tests =
     'triggers on scrolling': (scroller, container, injScope) ->
       el = angular.element(scroller)
       $document.append(el)
 
       isWindow = true unless container?
       if not isWindow
-        container.height(1000)
+        container[0].style.height = '1000px'
       else
-        sinon.stub(fakeWindow, 'height').returns(1000)
+        fakeWindow[0].resizeTo(1000, 1000)
         container = fakeWindow
-      
+
       scope = $rootScope.$new(true)
       for k, v of injScope
         scope[k] = v
@@ -45,7 +41,7 @@ describe 'Infinite Scroll', ->
       $compile(el)(scope)
       $timeout.flush() # 'immediate' call is with $timeout ..., 0
 
-      container.scroll()
+      scroll(container)
 
       scope.scroll.should.have.been.calledOnce
 
@@ -58,9 +54,9 @@ describe 'Infinite Scroll', ->
 
       isWindow = true unless container?
       if not isWindow
-        container.height(1000)
+        container[0].style.height = '1000px'
       else
-        sinon.stub(fakeWindow, 'height').returns(1000)
+        fakeWindow[0].resizeTo(1000, 1000)
         container = fakeWindow
 
       scope = $rootScope.$new(true)
@@ -81,9 +77,9 @@ describe 'Infinite Scroll', ->
 
       isWindow = true unless container?
       if not isWindow
-        container.height(1000)
+        container[0].style.height = '1000px'
       else
-        sinon.stub(fakeWindow, 'height').returns(1000)
+        fakeWindow[0].resizeTo(1000, 1000)
         container = fakeWindow
 
       scope = $rootScope.$new(true)
@@ -93,21 +89,21 @@ describe 'Infinite Scroll', ->
       $compile(el)(scope)
       $timeout.flush() # 'immediate' call is with $timeout ..., 0
       scope.scroll.should.not.have.been.called
-      container.scroll()
+      scroll(container)
       scope.scroll.should.have.been.called
 
       el.remove()
       scope.$destroy()
 
-    'does not trigger when disabled': (scroller, container, injScope) -> 
+    'does not trigger when disabled': (scroller, container, injScope) ->
       el = angular.element(scroller)
       $document.append(el)
 
       isWindow = true unless container?
       if not isWindow
-        container.height(1000)
+        container[0].style.height = '1000px'
       else
-        sinon.stub(fakeWindow, 'height').returns(1000)
+        fakeWindow[0].resizeTo(1000, 1000)
         container = fakeWindow
 
       scope = $rootScope.$new(true)
@@ -118,7 +114,7 @@ describe 'Infinite Scroll', ->
       $compile(el)(scope)
       scope.$digest()
 
-      container.scroll()
+      scroll(container)
       scope.scroll.should.not.have.been.called
 
       el.remove()
@@ -130,9 +126,9 @@ describe 'Infinite Scroll', ->
 
       isWindow = true unless container?
       if not isWindow
-        container.height(1000)
+        container[0].style.height = '1000px'
       else
-        sinon.stub(fakeWindow, 'height').returns(1000)
+        fakeWindow[0].resizeTo(1000, 1000)
         container = fakeWindow
 
       scope = $rootScope.$new(true)
@@ -143,7 +139,7 @@ describe 'Infinite Scroll', ->
       $compile(el)(scope)
       scope.$digest()
 
-      container.scroll()
+      scroll(container)
       scope.scroll.should.not.have.been.called
 
       scope.busy = false
@@ -159,29 +155,30 @@ describe 'Infinite Scroll', ->
 
       isWindow = true unless container?
       if not isWindow
-        container.height(1000)
-        container.offset = -> {top: 7999, left: 0}
+        container[0].style.height = '1000px'
+        container.style.position = 'relative'
+        container.style.top = '7999px'
       else
-        sinon.stub(fakeWindow, 'height').returns(1000)
-        sinon.stub(fakeWindow, 'scrollTop').returns(7998)
+        fakeWindow[0].resizeTo 1000, 1000
+        fakeWindow[0].scroll 0, 7998
         container = fakeWindow
-       
+
       scope = $rootScope.$new(true)
       for k, v of injScope
         scope[k] = v
       scope.scroll = sinon.spy()
       $compile(el)(scope)
       scope.$digest()
-      fakeWindow.scroll()
+      scroll(fakeWindow)
       scope.scroll.should.not.have.been.called
 
       if not isWindow
         el.pageYOffset = 800
       else
-        fakeWindow.scrollTop.returns(8000)
+        fakeWindow.scroll 0, 8000
         container = fakeWindow
 
-      container.scroll()
+      scroll(container)
       scope.scroll.should.have.been.calledOnce
 
       el.remove()
@@ -252,10 +249,10 @@ describe 'Infinite Scroll', ->
         infinite-scroll-distance='1' style='height: 10000px'></div>
       """
 
-    'respects the infinite-scroll-distance attribute': -> 
+    'respects the infinite-scroll-distance attribute': ->
       """
       <div infinite-scroll='scroll()' infinite-scroll-distance='5' style='height: 10000px;'></div>
-      """ 
+      """
 
   for test, scroller of scrollers
     ((scroller, test) ->
@@ -264,12 +261,12 @@ describe 'Infinite Scroll', ->
       # TODO: Those two tests are broken for container and parent because
       # I can't manage to properly simulate scrolling on the tests, but they
       # seem to work fine in practice.
-      brokenTests = [
-        'respects the infinite-scroll-distance attribute'
-        'only triggers when the container has been sufficiently scrolled down'
-      ]
-      if test in brokenTests
-        return
+      # brokenTests = [
+      #   'respects the infinite-scroll-distance attribute'
+      #   'only triggers when the container has been sufficiently scrolled down'
+      # ]
+      # if test in brokenTests
+      #   return
 
       it "container: #{test}", ->
         cont = angular.element """
@@ -279,7 +276,7 @@ describe 'Infinite Scroll', ->
 
         sc.attr "infinite-scroll-container", "elem"
         cont.append sc
-        
+
         tests[test](cont, cont, {elem: cont})
 
       it "parent: #{test}", ->
@@ -290,7 +287,7 @@ describe 'Infinite Scroll', ->
 
         sc.attr "infinite-scroll-parent", ""
         cont.append sc
-        
+
         tests[test](cont, cont, {})
     ) scroller, test
 
