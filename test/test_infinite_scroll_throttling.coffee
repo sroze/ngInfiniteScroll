@@ -9,13 +9,13 @@
 should = chai.should()
 
 describe 'Infinite Scroll Throttled to 200ms', ->
-  [$rootScope, $compile, docWindow, $document, $timeout, fakeWindow, THROTTLE_MILLISECONDS, origJq] = [undefined]
+  [$rootScope, $compile, docWindow, $document, $timeout, fakeWindow, THROTTLE_MILLISECONDS] = [undefined]
 
   beforeEach ->
     module 'infinite-scroll', ($provide) ->
       $provide.value('THROTTLE_MILLISECONDS', 200)
       return
-  
+
   beforeEach ->
     inject (_$rootScope_, _$compile_, _$window_, _$document_, _$timeout_, _THROTTLE_MILLISECONDS_) ->
       $rootScope = _$rootScope_
@@ -24,19 +24,15 @@ describe 'Infinite Scroll Throttled to 200ms', ->
       $document = _$document_
       $timeout = _$timeout_
       fakeWindow = angular.element($window)
-      sinon.stub(fakeWindow, 'last').returns(fakeWindow)
+      # sinon.stub(fakeWindow, 'last').returns(fakeWindow)
 
       THROTTLE_MILLISECONDS = _THROTTLE_MILLISECONDS_
 
-      origJq = angular.element
-      angular.element = (first, args...) ->
-        if first == $window
-          fakeWindow
-        else
-          origJq(first, args...)
+  scroll = (container) ->
+    event = $document[0].createEvent 'UIEvent'
+    event.initUIEvent 'scroll', true, true, fakeWindow[0], 1
 
-  afterEach ->
-    angular.element = origJq
+    container[0].dispatchEvent(event)
 
   it 'waits correct interval between calls to handler', ->
     scroller = """
@@ -46,13 +42,12 @@ describe 'Infinite Scroll Throttled to 200ms', ->
     el = angular.element(scroller)
     $document.append(el)
 
-    sinon.stub(fakeWindow, 'height').returns(1000)
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
     $compile(el)(scope)
-    
+
     for i in [0..2] # so, three times
-      fakeWindow.scroll()
+      scroll(fakeWindow)
 
     $timeout.flush()
 
@@ -69,12 +64,11 @@ describe 'Infinite Scroll Throttled to 200ms', ->
     el = angular.element(scroller)
     $document.append(el)
 
-    sinon.stub(fakeWindow, 'height').returns(1000)
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
     $compile(el)(scope)
-    
-    fakeWindow.scroll()
+
+    scroll(fakeWindow)
 
     $timeout.flush()
 
@@ -90,7 +84,6 @@ describe 'Infinite Scroll Throttled to 200ms', ->
     el = angular.element(scroller)
     $document.append(el)
 
-    sinon.stub(fakeWindow, 'height').returns(1000)
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
     $compile(el)(scope)
@@ -108,13 +101,12 @@ describe 'Infinite Scroll Throttled to 200ms', ->
     el = angular.element(scroller)
     $document.append(el)
 
-    sinon.stub(fakeWindow, 'height').returns(1000)
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
     $compile(el)(scope)
     $timeout.flush() # 'immediate' call is with $timeout ..., 0
     scope.scroll.should.not.have.been.called
-    fakeWindow.scroll()
+    scroll(fakeWindow)
     scope.scroll.should.have.been.calledOnce
 
     el.remove()
@@ -128,14 +120,13 @@ describe 'Infinite Scroll Throttled to 200ms', ->
     el = angular.element(scroller)
     $document.append(el)
 
-    sinon.stub(fakeWindow, 'height').returns(1000)
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
     scope.busy = true
     $compile(el)(scope)
     scope.$digest()
 
-    fakeWindow.scroll()
+    scroll(fakeWindow)
     scope.scroll.should.not.have.been.called
 
     el.remove()
@@ -149,14 +140,13 @@ describe 'Infinite Scroll Throttled to 200ms', ->
     el = angular.element(scroller)
     $document.append(el)
 
-    sinon.stub(fakeWindow, 'height').returns(1000)
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
     scope.busy = true
     $compile(el)(scope)
     scope.$digest()
 
-    fakeWindow.scroll()
+    scroll(fakeWindow)
 
     $timeout.flush()
     scope.scroll.should.not.have.been.called
