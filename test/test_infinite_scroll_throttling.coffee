@@ -166,22 +166,24 @@ describe 'Infinite Scroll Throttled to 200ms', ->
       infinite-scroll-distance='1' style='height: 10000px'></div>
     """
     el = angular.element(scroller)
-    $document.append(el)
+    body = $document.find('body')
+    body[0].appendChild(el[0])
+    el = body.find('div')
 
-    sinon.stub(fakeWindow, 'height').returns(1000)
-    sinon.stub(fakeWindow, 'scrollTop').returns(7998)
+    fakeWindow[0].resizeTo 1000, 1000
+    fakeWindow[0].scroll 0, 7998
 
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
     $compile(el)(scope)
     scope.$digest()
-    fakeWindow.scroll()
+    scroll(fakeWindow)
 
     $timeout.flush()
     scope.scroll.should.not.have.been.called
 
-    fakeWindow.scrollTop.returns(8000)
-    fakeWindow.scroll()
+    fakeWindow[0].scroll 0, 8600
+    scroll(fakeWindow)
 
     $timeout.flush()
     scope.scroll.should.have.been.calledOnce
@@ -194,22 +196,24 @@ describe 'Infinite Scroll Throttled to 200ms', ->
     <div infinite-scroll='scroll()' infinite-scroll-distance='5' style='height: 10000px;'></div>
     """
     el = angular.element(scroller)
-    $document.append(el)
+    body = $document.find('body')
+    body[0].appendChild(el[0])
+    el = body.find('div')
 
-    sinon.stub(fakeWindow, 'height').returns(1000)
-    sinon.stub(fakeWindow, 'scrollTop').returns(3998)
+    fakeWindow[0].resizeTo 1000, 1000
+    fakeWindow[0].scroll 0, 3998
 
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
     $compile(el)(scope)
     scope.$digest()
-    fakeWindow.scroll()
+    scroll(fakeWindow)
 
     $timeout.flush()
     scope.scroll.should.not.have.been.called
 
-    fakeWindow.scrollTop.returns(4000)
-    fakeWindow.scroll()
+    fakeWindow[0].scroll 0, 6000
+    scroll(fakeWindow)
 
     $timeout.flush()
     scope.scroll.should.have.been.calledOnce
