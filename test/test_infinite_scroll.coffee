@@ -31,7 +31,6 @@ describe 'Infinite Scroll', ->
       if not isWindow
         container[0].style.height = '1000px'
       else
-        fakeWindow[0].resizeTo(1000, 1000)
         container = fakeWindow
 
       scope = $rootScope.$new(true)
@@ -78,7 +77,6 @@ describe 'Infinite Scroll', ->
       if not isWindow
         container[0].style.height = '1000px'
       else
-        fakeWindow[0].resizeTo(1000, 1000)
         container = fakeWindow
 
       scope = $rootScope.$new(true)
@@ -102,7 +100,6 @@ describe 'Infinite Scroll', ->
       if not isWindow
         container[0].style.height = '1000px'
       else
-        fakeWindow[0].resizeTo(1000, 1000)
         container = fakeWindow
 
       scope = $rootScope.$new(true)
@@ -127,7 +124,6 @@ describe 'Infinite Scroll', ->
       if not isWindow
         container[0].style.height = '1000px'
       else
-        fakeWindow[0].resizeTo(1000, 1000)
         container = fakeWindow
 
       scope = $rootScope.$new(true)
@@ -154,9 +150,8 @@ describe 'Infinite Scroll', ->
 
       isWindow = true unless container?
       if not isWindow
-        container[0].style.height = '1000px'
-        container[0].style.position = 'relative'
-        container[0].style.top = '7999px'
+        container.height(1000)
+        container.offset = -> {top: 7999, left: 0}
       else
         fakeWindow[0].scroll 0, $document[0].body.offsetHeight - 2 * fakeWindow[0].innerHeight - 2
         container = fakeWindow
@@ -171,10 +166,8 @@ describe 'Infinite Scroll', ->
       scope.scroll.should.not.have.been.called
 
       if not isWindow
-        # Means nothing while the tests are broken
-        # container[0].scrollByLines(200)
+        el.pageYOffset = 800
       else
-        # This is not right - container height is still 709, not 1000 as it is supposed to be
         fakeWindow[0].scroll 0, $document[0].body.offsetHeight - 2 * fakeWindow[0].innerHeight
         container = fakeWindow
 
@@ -206,8 +199,7 @@ describe 'Infinite Scroll', ->
       scope.scroll.should.not.have.been.called
 
       if not isWindow
-        # Means nothing while the tests are broken
-        # container.scrollTop = -> 4000
+        container.scrollTop = -> 4000
       else
         fakeWindow[0].scroll 0, $document[0].body.offsetHeight - 6 * fakeWindow[0].innerHeight
         container = fakeWindow
