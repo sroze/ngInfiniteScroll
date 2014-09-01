@@ -25,7 +25,7 @@ describe 'Infinite Scroll', ->
   tests =
     'triggers on scrolling': (scroller, container, injScope) ->
       el = angular.element(scroller)
-      $document.append(el)
+      angular.element($document[0].body).append(el)
 
       isWindow = true unless container?
       if not isWindow
@@ -50,7 +50,7 @@ describe 'Infinite Scroll', ->
 
     'triggers immediately by default': (scroller, container, injScope) ->
       el = angular.element(scroller)
-      $document.append(el)
+      angular.element($document[0].body).append(el)
 
       isWindow = true unless container?
       if not isWindow
@@ -72,7 +72,7 @@ describe 'Infinite Scroll', ->
 
     'does not trigger immediately when infinite-scroll-immediate-check is false': (scroller, container, injScope) ->
       el = angular.element(scroller)
-      $document.append(el)
+      angular.element($document[0].body).append(el)
 
       isWindow = true unless container?
       if not isWindow
@@ -96,7 +96,7 @@ describe 'Infinite Scroll', ->
 
     'does not trigger when disabled': (scroller, container, injScope) ->
       el = angular.element(scroller)
-      $document.append(el)
+      angular.element($document[0].body).append(el)
 
       isWindow = true unless container?
       if not isWindow
@@ -121,7 +121,7 @@ describe 'Infinite Scroll', ->
 
     're-triggers after being re-enabled': (scroller, container, injScope) ->
       el = angular.element(scroller)
-      $document.append(el)
+      angular.element($document[0].body).append(el)
 
       isWindow = true unless container?
       if not isWindow
@@ -150,9 +150,7 @@ describe 'Infinite Scroll', ->
 
     'only triggers when the container has been sufficiently scrolled down': (scroller, container, injScope) ->
       el = angular.element(scroller)
-      body = $document.find('body')
-      body[0].appendChild(el[0])
-      el = body.find('div')
+      angular.element($document[0].body).append(el)
 
       isWindow = true unless container?
       if not isWindow
@@ -188,9 +186,7 @@ describe 'Infinite Scroll', ->
 
     'respects the infinite-scroll-distance attribute': (scroller, container, injScope) ->
       el = angular.element(scroller)
-      body = $document.find('body')
-      body[0].appendChild(el[0])
-      el = body.find('div')
+      angular.element($document[0].body).append(el)
 
       isWindow = true unless container?
       if not isWindow
@@ -225,12 +221,12 @@ describe 'Infinite Scroll', ->
   scrollers =
     'triggers on scrolling': ->
       """
-      <div infinite-scroll='scroll()' style='height: 1000px'
+      <div infinite-scroll='scroll()' style='height: #{fakeWindow[0].innerHeight}px'
         infinite-scroll-immediate-check='false'></div>
       """
 
     'triggers immediately by default': -> """
-      <div infinite-scroll='scroll()' style='height: 1000px'></div>
+      <div infinite-scroll='scroll()' style='height: #{fakeWindow[0].innerHeight}px'></div>
       """
 
     'does not trigger immediately when infinite-scroll-immediate-check is false': -> """

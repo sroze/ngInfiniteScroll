@@ -35,11 +35,11 @@ describe 'Infinite Scroll Throttled to 200ms', ->
 
   it 'waits correct interval between calls to handler', ->
     scroller = """
-    <div infinite-scroll='scroll()' style='height: 1000px'
+    <div infinite-scroll='scroll()' style='height: #{fakeWindow[0].innerHeight}px'
       infinite-scroll-immediate-check='false'></div>
     """
     el = angular.element(scroller)
-    $document.append(el)
+    angular.element($document[0].body).append(el)
 
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
@@ -57,11 +57,11 @@ describe 'Infinite Scroll Throttled to 200ms', ->
 
   it "doesn't duplicate calls", ->
     scroller = """
-    <div infinite-scroll='scroll()' style='height: 1000px'
+    <div infinite-scroll='scroll()' style='height: #{fakeWindow[0].innerHeight}px'
       infinite-scroll-immediate-check='false'></div>
     """
     el = angular.element(scroller)
-    $document.append(el)
+    angular.element($document[0].body).append(el)
 
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
@@ -78,10 +78,10 @@ describe 'Infinite Scroll Throttled to 200ms', ->
 
   it 'triggers immediately by default', ->
     scroller = """
-    <div infinite-scroll='scroll()' style='height: 1000px'></div>
+    <div infinite-scroll='scroll()' style='height: #{fakeWindow[0].innerHeight}px'></div>
     """
     el = angular.element(scroller)
-    $document.append(el)
+    angular.element($document[0].body).append(el)
 
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
@@ -98,7 +98,7 @@ describe 'Infinite Scroll Throttled to 200ms', ->
       infinite-scroll-immediate-check='false' style='height: 500px;'></div>
     """
     el = angular.element(scroller)
-    $document.append(el)
+    angular.element($document[0].body).append(el)
 
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
@@ -117,7 +117,7 @@ describe 'Infinite Scroll Throttled to 200ms', ->
       infinite-scroll-disabled='busy' style='height: 500px;'></div>
     """
     el = angular.element(scroller)
-    $document.append(el)
+    angular.element($document[0].body).append(el)
 
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
@@ -137,7 +137,7 @@ describe 'Infinite Scroll Throttled to 200ms', ->
       infinite-scroll-disabled='busy' style='height: 500px;'></div>
     """
     el = angular.element(scroller)
-    $document.append(el)
+    angular.element($document[0].body).append(el)
 
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
@@ -165,9 +165,7 @@ describe 'Infinite Scroll Throttled to 200ms', ->
       infinite-scroll-distance='1' style='height: 10000px'></div>
     """
     el = angular.element(scroller)
-    body = $document.find('body')
-    body[0].appendChild(el[0])
-    el = body.find('div')
+    angular.element($document[0].body).append(el)
 
     fakeWindow[0].scroll 0, $document[0].body.offsetHeight - 2 * fakeWindow[0].innerHeight - 2
 
@@ -194,9 +192,7 @@ describe 'Infinite Scroll Throttled to 200ms', ->
     <div infinite-scroll='scroll()' infinite-scroll-distance='5' style='height: 10000px;'></div>
     """
     el = angular.element(scroller)
-    body = $document.find('body')
-    body[0].appendChild(el[0])
-    el = body.find('div')
+    angular.element($document[0].body).append(el)
 
     fakeWindow[0].scroll 0, $document[0].body.offsetHeight - 6 * fakeWindow[0].innerHeight - 2
 
