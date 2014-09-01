@@ -24,7 +24,6 @@ describe 'Infinite Scroll Throttled to 200ms', ->
       $document = _$document_
       $timeout = _$timeout_
       fakeWindow = angular.element($window)
-      # sinon.stub(fakeWindow, 'last').returns(fakeWindow)
 
       THROTTLE_MILLISECONDS = _THROTTLE_MILLISECONDS_
 
@@ -170,8 +169,7 @@ describe 'Infinite Scroll Throttled to 200ms', ->
     body[0].appendChild(el[0])
     el = body.find('div')
 
-    fakeWindow[0].resizeTo 1000, 1000
-    fakeWindow[0].scroll 0, 7998
+    fakeWindow[0].scroll 0, $document[0].body.offsetHeight - 2 * fakeWindow[0].innerHeight - 2
 
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
@@ -182,7 +180,7 @@ describe 'Infinite Scroll Throttled to 200ms', ->
     $timeout.flush()
     scope.scroll.should.not.have.been.called
 
-    fakeWindow[0].scroll 0, 8600
+    fakeWindow[0].scroll 0, $document[0].body.offsetHeight - 2 * fakeWindow[0].innerHeight
     scroll(fakeWindow)
 
     $timeout.flush()
@@ -200,8 +198,7 @@ describe 'Infinite Scroll Throttled to 200ms', ->
     body[0].appendChild(el[0])
     el = body.find('div')
 
-    fakeWindow[0].resizeTo 1000, 1000
-    fakeWindow[0].scroll 0, 3998
+    fakeWindow[0].scroll 0, $document[0].body.offsetHeight - 6 * fakeWindow[0].innerHeight - 2
 
     scope = $rootScope.$new(true)
     scope.scroll = sinon.spy()
@@ -212,7 +209,7 @@ describe 'Infinite Scroll Throttled to 200ms', ->
     $timeout.flush()
     scope.scroll.should.not.have.been.called
 
-    fakeWindow[0].scroll 0, 6000
+    fakeWindow[0].scroll 0, $document[0].body.offsetHeight - 6 * fakeWindow[0].innerHeight
     scroll(fakeWindow)
 
     $timeout.flush()

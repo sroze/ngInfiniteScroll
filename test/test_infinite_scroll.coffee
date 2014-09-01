@@ -14,7 +14,7 @@ describe 'Infinite Scroll', ->
       $document = _$document_
       $timeout = _$timeout_
       fakeWindow = angular.element($window)
-      # sinon.stub(fakeWindow, 'last').returns(fakeWindow)
+      $document[0].body.style.margin = '0'
 
   scroll = (container) ->
     event = $document[0].createEvent 'UIEvent'
@@ -56,7 +56,6 @@ describe 'Infinite Scroll', ->
       if not isWindow
         container[0].style.height = '1000px'
       else
-        fakeWindow[0].resizeTo(1000, 1000)
         container = fakeWindow
 
       scope = $rootScope.$new(true)
@@ -161,8 +160,7 @@ describe 'Infinite Scroll', ->
         container[0].style.position = 'relative'
         container[0].style.top = '7999px'
       else
-        fakeWindow[0].resizeTo 1000, 1000
-        fakeWindow[0].scroll 0, 7998
+        fakeWindow[0].scroll 0, $document[0].body.offsetHeight - 2 * fakeWindow[0].innerHeight - 2
         container = fakeWindow
 
       scope = $rootScope.$new(true)
@@ -179,7 +177,7 @@ describe 'Infinite Scroll', ->
         # container[0].scrollByLines(200)
       else
         # This is not right - container height is still 709, not 1000 as it is supposed to be
-        fakeWindow[0].scroll 0, 8600
+        fakeWindow[0].scroll 0, $document[0].body.offsetHeight - 2 * fakeWindow[0].innerHeight
         container = fakeWindow
 
       scroll(container)
@@ -199,8 +197,7 @@ describe 'Infinite Scroll', ->
         container.height 1000
         container.scrollTop = 3999
       else
-        fakeWindow[0].resizeTo 1000, 1000
-        fakeWindow[0].scroll 0, 3998
+        fakeWindow[0].scroll 0, $document[0].body.offsetHeight - 6 * fakeWindow[0].innerHeight - 2
         container = fakeWindow
 
       scope = $rootScope.$new(true)
@@ -216,7 +213,7 @@ describe 'Infinite Scroll', ->
         # Means nothing while the tests are broken
         # container.scrollTop = -> 4000
       else
-        fakeWindow[0].scroll 0, 6000
+        fakeWindow[0].scroll 0, $document[0].body.offsetHeight - 6 * fakeWindow[0].innerHeight
         container = fakeWindow
 
       scroll(container)
