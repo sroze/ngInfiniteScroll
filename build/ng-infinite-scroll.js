@@ -1,4 +1,4 @@
-/* ng-infinite-scroll - v1.1.2 - 2014-08-08 */
+/* ng-infinite-scroll - v1.1.2 - 2014-11-03 */
 var mod;
 
 mod = angular.module('infinite-scroll', []);
@@ -27,7 +27,7 @@ mod.directive('infiniteScroll', [
         height = function(elem) {
           elem = elem[0] || elem;
           if (isNaN(elem.offsetHeight)) {
-            return height(elem.document.documentElement);
+            return elem.document.documentElement.clientHeight;
           } else {
             return elem.offsetHeight;
           }
@@ -113,7 +113,7 @@ mod.directive('infiniteScroll', [
           return container.off('scroll', handler);
         });
         handleInfiniteScrollDistance = function(v) {
-          return scrollDistance = parseInt(v, 10) || 0;
+          return scrollDistance = parseFloat(v) || 0;
         };
         scope.$watch('infiniteScrollDistance', handleInfiniteScrollDistance);
         handleInfiniteScrollDistance(scope.infiniteScrollDistance);
