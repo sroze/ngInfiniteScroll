@@ -149,7 +149,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
       if container?
         container.unbind 'scroll', handler
 
-      container = if typeof newContainer.last is 'function' && newContainer != windowElement then newContainer.last() else newContainer
+      container = newContainer
       if newContainer?
         container.bind 'scroll', handler
 
@@ -163,6 +163,14 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
       # So I leave both checks.
       if (not newContainer?) or newContainer.length == 0
         return
+
+      if newContainer instanceof HTMLElement
+        newContainer = angular.element newContainer
+      else if typeof newContainer.append == 'function'
+        newContainer = angular.element newContainer[newContainer.length - 1]
+      else if typeof newContainer == 'string'
+        newContainer = angular.element document.querySelector newContainer
+
       if newContainer?
         changeContainer newContainer
       else

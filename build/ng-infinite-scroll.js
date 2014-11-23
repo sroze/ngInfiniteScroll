@@ -1,4 +1,4 @@
-/* ng-infinite-scroll - v1.1.2 - 2014-08-08 */
+/* ng-infinite-scroll - v1.1.2 - 2014-11-23 */
 var mod;
 
 mod = angular.module('infinite-scroll', []);
@@ -27,7 +27,7 @@ mod.directive('infiniteScroll', [
         height = function(elem) {
           elem = elem[0] || elem;
           if (isNaN(elem.offsetHeight)) {
-            return height(elem.document.documentElement);
+            return elem.document.documentElement.clientHeight;
           } else {
             return elem.offsetHeight;
           }
@@ -110,10 +110,10 @@ mod.directive('infiniteScroll', [
           handler = throttle(handler, THROTTLE_MILLISECONDS);
         }
         scope.$on('$destroy', function() {
-          return container.off('scroll', handler);
+          return container.unbind('scroll', handler);
         });
         handleInfiniteScrollDistance = function(v) {
-          return scrollDistance = parseInt(v, 10) || 0;
+          return scrollDistance = parseFloat(v) || 0;
         };
         scope.$watch('infiniteScrollDistance', handleInfiniteScrollDistance);
         handleInfiniteScrollDistance(scope.infiniteScrollDistance);
@@ -133,19 +133,25 @@ mod.directive('infiniteScroll', [
         handleInfiniteScrollUseDocumentBottom(scope.infiniteScrollUseDocumentBottom);
         changeContainer = function(newContainer) {
           if (container != null) {
-            container.off('scroll', handler);
+            container.unbind('scroll', handler);
           }
-          container = typeof newContainer.last === 'function' && newContainer !== windowElement ? newContainer.last() : newContainer;
+          container = newContainer;
           if (newContainer != null) {
-            return container.on('scroll', handler);
+            return container.bind('scroll', handler);
           }
         };
         changeContainer(windowElement);
         handleInfiniteScrollContainer = function(newContainer) {
-          if ((!(newContainer != null)) || newContainer.length === 0) {
+          if ((newContainer == null) || newContainer.length === 0) {
             return;
           }
-          newContainer = angular.element(document.querySelector(newContainer));
+          if (newContainer instanceof HTMLElement) {
+            newContainer = angular.element(newContainer);
+          } else if (typeof newContainer.append === 'function') {
+            newContainer = angular.element(newContainer[newContainer.length - 1]);
+          } else if (typeof newContainer === 'string') {
+            newContainer = angular.element(document.querySelector(newContainer));
+          }
           if (newContainer != null) {
             return changeContainer(newContainer);
           } else {
