@@ -6,6 +6,7 @@
     "type": "git",
     "url": "git://github.com/sroze/ngInfiniteScroll.git"
   },
+  "browser": "build/ng-infinite-scroll.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start --single-run --browsers=PhantomJS ./test/karma.conf.js"
   },
