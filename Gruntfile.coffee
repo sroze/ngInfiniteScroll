@@ -54,7 +54,7 @@ module.exports = (grunt) ->
         options:
           configFile: 'test/karma.conf.js'
           autoWatch: true
-          browsers: ['Chrome', 'PhantomJS']
+          browsers: ['Chrome']
           reporters: ['dots']
           runnerPort: 9101
           keepalive: true
