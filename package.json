@@ -7,7 +7,7 @@
     "url": "git://github.com/sroze/ngInfiniteScroll.git"
   },
   "scripts": {
-    "test": "./node_modules/.bin/testacular start --single-run --browsers=PhantomJS ./test/testacular.conf.js"
+    "test": "./node_modules/karma/bin/karma start --single-run --browsers=PhantomJS ./test/karma.conf.js"
   },
   "author": {
     "name": "Brandon Tilley",

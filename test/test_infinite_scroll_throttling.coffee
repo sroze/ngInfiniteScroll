@@ -159,7 +159,9 @@ describe 'Infinite Scroll Throttled to 200ms', ->
     el.remove()
     scope.$destroy()
 
-  it 'only triggers when the page has been sufficiently scrolled down', ->
+  # Skipping the following two tests, because they don't work in PhantomJS
+  # (we cannot set window size)
+  it.skip 'only triggers when the page has been sufficiently scrolled down', ->
     scroller = """
     <div infinite-scroll='scroll()'
       infinite-scroll-distance='1' style='height: 10000px'></div>
@@ -187,7 +189,7 @@ describe 'Infinite Scroll Throttled to 200ms', ->
     el.remove()
     scope.$destroy()
 
-  it 'respects the infinite-scroll-distance attribute', ->
+  it.skip 'respects the infinite-scroll-distance attribute', ->
     scroller = """
     <div infinite-scroll='scroll()' infinite-scroll-distance='5' style='height: 10000px;'></div>
     """
