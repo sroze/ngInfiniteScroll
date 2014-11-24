@@ -102,7 +102,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
       handler = throttle(handler, THROTTLE_MILLISECONDS)
 
     scope.$on '$destroy', ->
-      container.off 'scroll', handler
+      container.unbind 'scroll', handler
 
     # infinite-scroll-distance specifies how close to the bottom of the page
     # the window is allowed to be before we trigger a new scroll. The value
@@ -147,11 +147,11 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
     # a jQuery selector as a string.
     changeContainer = (newContainer) ->
       if container?
-        container.off 'scroll', handler
+        container.unbind 'scroll', handler
 
-      container = if typeof newContainer.last is 'function' && newContainer != windowElement then newContainer.last() else newContainer
+      container = newContainer
       if newContainer?
-        container.on 'scroll', handler
+        container.bind 'scroll', handler
 
     changeContainer windowElement
 
@@ -163,7 +163,14 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
       # So I leave both checks.
       if (not newContainer?) or newContainer.length == 0
         return
-      newContainer = angular.element document.querySelector newContainer
+
+      if newContainer instanceof HTMLElement
+        newContainer = angular.element newContainer
+      else if typeof newContainer.append == 'function'
+        newContainer = angular.element newContainer[newContainer.length - 1]
+      else if typeof newContainer == 'string'
+        newContainer = angular.element document.querySelector newContainer
+
       if newContainer?
         changeContainer newContainer
       else
