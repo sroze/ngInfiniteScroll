@@ -3,8 +3,12 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-concat'
+  grunt.loadNpmTasks 'grunt-contrib-connect'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
-  grunt.loadNpmTasks 'grunt-karma'
+  grunt.loadNpmTasks 'grunt-protractor-runner'
+
+  sauceUser = 'pomerantsevp'
+  sauceKey = '497ab04e-f31b-4a7b-9b18-ae3fbe023222'
 
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
@@ -49,14 +53,51 @@ module.exports = (grunt) ->
       dist:
         src: ['build/ng-infinite-scroll.js']
         dest: 'build/ng-infinite-scroll.min.js'
-    karma:
-      unit:
+    connect:
+      testserver:
         options:
-          configFile: 'test/karma.conf.js'
-          reporters: ['dots']
-          browsers: ['PhantomJS', 'Chrome']
-          runnerPort: 9101
-          keepalive: true
+          port: 8000
+          hostname: '0.0.0.0'
+          middleware: (connect, options) ->
+            base = if Array.isArray(options.base) then options.base[options.base.length - 1] else options.base
+            [connect.static(base)]
+    protractor:
+      local:
+        options:
+          configFile: 'test/protractor-local.conf.js'
+      travis:
+        options:
+          configFile: 'test/protractor-travis.conf.js'
+          args:
+            sauceUser: sauceUser
+            sauceKey: sauceKey
+
+  grunt.registerTask 'webdriver', () ->
+    done = this.async()
+    p = require('child_process').spawn('node', ['node_modules/protractor/bin/webdriver-manager', 'update'])
+    p.stdout.pipe(process.stdout)
+    p.stderr.pipe(process.stderr)
+    p.on 'exit', (code) ->
+      if code isnt 0 then grunt.fail.warn('Webdriver failed to update')
+      done()
+
+  grunt.registerTask 'sauce-connect', () ->
+    done = this.async()
+    require('sauce-connect-launcher')({username: sauceUser, accessKey: sauceKey}, (err, sauceConnectProcess) ->
+      if err then console.error(err.message)
+      else done()
+    )
 
   grunt.registerTask 'default', ['coffeelint', 'clean', 'coffee', 'concat', 'uglify']
-  grunt.registerTask 'test', ['karma']
+  grunt.registerTask 'test:protractor-local', [
+    'default',
+    'webdriver',
+    'connect:testserver',
+    'protractor:local'
+  ]
+
+  grunt.registerTask 'test:protractor-travis', [
+    'connect:testserver',
+    'sauce-connect',
+    'protractor:travis'
+  ]
