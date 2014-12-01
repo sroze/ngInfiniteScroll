@@ -1,7 +1,7 @@
 fs = require "fs"
 mkdirp = require "mkdirp"
 
-getTemplate = (angularVersion, container, attrs) ->
+getTemplate = (angularVersion, container, attrs, throttle) ->
   """
     <!doctype html>
     <head>
@@ -14,6 +14,9 @@ getTemplate = (angularVersion, container, attrs) ->
       <script src="../../build/ng-infinite-scroll.js"></script>
       <script>
         angular.module('app', ['infinite-scroll'])
+          .config(function ($provide) {
+            $provide.value('THROTTLE_MILLISECONDS', #{throttle});
+          })
           .run(function ($rootScope) {
             $rootScope.items = [];
             $rootScope.loadMore = function () {
@@ -94,38 +97,79 @@ describe "ng-infinite-scroll", ->
       for container in ["window", "ancestor", "parent"]
         describe "with #{container} as container", ->
 
-          replaceIndexFile = (attrs) ->
+          replaceIndexFile = (attrs, throttle) ->
             mkdirp tmpDir
-            fs.writeFileSync(pathToDocument, getTemplate(angularVersion, container, attrs))
+            fs.writeFileSync(pathToDocument, getTemplate(angularVersion, container, attrs, throttle))
 
-          it "should be triggered immediately and when container is scrolled to the bottom", ->
-            replaceIndexFile ""
-            browser.get pathToDocument
-            expect(getItems().count()).toBe 100
-            browser.driver.executeScript(scrollToBottomScript(container))
-            expect(getItems().count()).toBe 200
+          describe "without throttling", ->
 
-          it "does not trigger immediately when infinite-scroll-immediate-check is false", ->
-            replaceIndexFile "infinite-scroll-immediate-check='false'"
-            browser.get pathToDocument
-            expect(getItems().count()).toBe 0
-            element(By.id("force")).click()
-            expect(getItems().count()).toBe 100
-            browser.driver.executeScript(scrollToBottomScript(container))
-            expect(getItems().count()).toBe 200
+            throttle = null
 
-          it "respects the disabled attribute", ->
-            replaceIndexFile "infinite-scroll-disabled='busy'"
-            browser.get pathToDocument
-            expect(getItems().count()).toBe 0
-            element(By.id("action")).click()
-            expect(getItems().count()).toBe 100
+            it "should be triggered immediately and when container is scrolled to the bottom", ->
+              replaceIndexFile "", throttle
+              browser.get pathToDocument
+              expect(getItems().count()).toBe 100
+              browser.driver.executeScript(scrollToBottomScript(container))
+              expect(getItems().count()).toBe 200
 
-          it "respects the infinite-scroll-distance attribute", ->
-            replaceIndexFile "infinite-scroll-distance='1'"
-            browser.get pathToDocument
-            expect(getItems().count()).toBe 100
-            browser.driver.executeScript(scrollToLastScreenScript(container, -20))
-            expect(getItems().count()).toBe 100
-            browser.driver.executeScript(scrollToLastScreenScript(container, 20))
-            expect(getItems().count()).toBe 200
+            it "does not trigger immediately when infinite-scroll-immediate-check is false", ->
+              replaceIndexFile "infinite-scroll-immediate-check='false'", throttle
+              browser.get pathToDocument
+              expect(getItems().count()).toBe 0
+              element(By.id("force")).click()
+              expect(getItems().count()).toBe 100
+              browser.driver.executeScript(scrollToBottomScript(container))
+              expect(getItems().count()).toBe 200
+
+            it "respects the disabled attribute", ->
+              replaceIndexFile "infinite-scroll-disabled='busy'", throttle
+              browser.get pathToDocument
+              expect(getItems().count()).toBe 0
+              element(By.id("action")).click()
+              expect(getItems().count()).toBe 100
+
+            it "respects the infinite-scroll-distance attribute", ->
+              replaceIndexFile "infinite-scroll-distance='1'", throttle
+              browser.get pathToDocument
+              expect(getItems().count()).toBe 100
+              browser.driver.executeScript(scrollToLastScreenScript(container, -20))
+              expect(getItems().count()).toBe 100
+              browser.driver.executeScript(scrollToLastScreenScript(container, 20))
+              expect(getItems().count()).toBe 200
+
+          describe "with throttling", ->
+
+            throttle = browser.params.testThrottleValue
+
+            it "should be triggered immediately and when container is scrolled to the bottom", ->
+              replaceIndexFile "", throttle
+              browser.get pathToDocument
+              expect(getItems().count()).toBe 100
+              browser.driver.executeScript(scrollToBottomScript(container))
+              expect(getItems().count()).toBe 100
+              browser.sleep(throttle)
+              expect(getItems().count()).toBe 200
+
+            it "does not trigger immediately when infinite-scroll-immediate-check is false", ->
+              replaceIndexFile "infinite-scroll-immediate-check='false'", throttle
+              browser.get pathToDocument
+              expect(getItems().count()).toBe 0
+              element(By.id("force")).click()
+              expect(getItems().count()).toBe 100
+
+            it "respects the disabled attribute and is then throttled when re-enabled", ->
+              replaceIndexFile "infinite-scroll-disabled='busy'", throttle
+              browser.get pathToDocument
+              expect(getItems().count()).toBe 0
+              element(By.id("action")).click()
+              browser.sleep(throttle)
+              expect(getItems().count()).toBe 100
+
+            it "respects the infinite-scroll-distance attribute", ->
+              replaceIndexFile "infinite-scroll-distance='1'", throttle
+              browser.get pathToDocument
+              expect(getItems().count()).toBe 100
+              browser.driver.executeScript(scrollToLastScreenScript(container, 20))
+              expect(getItems().count()).toBe 100
+              browser.sleep(throttle)
+              expect(getItems().count()).toBe 200

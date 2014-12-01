@@ -65,10 +65,17 @@ module.exports = (grunt) ->
       local:
         options:
           configFile: 'test/protractor-local.conf.js'
+          args:
+            params:
+              testThrottleValue: 500
       travis:
         options:
           configFile: 'test/protractor-travis.conf.js'
           args:
+            params:
+              # When using Sauce Connect, we should use a large timeout
+              # since everything is generally much slower than when testing locally.
+              testThrottleValue: 10000
             sauceUser: sauceUser
             sauceKey: sauceKey
 
