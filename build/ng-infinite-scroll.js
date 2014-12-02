@@ -1,4 +1,4 @@
-/* ng-infinite-scroll - v1.1.2 - 2014-11-24 */
+/* ng-infinite-scroll - v1.1.2 - 2014-12-01 */
 var mod;
 
 mod = angular.module('infinite-scroll', []);
@@ -6,7 +6,7 @@ mod = angular.module('infinite-scroll', []);
 mod.value('THROTTLE_MILLISECONDS', null);
 
 mod.directive('infiniteScroll', [
-  '$rootScope', '$window', '$timeout', 'THROTTLE_MILLISECONDS', function($rootScope, $window, $timeout, THROTTLE_MILLISECONDS) {
+  '$rootScope', '$window', '$interval', 'THROTTLE_MILLISECONDS', function($rootScope, $window, $interval, THROTTLE_MILLISECONDS) {
     return {
       scope: {
         infiniteScroll: '&',
@@ -84,7 +84,7 @@ mod.directive('infiniteScroll', [
           later = function() {
             var context;
             previous = new Date().getTime();
-            $timeout.cancel(timeout);
+            $interval.cancel(timeout);
             timeout = null;
             func.call();
             return context = null;
@@ -95,13 +95,13 @@ mod.directive('infiniteScroll', [
             remaining = wait - (now - previous);
             if (remaining <= 0) {
               clearTimeout(timeout);
-              $timeout.cancel(timeout);
+              $interval.cancel(timeout);
               timeout = null;
               previous = now;
               return func.call();
             } else {
               if (!timeout) {
-                return timeout = $timeout(later, remaining);
+                return timeout = $interval(later, remaining, 1);
               }
             }
           };
@@ -166,11 +166,11 @@ mod.directive('infiniteScroll', [
         if (attrs.infiniteScrollImmediateCheck != null) {
           immediateCheck = scope.$eval(attrs.infiniteScrollImmediateCheck);
         }
-        return $timeout((function() {
+        return $interval((function() {
           if (immediateCheck) {
             return handler();
           }
-        }), 0);
+        }), 0, 1);
       }
     };
   }

@@ -1,2 +1,3 @@
 compile/*
 node_modules
+.tmp

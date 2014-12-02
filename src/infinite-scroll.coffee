@@ -2,8 +2,8 @@ mod = angular.module('infinite-scroll', [])
 
 mod.value('THROTTLE_MILLISECONDS', null)
 
-mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_MILLISECONDS', \
-                                  ($rootScope, $window, $timeout, THROTTLE_MILLISECONDS) ->
+mod.directive 'infiniteScroll', ['$rootScope', '$window', '$interval', 'THROTTLE_MILLISECONDS', \
+                                  ($rootScope, $window, $interval, THROTTLE_MILLISECONDS) ->
   scope:
     infiniteScroll: '&'
     infiniteScrollContainer: '='
@@ -82,7 +82,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
       previous = 0
       later = ->
         previous = new Date().getTime()
-        $timeout.cancel(timeout)
+        $interval.cancel(timeout)
         timeout = null
         func.call()
         context = null
@@ -92,11 +92,11 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
         remaining = wait - (now - previous)
         if remaining <= 0
           clearTimeout timeout
-          $timeout.cancel(timeout)
+          $interval.cancel(timeout)
           timeout = null
           previous = now
           func.call()
-        else timeout = $timeout(later, remaining) unless timeout
+        else timeout = $interval(later, remaining, 1) unless timeout
 
     if THROTTLE_MILLISECONDS?
       handler = throttle(handler, THROTTLE_MILLISECONDS)
@@ -190,8 +190,8 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$timeout', 'THROTTLE_
     if attrs.infiniteScrollImmediateCheck?
       immediateCheck = scope.$eval(attrs.infiniteScrollImmediateCheck)
 
-    $timeout (->
+    $interval (->
       if immediateCheck
         handler()
-    ), 0
+    ), 0, 1
 ]
