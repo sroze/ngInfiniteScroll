@@ -157,12 +157,21 @@ describe "ng-infinite-scroll", ->
               element(By.id("force")).click()
               expect(getItems().count()).toBe 100
 
-            it "respects the disabled attribute and is then throttled when re-enabled", ->
+            it "respects the disabled attribute and is throttled when page loads", ->
               replaceIndexFile "infinite-scroll-disabled='busy'", throttle
               browser.get pathToDocument
               expect(getItems().count()).toBe 0
               element(By.id("action")).click()
+              expect(getItems().count()).toBe 0
               browser.sleep(throttle)
+              expect(getItems().count()).toBe 100
+
+            it "is not throttled when re-enabled if the throttle time has already elapsed", ->
+              replaceIndexFile "infinite-scroll-disabled='busy'", throttle
+              browser.get pathToDocument
+              expect(getItems().count()).toBe 0
+              browser.sleep(throttle)
+              element(By.id("action")).click()
               expect(getItems().count()).toBe 100
 
             it "respects the infinite-scroll-distance attribute", ->
