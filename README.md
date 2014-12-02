@@ -63,3 +63,5 @@ Testing
 ngInfiniteScroll uses Protractor for testing. Note that you will need to have Chrome browser, and the `grunt-cli` npm package installed globally if you wish to use grunt (`npm install -g grunt-cli`). Then, install the dependencies with `npm install`.
 
 * `grunt test:protractor-local` - run tests
+
+Thank you very much @pomerantsev for your work on these Protractor tests.
