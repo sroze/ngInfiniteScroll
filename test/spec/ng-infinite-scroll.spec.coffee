@@ -28,12 +28,17 @@ getTemplate = (angularVersion, container, attrs, throttle) ->
             $rootScope.enable = function () {
               $rootScope.busy = false;
             };
+
+            $rootScope.triggerEvent = function () {
+              $rootScope.$emit('anEvent');
+            };
           });
       </script>
     </head>
     <body ng-app="app">
       <a id="action" ng-click="enable()">Enable</a>
       <a id="force" ng-click="loadMore()">Force</a>
+      <a id="trigger" ng-click="triggerEvent()">Trigger</a>
       #{containers[container].start}
         <div infinite-scroll="loadMore()" #{containers[container].attr} #{attrs}>
           <p ng-repeat='item in items track by $index'>
@@ -84,6 +89,14 @@ scrollToLastScreenScript = (container, offset) ->
       #{getElementByIdScript(container)}.scrollTop =
         #{calculateChildrenHeightScript(container)} - 2 * #{getElementByIdScript(container)}.offsetHeight + #{offset}
     """
+
+collapseItemsScript = (container) ->
+  """
+  var items = document.getElementsByTagName('p')
+  for (i = 0; i < items.length; ++i) {
+    items[i].style.display = 'none'
+  }
+  """
 
 getItems = ->
   element.all(By.repeater "item in items")
@@ -137,6 +150,17 @@ describe "ng-infinite-scroll", ->
               browser.driver.executeScript(scrollToLastScreenScript(container, 20))
               expect(getItems().count()).toBe 200
 
+            describe "with an event handler", ->
+
+              it "calls the event handler on an event", ->
+                replaceIndexFile "infinite-scroll-listen-for-event='anEvent'", throttle
+                browser.get pathToDocument
+                expect(getItems().count()).toBe 100
+                browser.driver.executeScript(collapseItemsScript(container))
+                expect(getItems().count()).toBe 100
+                element(By.id("trigger")).click()
+                expect(getItems().count()).toBe 200
+
           describe "with throttling", ->
 
             throttle = browser.params.testThrottleValue
@@ -182,3 +206,16 @@ describe "ng-infinite-scroll", ->
               expect(getItems().count()).toBe 100
               browser.sleep(throttle)
               expect(getItems().count()).toBe 200
+
+            describe "with an event handler", ->
+
+              it "calls the event handler on an event", ->
+                replaceIndexFile "infinite-scroll-listen-for-event='anEvent'", throttle
+                browser.get pathToDocument
+                expect(getItems().count()).toBe 100
+                browser.driver.executeScript(collapseItemsScript(container))
+                expect(getItems().count()).toBe 100
+                element(By.id("trigger")).click()
+                expect(getItems().count()).toBe 100
+                browser.sleep(throttle)
+                expect(getItems().count()).toBe 200
