@@ -52,7 +52,8 @@
 <pre>&lt;ANY infinite-scroll='{expression}'
      [infinite-scroll-distance='{number}']
      [infinite-scroll-disabled='{boolean}']
-     [infinite-scroll-immediate-check='{boolean}']>
+     [infinite-scroll-immediate-check='{boolean}']
+     [infinite-scroll-listen-for-event='{string}']>
 &lt;/ANY></pre></div>
 
     <h5>Parameters</h5>
@@ -61,6 +62,7 @@
       <li><code>infinite-scroll-distance <em>(optional)</em> - {number}</code> - A number representing how close the bottom of the element must be to the bottom of the browser window before the expression specified by <code>infinite-scroll</code> is triggered. Measured in multiples of the window height; for example, if the browser window is 1000 pixels tall and <code>infinite-scroll-distance</code> is set to <code>2</code>, the infinite scroll expression will be evaluated when the bottom of the element is within 2000 pixels of the bottom of the browser window. Defaults to <code>0</code> (e.g. the expression will be evaluated when the bottom of the element crosses the bottom of the browser window).</li>
       <li><code>infinite-scroll-disabled <em>(optional)</em> - {boolean}</code> - A boolean expression that, when <code>true</code>, indicates that the infininite scroll expression should not be evaluated even if all other conditions are met. This is usually used to throttle or pause the infinite scroll, for example when data is loading via Ajax. If a scroll event triggers the directive but this attribute prevents the expression evaluation, the event will be handled instead immediately after this attribute again evaluates to <code>false</code>.</li>
       <li><code>infinite-scroll-immediate-check <em>(optional)</em> - {boolean}</code> - A boolean expression that indicates that the directive should check immediately to see if a scroll event <em>would</em> trigger an evaluation of the infinite scroll expression even if a scroll event does not occur. Useful if it's possible that the content inside the directive's element is not tall enough to fill up the entire browser window's height. Defaults to <code>true</code>.</li>
+      <li><code>infinite-scroll-listen-for-event <em>(optional)</em> - {string}</code> - The name of an event that, when received, will cause the scroll position check to be re-run. This is useful if you need to manually trigger the scroll handler, for instance if your items have been filtered or modified without altering the collection.</li>
     </ul>
 
     <h4>Loading the Module</h4>
@@ -76,6 +78,18 @@ var myApp = angular.module('myApp', ['infinite-scroll']);</pre>
 // you might call this after your module initalization
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 250)
     </pre>
+
+    <h4>Triggering the scroll handler manually</h4>
+    <p>If your items can change their height or be hidden — for instance in a filtered list — it is possible for your list to get shorter and require repopulating without the user triggering a scroll event. In this case, you can use the infinite-scroll-listen-for-event attribute. Later, when you need to trigger the scroll check, fire the corresponding event. For example:</p>
+
+    <pre class='panel demo radius'>
+&lt;div infinite-scroll="addMoreItems()" infinite-scroll-listen-for-event="list:filtered"&gt;
+  [...]
+&lt;/div&gt;</pre>
+
+    <p>And then, when you need to trigger the check, for instance in your controller:</p>
+
+    <pre class='panel demo radius'>$scope.$emit('list:filtered')</pre>
 
     <h4>Typical Usage</h4>
     <p>Typically, you will use the <code>infiniteScroll</code> directive on an element that contains another element that uses <code>ngRepeat</code> to show a series of elements based on an array (or object); the expression you pass in to the <code>infinite-scroll</code> attribute will generally add additional elements to the array, expanding the <code>ngRepeat</code>.</p>
