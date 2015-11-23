@@ -1,8 +1,6 @@
-mod = angular.module('infinite-scroll', [])
-
-mod.value('THROTTLE_MILLISECONDS', null)
-
-mod.directive 'infiniteScroll', ['$rootScope', '$window', '$interval', 'THROTTLE_MILLISECONDS', \
+angular.module('infinite-scroll', []) \
+.value('THROTTLE_MILLISECONDS', null) \
+.directive 'infiniteScroll', ['$rootScope', '$window', '$interval', 'THROTTLE_MILLISECONDS', \
                                   ($rootScope, $window, $interval, THROTTLE_MILLISECONDS) ->
   scope:
     infiniteScroll: '&'
