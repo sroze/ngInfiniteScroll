@@ -1,4 +1,4 @@
-/* ng-infinite-scroll - v1.2.0 - 2015-12-02 */
+/* ng-infinite-scroll - v1.2.1 - 2016-01-27 */
 var mod;
 
 mod = angular.module('infinite-scroll', []);
@@ -168,7 +168,7 @@ mod.directive('infiniteScroll', [
           if (newContainer != null) {
             return changeContainer(newContainer);
           } else {
-            throw new Exception("invalid infinite-scroll-container attribute.");
+            throw new Error("invalid infinite-scroll-container attribute.");
           }
         };
         scope.$watch('infiniteScrollContainer', handleInfiniteScrollContainer);
