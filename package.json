@@ -12,7 +12,7 @@
     "test": "grunt test:protractor-local"
   },
   "author": {
-    "name": "Brandon Tilley",
+    "name": "Michelle Tilley",
     "email": "brandon@brandontilley.com",
     "url": "http://brandontilley.com"
   },
