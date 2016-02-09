@@ -155,7 +155,7 @@ mod.directive('infiniteScroll', [
           if ((newContainer == null) || newContainer.length === 0) {
             return;
           }
-          if (newContainer instanceof HTMLElement) {
+          if (newContainer.nodeType && newContainer.nodeType === 1) {
             newContainer = angular.element(newContainer);
           } else if (typeof newContainer.append === 'function') {
             newContainer = angular.element(newContainer[newContainer.length - 1]);
