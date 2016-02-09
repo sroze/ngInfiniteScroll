@@ -1,4 +1,4 @@
-/* ng-infinite-scroll - v1.2.0 - 2015-12-02 */
+/* ng-infinite-scroll - v1.2.1 - 2016-02-09 */
 var mod;
 
 mod = angular.module('infinite-scroll', []);
@@ -88,19 +88,16 @@ mod.directive('infiniteScroll', [
           timeout = null;
           previous = 0;
           later = function() {
-            var context;
             previous = new Date().getTime();
             $interval.cancel(timeout);
             timeout = null;
-            func.call();
-            return context = null;
+            return func.call();
           };
           return function() {
             var now, remaining;
             now = new Date().getTime();
             remaining = wait - (now - previous);
             if (remaining <= 0) {
-              clearTimeout(timeout);
               $interval.cancel(timeout);
               timeout = null;
               previous = now;
@@ -181,9 +178,10 @@ mod.directive('infiniteScroll', [
         }
         return checkInterval = $interval((function() {
           if (immediateCheck) {
-            return handler();
+            handler();
           }
-        }), 0);
+          return $interval.cancel(checkInterval);
+        }));
       }
     };
   }
