@@ -89,13 +89,11 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$interval', 'THROTTLE
         $interval.cancel(timeout)
         timeout = null
         func.call()
-        context = null
 
       return ->
         now = new Date().getTime()
         remaining = wait - (now - previous)
         if remaining <= 0
-          clearTimeout timeout
           $interval.cancel(timeout)
           timeout = null
           previous = now
@@ -174,7 +172,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$interval', 'THROTTLE
       if (not newContainer?) or newContainer.length == 0
         return
 
-      if newContainer instanceof HTMLElement
+      if newContainer.nodeType && newContainer.nodeType == 1
         newContainer = angular.element newContainer
       else if typeof newContainer.append == 'function'
         newContainer = angular.element newContainer[newContainer.length - 1]
@@ -203,5 +201,6 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$interval', 'THROTTLE
     checkInterval = $interval (->
       if immediateCheck
         handler()
-    ), 0
+      $interval.cancel checkInterval
+    )
 ]
