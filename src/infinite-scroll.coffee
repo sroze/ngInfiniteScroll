@@ -182,7 +182,7 @@ mod.directive 'infiniteScroll', ['$rootScope', '$window', '$interval', 'THROTTLE
       if newContainer?
         changeContainer newContainer
       else
-        throw new Exception("invalid infinite-scroll-container attribute.")
+        throw new Error("invalid infinite-scroll-container attribute.")
 
     scope.$watch 'infiniteScrollContainer', handleInfiniteScrollContainer
     handleInfiniteScrollContainer(scope.infiniteScrollContainer or [])
