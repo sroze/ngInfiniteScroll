@@ -1,3 +1,7 @@
+[**Maintainer help needed**: I'm looking for fellows that are willing to help me maintain and improve this project.](https://github.com/sroze/ngInfiniteScroll/issues/267)
+
+---
+
 ![logo](http://sroze.github.com/ngInfiniteScroll/images/logo-resized.png)
 
 [![Build Status](https://travis-ci.org/sroze/ngInfiniteScroll.png?branch=master)](https://travis-ci.org/sroze/ngInfiniteScroll)
