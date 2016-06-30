@@ -30,9 +30,8 @@ Getting Started
  * Download ngInfiniteScroll from [the download page on the ngInfiniteScroll web site](http://sroze.github.com/ngInfiniteScroll/#download) or install it with:
    * [Bower](http://bower.io/) via `bower install ngInfiniteScroll`
    * [Nuget](https://www.nuget.org) via `PM> Install-Package ng-infinite-scroll`
- * Include the script tag on your page after the AngularJS and jQuery script tags (ngInfiniteScroll requires jQuery to run)
+ * Include the script tag on your page after the AngularJS script tag (ngInfiniteScroll *doesn't* requires jQuery for more)
 
-        <script type='text/javascript' src='path/to/jquery.min.js'></script>
         <script type='text/javascript' src='path/to/angular.min.js'></script>
         <script type='text/javascript' src='path/to/ng-infinite-scroll.min.js'></script>
 
