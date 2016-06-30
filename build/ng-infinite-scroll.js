@@ -183,3 +183,7 @@ angular.module('infinite-scroll', []).value('THROTTLE_MILLISECONDS', null).direc
     };
   }
 ]);
+
+if (typeof module !== "undefined" && typeof exports !== "undefined" && module.exports === exports) {
+  module.exports = 'infinite-scroll';
+}
