@@ -97,7 +97,8 @@ angular.module('infinite-scroll', [])
           timeout = null
           previous = now
           func.call()
-        else timeout = $interval(later, remaining, 1) unless timeout
+        else if not timeout
+          timeout = $interval(later, remaining, 1)
 
     if THROTTLE_MILLISECONDS?
       handler = throttle(handler, THROTTLE_MILLISECONDS)
