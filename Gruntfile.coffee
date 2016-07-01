@@ -6,6 +6,8 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON 'package.json'
     meta:
       banner: '/* <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+    eslint:
+      target: ['src']
     coffeelint:
       src: 'src/**/*.coffee'
       options:
@@ -91,7 +93,7 @@ module.exports = (grunt) ->
       else done()
     )
 
-  grunt.registerTask 'default', ['coffeelint', 'clean', 'babel', 'coffee', 'concat', 'uglify']
+  grunt.registerTask 'default', ['eslint', 'coffeelint', 'clean', 'babel', 'coffee', 'concat', 'uglify']
   grunt.registerTask 'test:protractor-local', [
     'default',
     'webdriver',
