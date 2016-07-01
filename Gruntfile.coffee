@@ -1,16 +1,13 @@
+loadGruntTasks = require 'load-grunt-tasks'
 module.exports = (grunt) ->
-  grunt.loadNpmTasks 'grunt-coffeelint'
-  grunt.loadNpmTasks 'grunt-contrib-clean'
-  grunt.loadNpmTasks 'grunt-contrib-coffee'
-  grunt.loadNpmTasks 'grunt-contrib-concat'
-  grunt.loadNpmTasks 'grunt-contrib-connect'
-  grunt.loadNpmTasks 'grunt-contrib-uglify'
-  grunt.loadNpmTasks 'grunt-protractor-runner'
+  loadGruntTasks(grunt)
 
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
     meta:
       banner: '/* <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+    eslint:
+      target: ['src']
     coffeelint:
       src: 'src/**/*.coffee'
       options:
@@ -25,6 +22,20 @@ module.exports = (grunt) ->
       options:
         force: true
       build: ["compile/**", "build/**"]
+    babel:
+      compile:
+        files: [
+          {
+            expand: true
+            cwd: 'src/'
+            src: '**/*.js'
+            dest: 'compile/'
+            ext: '.js'
+          }
+        ]
+        options:
+          presets: ["es2015", "es2016", "stage-1"]
+          plugins: ["add-module-exports", "transform-es2015-modules-umd"]
     coffee:
       compile:
         files: [
@@ -82,7 +93,7 @@ module.exports = (grunt) ->
       else done()
     )
 
-  grunt.registerTask 'default', ['coffeelint', 'clean', 'coffee', 'concat', 'uglify']
+  grunt.registerTask 'default', ['eslint', 'coffeelint', 'clean', 'babel', 'coffee', 'concat', 'uglify']
   grunt.registerTask 'test:protractor-local', [
     'default',
     'webdriver',
