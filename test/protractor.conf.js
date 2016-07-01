@@ -4,6 +4,9 @@ exports.config = {
   allScriptsTimeout: 30000,
   getPageTimeout: 30000,
   multiCapabilities: [
-    { browserName: 'chrome' }
-  ]
+    {
+      browserName: 'chrome',
+      chromeOptions: { args: ['--no-sandbox'] },
+    }
+  ],
 };
