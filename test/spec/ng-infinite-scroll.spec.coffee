@@ -105,7 +105,7 @@ tmpDir = ".tmp"
 pathToDocument = "#{tmpDir}/index.html"
 
 describe "ng-infinite-scroll", ->
-  for angularVersion in ["1.2.0", "1.3.4"]
+  for angularVersion in ["1.2.29", "1.3.20", "1.4.12", "1.5.7"]
     describe "with Angular #{angularVersion}", ->
       for container in ["window", "ancestor", "parent"]
         describe "with #{container} as container", ->
