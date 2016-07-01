@@ -51,5 +51,8 @@
     "mkdirp": "0.5.0",
     "protractor": "1.4.0",
     "sauce-connect-launcher": "0.9.0"
+  },
+  "peerDependencies": {
+    "angular": "^1.2"
   }
 }
