@@ -18,7 +18,7 @@ angular.module(MODULE_NAME, [])
     },
 
     link(scope, elem, attrs) {
-      let windowElement = angular.element($window);
+      const windowElement = angular.element($window);
 
       let scrollDistance = null;
       let scrollEnabled = null;
@@ -29,13 +29,13 @@ angular.module(MODULE_NAME, [])
       let unregisterEventListener = null;
       let checkInterval = false;
 
-      let height = function (elem) {
+      const height = function (elem) {
         elem = elem[0] || elem;
 
         if (isNaN(elem.offsetHeight)) { return elem.document.documentElement.clientHeight; } else { return elem.offsetHeight; }
       };
 
-      let offsetTop = function (elem) {
+      const offsetTop = function (elem) {
         if (!elem[0].getBoundingClientRect || elem.css('none')) {
           return;
         }
@@ -72,8 +72,8 @@ angular.module(MODULE_NAME, [])
           var elementBottom = height((elem[0].ownerDocument || elem[0].document).documentElement);
         }
 
-        let remaining = elementBottom - containerBottom;
-        let shouldScroll = remaining <= height(container) * scrollDistance + 1;
+        const remaining = elementBottom - containerBottom;
+        const shouldScroll = remaining <= height(container) * scrollDistance + 1;
 
         if (shouldScroll) {
           checkWhenEnabled = true;
@@ -97,10 +97,10 @@ angular.module(MODULE_NAME, [])
       // immediately, and the final call will always result in the
       // handler being called after the `wait` period elapses.
       // A slimmed down version of underscore's implementation.
-      let throttle = function (func, wait) {
+      const throttle = function (func, wait) {
         let timeout = null;
         let previous = 0;
-        let later = function () {
+        const later = function () {
           previous = new Date().getTime();
           $interval.cancel(timeout);
           timeout = null;
@@ -108,8 +108,8 @@ angular.module(MODULE_NAME, [])
         };
 
         return (function () {
-          let now = new Date().getTime();
-          let remaining = wait - (now - previous);
+          const now = new Date().getTime();
+          const remaining = wait - (now - previous);
           if (remaining <= 0) {
             $interval.cancel(timeout);
             timeout = null;
@@ -141,7 +141,7 @@ angular.module(MODULE_NAME, [])
       // provided is multiplied by the container height; for example, to load
       // more when the bottom of the page is less than 3 container heights away,
       // specify a value of 3. Defaults to 0.
-      let handleInfiniteScrollDistance = v => scrollDistance = parseFloat(v) || 0;
+      const handleInfiniteScrollDistance = v => scrollDistance = parseFloat(v) || 0;
 
       scope.$watch('infiniteScrollDistance', handleInfiniteScrollDistance);
       // If I don't explicitly call the handler here, tests fail. Don't know why yet.
@@ -153,7 +153,7 @@ angular.module(MODULE_NAME, [])
       // scroll is triggered but this value evaluates to true, then
       // once it switches back to false the infinite scroll function
       // will be triggered again.
-      let handleInfiniteScrollDisabled = function (v) {
+      const handleInfiniteScrollDisabled = function (v) {
         scrollEnabled = !v;
         if (scrollEnabled && checkWhenEnabled) {
           checkWhenEnabled = false;
@@ -168,7 +168,7 @@ angular.module(MODULE_NAME, [])
       // use the bottom of the document instead of the element's bottom.
       // This useful when the element does not have a height due to its
       // children being absolute positioned.
-      let handleInfiniteScrollUseDocumentBottom = v => useDocumentBottom = v;
+      const handleInfiniteScrollUseDocumentBottom = v => useDocumentBottom = v;
 
       scope.$watch('infiniteScrollUseDocumentBottom', handleInfiniteScrollUseDocumentBottom);
       handleInfiniteScrollUseDocumentBottom(scope.infiniteScrollUseDocumentBottom);
@@ -177,7 +177,7 @@ angular.module(MODULE_NAME, [])
       // infinte scrolled, instead of the whole window. Must be an
       // Angular or jQuery element, or, if jQuery is loaded,
       // a jQuery selector as a string.
-      let changeContainer = function (newContainer) {
+      const changeContainer = function (newContainer) {
         if (container != null) {
           container.unbind('scroll', handler);
         }
@@ -194,7 +194,7 @@ angular.module(MODULE_NAME, [])
         unregisterEventListener = $rootScope.$on(scope.infiniteScrollListenForEvent, handler);
       }
 
-      let handleInfiniteScrollContainer = function (newContainer) {
+      const handleInfiniteScrollContainer = function (newContainer) {
         // TODO: For some reason newContainer is sometimes null instead
         // of the empty array, which Angular is supposed to pass when the
         // element is not defined
