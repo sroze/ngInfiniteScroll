@@ -6,7 +6,7 @@ angular.module(MODULE_NAME, [])
   .value('THROTTLE_MILLISECONDS', null)
   .directive('infiniteScroll', [
     '$rootScope', '$window', '$interval', 'THROTTLE_MILLISECONDS',
-($rootScope, $window, $interval, THROTTLE_MILLISECONDS) =>
+    ($rootScope, $window, $interval, THROTTLE_MILLISECONDS) =>
   ({
     scope: {
       infiniteScroll: '&',
@@ -14,7 +14,7 @@ angular.module(MODULE_NAME, [])
       infiniteScrollDistance: '=',
       infiniteScrollDisabled: '=',
       infiniteScrollUseDocumentBottom: '=',
-      infiniteScrollListenForEvent: '@'
+      infiniteScrollListenForEvent: '@',
     },
 
     link(scope, elem, attrs) {
@@ -29,13 +29,13 @@ angular.module(MODULE_NAME, [])
       let unregisterEventListener = null;
       let checkInterval = false;
 
-      let height = function(elem) {
+      let height = function (elem) {
         elem = elem[0] || elem;
 
         if (isNaN(elem.offsetHeight)) { return elem.document.documentElement.clientHeight; } else { return elem.offsetHeight; }
       };
 
-      let offsetTop = function(elem) {
+      let offsetTop = function (elem) {
         if (!elem[0].getBoundingClientRect || elem.css('none')) {
           return;
         }
@@ -43,7 +43,7 @@ angular.module(MODULE_NAME, [])
         return elem[0].getBoundingClientRect().top + pageYOffset(elem);
       };
 
-      var pageYOffset = function(elem) {
+      var pageYOffset = function (elem) {
         elem = elem[0] || elem;
 
         if (isNaN(window.pageYOffset)) { return elem.document.documentElement.scrollTop; } else { return elem.ownerDocument.defaultView.pageYOffset; }
@@ -55,7 +55,7 @@ angular.module(MODULE_NAME, [])
       // document. It is recommended to use infinite-scroll-disabled
       // with a boolean that is set to true when the function is
       // called in order to throttle the function call.
-      let handler = function() {
+      let handler = function () {
         if (container === windowElement) {
           var containerBottom = height(container) + pageYOffset(container[0].document.documentElement);
           var elementBottom = offsetTop(elem) + height(elem);
@@ -68,7 +68,7 @@ angular.module(MODULE_NAME, [])
           var elementBottom = offsetTop(elem) - containerTopOffset + height(elem);
         }
 
-        if(useDocumentBottom) {
+        if (useDocumentBottom) {
           var elementBottom = height((elem[0].ownerDocument || elem[0].document).documentElement);
         }
 
@@ -97,17 +97,17 @@ angular.module(MODULE_NAME, [])
       // immediately, and the final call will always result in the
       // handler being called after the `wait` period elapses.
       // A slimmed down version of underscore's implementation.
-      let throttle = function(func, wait) {
+      let throttle = function (func, wait) {
         let timeout = null;
         let previous = 0;
-        let later = function() {
+        let later = function () {
           previous = new Date().getTime();
           $interval.cancel(timeout);
           timeout = null;
           return func.call();
         };
 
-        return (function() {
+        return (function () {
           let now = new Date().getTime();
           let remaining = wait - (now - previous);
           if (remaining <= 0) {
@@ -125,7 +125,7 @@ angular.module(MODULE_NAME, [])
         handler = throttle(handler, THROTTLE_MILLISECONDS);
       }
 
-      scope.$on('$destroy', function() {
+      scope.$on('$destroy', function () {
         container.unbind('scroll', handler);
         if (unregisterEventListener != null) {
           unregisterEventListener();
@@ -153,7 +153,7 @@ angular.module(MODULE_NAME, [])
       // scroll is triggered but this value evaluates to true, then
       // once it switches back to false the infinite scroll function
       // will be triggered again.
-      let handleInfiniteScrollDisabled = function(v) {
+      let handleInfiniteScrollDisabled = function (v) {
         scrollEnabled = !v;
         if (scrollEnabled && checkWhenEnabled) {
           checkWhenEnabled = false;
@@ -177,7 +177,7 @@ angular.module(MODULE_NAME, [])
       // infinte scrolled, instead of the whole window. Must be an
       // Angular or jQuery element, or, if jQuery is loaded,
       // a jQuery selector as a string.
-      let changeContainer = function(newContainer) {
+      let changeContainer = function (newContainer) {
         if (container != null) {
           container.unbind('scroll', handler);
         }
@@ -194,7 +194,7 @@ angular.module(MODULE_NAME, [])
         unregisterEventListener = $rootScope.$on(scope.infiniteScrollListenForEvent, handler);
       }
 
-      let handleInfiniteScrollContainer = function(newContainer) {
+      let handleInfiniteScrollContainer = function (newContainer) {
         // TODO: For some reason newContainer is sometimes null instead
         // of the empty array, which Angular is supposed to pass when the
         // element is not defined
@@ -215,7 +215,7 @@ angular.module(MODULE_NAME, [])
         if (newContainer != null) {
           return changeContainer(newContainer);
         } else {
-          throw new Error("invalid infinite-scroll-container attribute.");
+          throw new Error('invalid infinite-scroll-container attribute.');
         }
       };
 
@@ -235,15 +235,15 @@ angular.module(MODULE_NAME, [])
         immediateCheck = scope.$eval(attrs.infiniteScrollImmediateCheck);
       }
 
-      return checkInterval = $interval((function() {
+      return checkInterval = $interval((function () {
         if (immediateCheck) {
           handler();
         }
         return $interval.cancel(checkInterval);
       }));
-    }
-  })
+    },
+  }),
 
-]);
+  ]);
 
 export default MODULE_NAME;
