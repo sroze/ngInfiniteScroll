@@ -9,6 +9,7 @@
   "main": "build/ng-infinite-scroll.js",
   "browser": "build/ng-infinite-scroll.js",
   "scripts": {
+    "prepublish": "grunt",
     "test": "grunt test:protractor-local"
   },
   "author": {

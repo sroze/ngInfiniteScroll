@@ -16,35 +16,29 @@ Check out the running demos [at the ngInfiniteScroll web site](http://sroze.gith
 Version Numbers
 ---------------
 
-ngInfinite Scroll follows [semantic versioning](http://semver.org/) and uses the following versioning scheme:
-
- * Versions starting with 0 (e.g. 0.1.0, 0.2.0, etc.) are for initial development, and the API is not stable
- * Versions with an even minor version (1.0.0, 1.4.0, 2.2.0, etc.) are stable releases
- * Versions with an odd minor version (1.1.0, 1.3.0, 2.1.0, etc.) are development releases
-
-The [download page](http://sroze.github.com/ngInfiniteScroll/#download) allows you to pick among various versions and specify which releases are stable (not including pre-release builds).
+ngInfinite Scroll follows [semantic versioning](http://semver.org/).
 
 Getting Started
 ---------------
 
- * Download ngInfiniteScroll from [the download page on the ngInfiniteScroll web site](http://sroze.github.com/ngInfiniteScroll/#download) or install it with:
-   * [Bower](http://bower.io/) via `bower install ngInfiniteScroll`
+ * Install it with:
    * [NPM](https://www.npmjs.com) via `npm install --save ng-infinite-scroll`
-   * [Nuget](https://www.nuget.org) via `PM> Install-Package ng-infinite-scroll`
- * Include the script tag on your page after the AngularJS script tag (ngInfiniteScroll *doesn't* require jQuery)
+ * Import ng-infinite-scroll after angular.
 
-        <script type='text/javascript' src='path/to/angular.min.js'></script>
-        <script type='text/javascript' src='path/to/ng-infinite-scroll.min.js'></script>
+        import angular from 'angular';
+        import ngInfiniteScroll from 'ng-infinite-scroll';
 
- * Ensure that your application module specifies `infinite-scroll` as a dependency:
+ * Ensure that your application module specifies ngInfiniteScroll as a dependency:
 
-        angular.module('myApplication', ['infinite-scroll']);
+        const MODULE_NAME = 'myApplication';
+        angular.module(MODULE_NAME, [ngInfiniteScroll]);
+        export default MODULE_NAME;
 
  * Use the directive by specifying an `infinite-scroll` attribute on an element.
 
-        <div infinite-scroll="myPagingFunction()" infinite-scroll-distance="3"></div>
+        <div infinite-scroll="$ctrl.myPagingFunction()" infinite-scroll-distance="3"></div>
 
-Note that neither the module nor the directive use the `ng` prefix, as that prefix is reserved for the core Angular module.
+Note that the directive does not use the `ng` prefix, as that prefix is reserved for the core Angular module.
 
 Detailed Documentation
 ----------------------
@@ -64,8 +58,10 @@ ngInfiniteScroll is licensed under the MIT license. See the LICENSE file for mor
 Testing
 -------
 
-ngInfiniteScroll uses Protractor for testing. Note that you will need to have Chrome browser, and the `grunt-cli` npm package installed globally if you wish to use grunt (`npm install -g grunt-cli`). Then, install the dependencies with `npm install`.
+ngInfiniteScroll uses Protractor for testing.
+Note that you will need to have Chrome browser.
 
-* `grunt test:protractor-local` - run tests
+    npm install
+    npm run test
 
 Thank you very much @pomerantsev for your work on these Protractor tests.
