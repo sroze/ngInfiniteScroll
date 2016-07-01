@@ -30,21 +30,21 @@ angular.module(MODULE_NAME, [])
       let checkInterval = false;
 
       function height(element) {
-        element = element[0] || element;
+        const el = element[0] || element;
 
-        if (isNaN(element.offsetHeight)) {
-          return element.document.documentElement.clientHeight;
+        if (isNaN(el.offsetHeight)) {
+          return el.document.documentElement.clientHeight;
         }
-        return element.offsetHeight;
+        return el.offsetHeight;
       }
 
       function pageYOffset(element) {
-        element = element[0] || element;
+        const el = element[0] || element;
 
         if (isNaN(window.pageYOffset)) {
-          return element.document.documentElement.scrollTop;
+          return el.document.documentElement.scrollTop;
         }
-        return element.ownerDocument.defaultView.pageYOffset;
+        return el.ownerDocument.defaultView.pageYOffset;
       }
 
       function offsetTop(element) {
@@ -220,18 +220,22 @@ angular.module(MODULE_NAME, [])
           return;
         }
 
+        let newerContainer;
+
         if (newContainer.nodeType && newContainer.nodeType === 1) {
-          newContainer = angular.element(newContainer);
+          newerContainer = angular.element(newContainer);
         } else if (typeof newContainer.append === 'function') {
-          newContainer = angular.element(newContainer[newContainer.length - 1]);
+          newerContainer = angular.element(newContainer[newContainer.length - 1]);
         } else if (typeof newContainer === 'string') {
-          newContainer = angular.element(document.querySelector(newContainer));
+          newerContainer = angular.element(document.querySelector(newContainer));
+        } else {
+          newerContainer = newContainer;
         }
 
-        if (newContainer == null) {
+        if (newerContainer == null) {
           throw new Error('invalid infinite-scroll-container attribute.');
         }
-        changeContainer(newContainer);
+        changeContainer(newerContainer);
       }
 
       scope.$watch('infiniteScrollContainer', handleInfiniteScrollContainer);

@@ -4,7 +4,6 @@
     "rules": {
         "arrow-parens": [2, "as-needed"],
         "curly": [2, "all"],
-        "no-param-reassign": 0,
         "no-restricted-syntax": [
             2,
             "DebuggerStatement",
