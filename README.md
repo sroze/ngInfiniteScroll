@@ -23,7 +23,7 @@ Getting Started
 
  * Install it with:
    * [NPM](https://www.npmjs.com) via `npm install --save ng-infinite-scroll`
- * Import ng-infinite-scroll after angular.
+ * Import ng-infinite-scroll and angular.
 
         import angular from 'angular';
         import ngInfiniteScroll from 'ng-infinite-scroll';

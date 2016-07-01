@@ -1,4 +1,8 @@
-angular.module('infinite-scroll', [])
+import angular from 'angular';
+
+const MODULE_NAME = 'infinite-scroll';
+
+angular.module(MODULE_NAME, [])
   .value('THROTTLE_MILLISECONDS', null)
   .directive('infiniteScroll', [
     '$rootScope', '$window', '$interval', 'THROTTLE_MILLISECONDS',
@@ -241,6 +245,5 @@ angular.module('infinite-scroll', [])
   })
 
 ]);
-if (typeof module !== "undefined" && typeof exports !== "undefined" && module.exports === exports) {
-  module.exports = 'infinite-scroll';
-}
+
+export default MODULE_NAME;
