@@ -3,12 +3,6 @@
     "extends": "airbnb-base",
     "rules": {
         "arrow-parens": [2, "as-needed"],
-        "curly": [2, "all"],
-        "no-restricted-syntax": [
-            2,
-            "DebuggerStatement",
-            "LabeledStatement",
-            "WithStatement"
-       ]
+        "curly": [2, "all"]
     }
 }
