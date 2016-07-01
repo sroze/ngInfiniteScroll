@@ -1,12 +1,10 @@
+sudo: false
 language: node_js
-node_js:
-  - 0.10
-
-install:
-  - npm install
-
+node_js: 6
 before_script:
-  - npm install -g grunt-cli
-
-script:
-  - grunt test:protractor-travis
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - until xwininfo -root > /dev/null 2>&1; do echo "waiting for xvfb"; done
+cache:
+  directories:
+    - node_modules

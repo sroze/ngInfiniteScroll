@@ -111,7 +111,7 @@ describe "ng-infinite-scroll", ->
         describe "with #{container} as container", ->
 
           replaceIndexFile = (attrs, throttle) ->
-            mkdirp tmpDir
+            mkdirp.sync tmpDir
             fs.writeFileSync(pathToDocument, getTemplate(angularVersion, container, attrs, throttle))
 
           describe "without throttling", ->
