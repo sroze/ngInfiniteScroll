@@ -5,5 +5,8 @@
         "arrow-parens": [2, "as-needed"],
         "curly": [2, "all"],
         "import/no-unresolved": 0
+    },
+    "env": {
+        "browser": true
     }
 }
