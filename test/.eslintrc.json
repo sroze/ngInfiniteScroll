@@ -1,0 +1,14 @@
+{
+    "env": {
+        "protractor": true,
+        "mocha": true
+    },
+    "globals": {
+        "expect": false
+    },
+    "rules": {
+        "import/no-extraneous-dependencies": 0,
+        "prefer-arrow-callback": 0,
+        "func-names": 0
+    }
+}

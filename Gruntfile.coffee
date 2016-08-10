@@ -7,17 +7,7 @@ module.exports = (grunt) ->
     meta:
       banner: '/* <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n'
     eslint:
-      target: ['src']
-    coffeelint:
-      src: 'src/**/*.coffee'
-      options:
-        max_line_length:
-          level: 'ignore'
-        line_endings:
-          value: 'unix'
-          level: 'error'
-        no_stand_alone_at:
-          level: 'error'
+      target: ['src', 'test']
     clean:
       options:
         force: true
@@ -36,19 +26,6 @@ module.exports = (grunt) ->
         options:
           presets: ["es2015", "es2016", "stage-1"]
           plugins: ["add-module-exports", "transform-es2015-modules-umd"]
-    coffee:
-      compile:
-        files: [
-          {
-            expand: true
-            cwd: 'src/'
-            src: '**/*.coffee'
-            dest: 'compile/'
-            ext: '.js'
-          }
-        ],
-        options:
-          bare: true
     concat:
       options:
         banner: '<%= meta.banner %>'
@@ -93,7 +70,7 @@ module.exports = (grunt) ->
       else done()
     )
 
-  grunt.registerTask 'default', ['eslint', 'coffeelint', 'clean', 'babel', 'coffee', 'concat', 'uglify']
+  grunt.registerTask 'default', ['eslint', 'clean', 'babel', 'concat', 'uglify']
   grunt.registerTask 'test:protractor-local', [
     'default',
     'webdriver',

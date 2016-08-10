@@ -72,7 +72,7 @@ angular.module(MODULE_NAME, [])
           if (offsetTop(container) !== undefined) {
             containerTopOffset = offsetTop(container);
           }
-          elementBottom = offsetTop(elem) - containerTopOffset + height(elem);
+          elementBottom = (offsetTop(elem) - containerTopOffset) + height(elem);
         }
 
         if (useDocumentBottom) {
@@ -80,7 +80,7 @@ angular.module(MODULE_NAME, [])
         }
 
         const remaining = elementBottom - containerBottom;
-        const shouldScroll = remaining <= height(container) * scrollDistance + 1;
+        const shouldScroll = remaining <= (height(container) * scrollDistance) + 1;
 
         if (shouldScroll) {
           checkWhenEnabled = true;
