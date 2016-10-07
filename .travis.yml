@@ -5,8 +5,8 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 env:
   global:
-  - ENCRYPTION_LABEL: f635dc9b0bb1
-  - COMMIT_AUTHOR_EMAIL: ''
+  - ENCRYPTION_LABEL: 61bce606080b
+  - COMMIT_AUTHOR_EMAIL: 'ng-infinite-scroll-bower@graingert.co.uk'
 before_script:
   - "export DISPLAY=:99.0"
   - until xwininfo -root > /dev/null 2>&1; do echo "waiting for xvfb"; done
