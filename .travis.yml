@@ -3,9 +3,14 @@ language: node_js
 node_js: 6
 before_install:
   - "sh -e /etc/init.d/xvfb start"
+env:
+  global:
+  - ENCRYPTION_LABEL: f635dc9b0bb1
+  - COMMIT_AUTHOR_EMAIL: ''
 before_script:
   - "export DISPLAY=:99.0"
   - until xwininfo -root > /dev/null 2>&1; do echo "waiting for xvfb"; done
 cache:
   directories:
     - node_modules
+script: ./make-bower-build.sh
