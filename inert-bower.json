@@ -1,0 +1,8 @@
+{
+    "name": "ng-infinite-scroll-npm-is-better-than-bower",
+    "main": "build/ng-infinite-scroll.js",
+    "license": "AGPL",
+    "dependencies": {
+        "angular": ">=1.2.0"
+    }
+}

@@ -1,6 +1,22 @@
 import fs from 'fs';
 import mkdirp from 'mkdirp';
 
+function retry(times, fn) {
+  function doRetry() {
+    for (let i = 0; i < (times - 1); i += 1) {
+      try {
+        return fn();
+      } catch (e) {
+        // does nothing;
+      }
+    }
+
+    return fn();
+  }
+
+  return doRetry;
+}
+
 const containers = {
   window: {
     start: '',
@@ -236,8 +252,7 @@ function describeTests(angularVersion, container) {
       );
 
       return describe('with an event handler', () =>
-
-        it('calls the event handler on an event', function () {
+        it('calls the event handler on an event', retry(4, function () {
           replaceIndexFile("infinite-scroll-listen-for-event='anEvent'", throttle);
           browser.get(pathToDocument);
           expect(getItems().count()).toBe(100);
@@ -245,11 +260,9 @@ function describeTests(angularVersion, container) {
           expect(getItems().count()).toBe(100);
           element(By.id('trigger')).click();
           expect(getItems().count()).toBe(100);
-          browser.sleep(throttle);
+          browser.sleep(100);
           return expect(getItems().count()).toBe(200);
-        }
-        )
-
+        }))
       );
     }
     );

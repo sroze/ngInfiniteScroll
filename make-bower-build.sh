@@ -18,7 +18,7 @@ ENCRYPTED_KEY_VAR="encrypted_${ENCRYPTION_LABEL}_key"
 ENCRYPTED_IV_VAR="encrypted_${ENCRYPTION_LABEL}_iv"
 ENCRYPTED_KEY=${!ENCRYPTED_KEY_VAR}
 ENCRYPTED_IV=${!ENCRYPTED_IV_VAR}
-openssl aes-256-cbc -K $ENCRYPTED_KEY -iv $ENCRYPTED_IV -in id_ed25519_nginfinite.enc -out deploy_key -d
+openssl aes-256-cbc -K $ENCRYPTED_KEY -iv $ENCRYPTED_IV -in id_rsa_nginfinite.enc -out deploy_key -d
 chmod 600 deploy_key
 eval `ssh-agent -s`
 ssh-add deploy_key
@@ -37,11 +37,12 @@ git config user.email "$COMMIT_AUTHOR_EMAIL"
 
 # Copy all build content to the bower repo
 cp -r ../build .
-cp -r ../src .
+cp ../inert-bower.json bower.json
 
 git add build
-git add src
+git add bower.json
 
 git commit -am "Release version $TRAVIS_TAG"
+git tag -d "$TRAVIS_TAG" || true
 git tag "$TRAVIS_TAG"
-git push origin $TARGET_BRANCH $TRAVIS_TAG
+git push origin -f $TARGET_BRANCH $TRAVIS_TAG
