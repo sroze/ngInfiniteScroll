@@ -22,7 +22,7 @@ Getting Started
 ---------------
 
  * Install it with:
-   * [NPM](https://www.npmjs.com) via `npm install --save ng-infinite-scroll`
+   * [npm](https://www.npmjs.com) via `npm install --save ng-infinite-scroll`
  * Import ng-infinite-scroll and angular.
 
         import angular from 'angular';
@@ -65,3 +65,18 @@ Note that you will need to have Chrome browser.
     npm run test
 
 Thank you very much @pomerantsev for your work on these Protractor tests.
+
+Bower
+-----
+
+While a Bower repo has been created for legacy use, it is still recommened to
+use npm and a module bundler (webpack, rollup, SystemJS) to use
+`ng-infinite-scroll`.
+
+To install using bower:
+
+```
+bower install ng-infinite-scroll-npm-is-better-than-bower
+```
+
+The name is temporary, until I have access to `ng-infinite-scroll` on bower.
