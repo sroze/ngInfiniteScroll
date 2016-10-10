@@ -252,7 +252,7 @@ function describeTests(angularVersion, container) {
       );
 
       return describe('with an event handler', () =>
-        it('calls the event handler on an event', retry(4, function () {
+        it('calls the event handler on an event', retry(8, function () {
           replaceIndexFile("infinite-scroll-listen-for-event='anEvent'", throttle);
           browser.get(pathToDocument);
           expect(getItems().count()).toBe(100);
