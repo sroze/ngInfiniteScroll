@@ -278,5 +278,5 @@ function withAngular(angularVersion) {
 }
 
 describe('ng-infinite-scroll', function () {
-  ['1.2.29', '1.3.20', '1.4.12', '1.5.7'].forEach(withAngular);
+  ['1.2.29', '1.3.20', '1.4.12', '1.5.8'].forEach(withAngular);
 });
