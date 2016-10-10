@@ -1,3 +1,5 @@
+[**Alternative project**: Angular Material's md-virtual-repeat](https://material.angularjs.org/latest/api/directive/mdVirtualRepeat)
+
 [**Maintainer help needed**: I'm looking for fellows that are willing to help me maintain and improve this project.](https://github.com/sroze/ngInfiniteScroll/issues/267)
 
 ---
