@@ -13,4 +13,4 @@ before_script:
 cache:
   directories:
     - node_modules
-script: ./make-bower-build.sh
+after_success: ./make-bower-build.sh

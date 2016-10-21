@@ -6,12 +6,8 @@ TARGET_BRANCH="master"
 
 # Run only test cases if this is not a release
 if [ -z "$TRAVIS_TAG" ]; then
-    echo "Skipping deploy; just doing a build and running test cases"
-    npm test
     exit 0
 fi
-
-npm test
 
 # Get the deploy key by using Travis's stored variables to decrypt deploy_key.enc
 ENCRYPTED_KEY_VAR="encrypted_${ENCRYPTION_LABEL}_key"
