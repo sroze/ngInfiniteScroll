@@ -78,7 +78,5 @@ use npm and a module bundler (webpack, rollup, SystemJS) to use
 To install using bower:
 
 ```
-bower install ng-infinite-scroll-npm-is-better-than-bower
+bower install ngInfiniteScroll
 ```
-
-The name is temporary, until I have access to `ng-infinite-scroll` on bower.
