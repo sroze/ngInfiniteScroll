@@ -53,7 +53,10 @@
      [infinite-scroll-distance='{number}']
      [infinite-scroll-disabled='{boolean}']
      [infinite-scroll-immediate-check='{boolean}']
-     [infinite-scroll-listen-for-event='{string}']>
+     [infinite-scroll-listen-for-event='{string}']
+     [infinite-scroll-container='{HTMLElement | [] | string}']
+     [infinite-scroll-use-document-bottom='{boolean}']
+     [infinite-scroll-parent]>
 &lt;/ANY></pre></div>
 
     <h5>Parameters</h5>
@@ -63,6 +66,9 @@
       <li><code>infinite-scroll-disabled <em>(optional)</em> - {boolean}</code> - A boolean expression that, when <code>true</code>, indicates that the infininite scroll expression should not be evaluated even if all other conditions are met. This is usually used to throttle or pause the infinite scroll, for example when data is loading via Ajax. If a scroll event triggers the directive but this attribute prevents the expression evaluation, the event will be handled instead immediately after this attribute again evaluates to <code>false</code>.</li>
       <li><code>infinite-scroll-immediate-check <em>(optional)</em> - {boolean}</code> - A boolean expression that indicates that the directive should check immediately to see if a scroll event <em>would</em> trigger an evaluation of the infinite scroll expression even if a scroll event does not occur. Useful if it's possible that the content inside the directive's element is not tall enough to fill up the entire browser window's height. Defaults to <code>true</code>.</li>
       <li><code>infinite-scroll-listen-for-event <em>(optional)</em> - {string}</code> - The name of an event that, when received, will cause the scroll position check to be re-run. This is useful if you need to manually trigger the scroll handler, for instance if your items have been filtered or modified without altering the collection.</li>
+      <li><code>infinite-scroll-container <em>(optional)</em> - {HTMLElement | [] | string}</code> - The HTMLElement in which scrolling is contained.  This is an expression that results in an HTMLElement object, an array whose first element is evaluated using angular.element(), or a string which is used as the parameter to document.querySelector(). The selector is similar to jQuery selectors but should evaluate to a single element. Remember to use single quotes around string constants.</li>
+      <li><code>infinite-scroll-use-document-bottom <em>(optional)</em> - {boolean}</code> - True, use the bottom of the document, rather than the containing element, to determine infinite-scroll-distance.</li>
+      <li><code>infinite-scroll-parent <em>(optional)</em></code> - When present, the scroll container that is tracked is the parent element of the element on which the ngInfiniteScroll directive is placed.</li>
     </ul>
 
     <h4>Loading the Module</h4>
