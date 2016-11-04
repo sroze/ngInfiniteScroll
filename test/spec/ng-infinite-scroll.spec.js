@@ -219,7 +219,7 @@ function describeTests(angularVersion, container) {
       }
       );
 
-      it('respects the disabled attribute and is throttled when page loads', function () {
+      it('respects the disabled attribute and is throttled when page loads', retry(16, function () {
         replaceIndexFile("infinite-scroll-disabled='busy'", throttle);
         browser.get(pathToDocument);
         expect(getItems().count()).toBe(0);
@@ -227,8 +227,7 @@ function describeTests(angularVersion, container) {
         expect(getItems().count()).toBe(0);
         browser.sleep(throttle);
         return expect(getItems().count()).toBe(100);
-      }
-      );
+      }));
 
       it('is not throttled when re-enabled if the throttle time has already elapsed', function () {
         replaceIndexFile("infinite-scroll-disabled='busy'", throttle);
