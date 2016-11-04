@@ -7,7 +7,7 @@ function retry(times, fn) {
       try {
         return fn();
       } catch (e) {
-        // does nothing;
+        browser.restart();
       }
     }
 
