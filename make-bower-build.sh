@@ -34,6 +34,7 @@ git config user.email "$COMMIT_AUTHOR_EMAIL"
 # Copy all build content to the bower repo
 cp -r ../build .
 cp ../inert-bower.json bower.json
+cp ../LICENSE LICENSE
 
 git add build
 git add bower.json
