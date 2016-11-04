@@ -56,7 +56,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'webdriver', () ->
     done = this.async()
-    p = require('child_process').spawn('node', ['node_modules/protractor/bin/webdriver-manager', 'update'])
+    p = require('child_process').spawn('node', ['node_modules/.bin/webdriver-manager', 'update'])
     p.stdout.pipe(process.stdout)
     p.stderr.pipe(process.stderr)
     p.on 'exit', (code) ->
