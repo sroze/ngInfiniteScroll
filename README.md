@@ -26,19 +26,25 @@ Getting Started
  * Install it with:
    * [npm](https://www.npmjs.com) via `npm install --save ng-infinite-scroll`
  * Import ng-infinite-scroll and angular.
-
-        import angular from 'angular';
-        import ngInfiniteScroll from 'ng-infinite-scroll';
+ 
+    ```js
+    import angular from 'angular';
+    import ngInfiniteScroll from 'ng-infinite-scroll';
+    ```
 
  * Ensure that your application module specifies ngInfiniteScroll as a dependency:
 
-        const MODULE_NAME = 'myApplication';
-        angular.module(MODULE_NAME, [ngInfiniteScroll]);
-        export default MODULE_NAME;
+    ```js
+    const MODULE_NAME = 'myApplication';
+    angular.module(MODULE_NAME, [ngInfiniteScroll]);
+    export default MODULE_NAME;
+    ```
 
  * Use the directive by specifying an `infinite-scroll` attribute on an element.
 
-        <div infinite-scroll="$ctrl.myPagingFunction()" infinite-scroll-distance="3"></div>
+    ```html
+    <div infinite-scroll="$ctrl.myPagingFunction()" infinite-scroll-distance="3"></div>
+    ```
 
 Note that the directive does not use the `ng` prefix, as that prefix is reserved for the core Angular module.
 
